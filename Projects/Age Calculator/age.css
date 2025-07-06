@@ -1,0 +1,86 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+   background-color: rgb(170, 187, 230);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin-top: 10%;
+}
+
+div {
+    width: 65%;
+    height: 100px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow:3px 2px 1px 3px ;
+}
+.age{
+    font-size: 30px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: purple;
+    text-transform: uppercase;
+}
+.header {
+    display: flex;
+    flex-direction: column;
+}
+
+h2 {
+    font-size: 27px;
+    font-family: sans-serif;
+    color: rgb(11, 11, 161);
+}
+
+.frame1,.frame2 {
+    color: rgb(63, 63, 158);
+}
+
+#yearBorn {
+    font-size: 23px;
+    background-color:rgb(70, 1, 70);
+    border-radius: 13px;
+    color: white;
+    border: none;
+    height: 50px;
+}
+.submitBtn{
+    width: 100px;
+    height: 60px;
+    font-size:1.5vw;
+    border-radius: 20px;
+    border: none;
+    color:white;
+    background-color:rgb(70, 1, 70);
+    cursor: pointer;
+}
+.year,.month,.week,.day,.hour,.minute{
+    color: rgb(84, 3, 84);
+    font-size: 20px;
+    font-family: sans-serif;
+}
+@media (max-width:1000px){
+    .age,h2,#yearBorn,.submitBtn{
+        font-size: 3vw;
+    }
+
+.year,.month,.week,.day,.hour,.minute{
+    font-style: 2vw;
+}
+   
+}

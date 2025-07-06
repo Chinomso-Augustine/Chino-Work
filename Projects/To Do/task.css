@@ -1,0 +1,130 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+nav {
+    background-color: salmon;
+    display: flex;
+    position: static;
+    height: 100px;
+    color: white;
+    justify-content:space-evenly;
+    align-items: center;
+
+}
+
+h3 {
+    margin: 60px;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+body {
+    background-color: wheat;
+}
+
+.frame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+#addTaskBtn {
+    width: 100px;
+    height: 50px;
+    margin-left: 1%;
+    border-radius: 20px;
+    color: purple;
+    font-size: 20px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-radius: 10px;
+    border: 4px groove purple;
+    cursor: pointer;
+    background-color: whitesmoke;
+}
+
+.typeBox {
+    width: 70%;
+    height: 50px;
+    font-size: 28px;
+    border: none;
+    border-radius: 10px;
+}
+
+.typeBox::placeholder{
+    color: purple;
+    padding-left: 20px;
+
+}
+.checkBtn {
+    width: 2%;
+    margin-left: 8%;
+    margin-top: 50px;
+}
+span{
+    color:purple;
+    font-size: 25px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#dueDateBtn{
+    width: 140px;
+    height: 50px;
+    margin-left: 2%;
+    color: purple;
+    font-size: 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    border-radius: 10px;
+    border: 4px groove purple;
+    cursor: pointer;
+    background-color: whitesmoke;
+}
+
+.deleteBtn,.dueDateDisplay,.dateCreatedBtn{
+    color: purple;
+    height: 30px;
+    font-size: 100%;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    border-radius: 10px;
+    border: 4px groove purple;
+    margin-left: 30px;
+    cursor: pointer;
+    background-color: whitesmoke;
+    padding: 2px;
+    display: inline;
+}
+#toggleHistoryBtn{
+    font-size: 30px;
+    color: white;
+    background-color: salmon;
+    
+    border-radius: 10px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+#historyList{
+    display: none;
+    color:purple;
+    font-size: 20px;
+    padding:10px;
+    font-family:'Times New Roman', Times, serif;
+}
+.frame2{
+    display: flex;
+    margin-top: 10px;
+    justify-content:space-around;
+    align-items:flex-start;
+}
+
+.taskDiv{
+    flex: 75%;
+    
+}
+
+.history{
+    flex: 17%;
+    margin-top: 2%;
+}
