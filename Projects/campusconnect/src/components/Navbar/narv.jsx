@@ -25,7 +25,7 @@ function Navbar() {
             <a
               key={index}
               href={item.href}
-              className="inline-flex items-center justify-center bg-purple-800 w-[130px] h-[45px] text-white text-lg hover:bg-purple-700 transition rounded-2xl"
+              className="inline-flex items-center justify-center bg-purple-500/10 w-[130px] h-[45px] text-white text-lg hover:bg-purple-200/10 transition rounded-2xl"
             >
               {item.label}
             </a>
