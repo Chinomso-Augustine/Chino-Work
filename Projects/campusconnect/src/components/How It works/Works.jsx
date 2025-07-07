@@ -8,7 +8,7 @@ function HowItWorks() {
             </section>
 
             {/**Step By step of how it works */}
-            <section className="bg-gradient-to-r from-purple-900 from-55% to-pink-800 to-100% text-white h-auto py-12 p-13 flex">
+            <section className="bg-gradient-to-r from-purple-900 from-55% to-pink-800 to-100% text-white h-auto py-12 p-13">
                 <div className="mt-6 flex flex-col md:flex-row justify-center items-center flex-wrap gap-12">
 
                     <div className="bg-white/8 backdrop-blur-md py-8 shadow-md text-white rounded-2xl w-lg">
@@ -49,12 +49,12 @@ function HowItWorks() {
                             </li>
                         </ol>
                     </div>
-
-                    <div>
-                    <button className="bg-gradient-to-r from-pink-500 to-purple-500 w-l py-4 px-7 text-center rounded-lg shadow text-lg hover:opacity-90">
-                    Get Started Now
+                </div>
+                  
+                <div className="mt-12 flex justify-center text-center ">
+                  <button className="bg-gradient-to-r from-pink-500 to-purple-500 w-l py-4 px-7 text-center rounded-lg shadow text-lg hover:opacity-90">
+                        Get Started Now
                     </button>
-                    </div>
                 </div>
             </section>
         </div>

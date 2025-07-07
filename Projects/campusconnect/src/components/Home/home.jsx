@@ -69,7 +69,7 @@ function Home() {
                     {reason.map((whyUs, index) => (
                         <div
                             key={index}
-                            className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+className="bg-white p-6 rounded-lg shadow-sm transition-shadow duration-100 ease-in hover:shadow-lg">
 
                             <div className="bg-gradient-to-r from-purple-500  to-indigo-500 w-12 h-12 text-white text-center rounded-lg flex items-center justify-center">{whyUs.icon}</div>
                             <div className="text-lg  font-semibold text-gray-900 mb-2 mt-3">{whyUs.value}</div>
