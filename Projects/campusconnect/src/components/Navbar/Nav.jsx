@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Menu, X } from 'lucide-react'; // if installed
+import { Import, Menu, X } from 'lucide-react'; // if installed
+import { Link } from "react-router-dom"
 
 function Navbar() {
   // State for mobile menu toggle
@@ -7,8 +8,8 @@ function Navbar() {
 
   // Navigation links
   const navItems = [
-    { label: "Home", href: "#" },
-    { label: "How It Works", href: "#" },
+    { label: "Home", href: "/" },
+    { label: "How It Works", href: "/work" },
     { label: "View Services", href: "#" },
     { label: "View Providers", href: "#" },
   ];
@@ -22,13 +23,13 @@ function Navbar() {
         {/* Desktop nav links - hidden on small screens */}
         <div className="hidden md:flex items-center space-x-4">
           {navItems.map((item, index) => (
-            <a
+            <Link
               key={index}
-              href={item.href}
+              to={item.href}
                     className="bg-white/8 backdrop-blur-md text-center shadow-md text-white p-3 md:w-auto rounded-lg hover:bg-purple-800"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
           <a
             href="#"
@@ -50,13 +51,13 @@ function Navbar() {
       {isOpen && (
         <div className="md:hidden flex flex-col items-center space-y-4 pb-4">
           {navItems.map((item, index) => (
-            <a
+            <Link
               key={index}
-              href={item.href}
+              to={item.href}
               className="inline-flex items-center justify-center bg-purple-800 w-[130px] h-[45px] text-white text-lg hover:bg-purple-700 transition rounded-2xl"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
           <a
             href="#"
