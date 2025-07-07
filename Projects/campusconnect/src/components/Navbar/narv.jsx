@@ -14,8 +14,8 @@ function Navbar() {
   ];
 
   return (
-    <nav className="bg-gradient-to-r from-purple-800 via-purple-800 to-indigo-800 text-white">
-      <div className="flex items-center justify-between h-[100px] px-6">
+<nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-purple-800 via-purple-800 to-indigo-800 text-white shadow-md">
+      <div className="flex items-center justify-between h-[80px] px-6">
         {/* Logo */}
         <div className="text-3xl font-bold">CampusConnect</div>
 
@@ -25,7 +25,7 @@ function Navbar() {
             <a
               key={index}
               href={item.href}
-              className="inline-flex items-center justify-center bg-purple-500/10 w-[130px] h-[45px] text-white text-lg hover:bg-purple-200/10 transition rounded-2xl"
+                    className="bg-white/8 backdrop-blur-md text-center shadow-md text-white p-3 md:w-auto rounded-lg hover:bg-purple-800"
             >
               {item.label}
             </a>

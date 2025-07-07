@@ -6,7 +6,7 @@ function Home() {
     {/*Stats for stat section  */ }
     const stats = [
         { value: "500+", label: "Active Students" },
-        { value: "4.5", label: "Average Rating", icon: <Star className="inline w-5 h-5 ml-1" /> },
+        { value: "4.5", label: "Average Rating", icon: <Star className="inline w-8 h-7 ml-1" /> },
         { value: "2000+", label: "Services Completed" },
     ];
 
@@ -21,8 +21,8 @@ function Home() {
     return (
         <div>
             {/** Header section */}
-            <section className="bg-gradient-to-br from-purple-700 via-indigo-800  to-purple-700 text-white h-auto py-12 p-13 ">
-                <h1 className="text-6xl text-center font-bold">Connect with <span className="text-purple-300"> Campus Services</span>
+            <section className="bg-gradient-to-br from-purple-700 via-indigo-800  to-purple-700 text-white h-auto py-12 p-13 mt-20">
+                <h1 className="text-3xl  md:text-6xl text-center font-bold ">Connect with <span className="text-purple-300"> Campus Services</span>
                 </h1>
 
                 <p className="text-2xl text-center mt-9 mb-9">Find tutoring, tech support, creative services, and more from fellow students on campus.
@@ -38,11 +38,11 @@ function Home() {
             </section>
 
             {/*Stats section */}
-            <section className="bg-gradient-to-r from-purple-800 to-indigo-800 py-12 flex flex-col md:flex-row justify-center gap-6 flex-wrap">
+            <section className="bg-gradient-to-r from-purple-800 to-indigo-800 py-12 flex flex-col items-center md:flex-row justify-center gap-6 flex-wrap">
                 {stats.map((stat, index) => (
                     <div
                         key={index}
-                        className="bg-white/8 backdrop-blur-md rounded-1xl px-8 py-6 text-center shadow-md text-white w-full md:w-56 rounded-2xl"
+                        className="bg-white/8 backdrop-blur-md rounded-1xl py-6 text-center shadow-md text-white w-lg md:w-56 rounded-2xl"
                     >
                         <div className="text-3xl font-bold">
                             {stat.value}
@@ -64,7 +64,7 @@ function Home() {
                 <h3 className="text-3xl font-bold text-center mb-4 text-gray-900">Why Choose CampusConnect?</h3>
                 <p className="text-lg text-center text-gray-600 mb-12 max-w-2xl mx-auto">We make it easy to find trusted services from fellow students on your campus </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
 
                     {reason.map((whyUs, index) => (
                         <div
@@ -80,8 +80,21 @@ function Home() {
                 </div>
             </section>
 
-            <footer>
+            <footer className="bg-gradient-to-r from-purple-800 to-indigo-800 py-12">
+            <h2 className="text-3xl font-bold text-center mb-4 text-white">Ready to Connect?</h2>
 
+            <p className="text-gray-300 text-lg font-semibold flex text-center justify-center m-4 ">Join our community of students helping students. Find the services you need or offer your skills to others.</p>
+           
+            <div className="flex flex-col md:flex-row justify-center gap-6 flex-wrap font-bold mt-9 mb-7">
+                <button className="bg-white text-purple-800 text-lg rounded-lg p-4  cursor-pointer">
+                    Find Services
+
+                </button>
+                <button className="border text-white text-lg rounded-lg p-4 hover:bg-white hover:text-purple-800 cursor-pointer">
+                Browse Providers
+                </button>
+
+            </div>
             </footer>
         </div>
     )
