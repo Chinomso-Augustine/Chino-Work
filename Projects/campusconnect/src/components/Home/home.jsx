@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Star } from "lucide-react";
+import { Star, User, Clock } from "lucide-react";
 
 
 function Home() {
@@ -11,10 +10,17 @@ function Home() {
         { value: "2000+", label: "Services Completed" },
     ];
 
-    const [bodyMobileScreen, setBodyMobileScreen] = useState(false);
+    {/**Info for reason to chose us section */ }
+    const reason = [
+        { icon: <User className="w-6 h-6" />, value: "Student-to-Student", label: "Connect directly with fellow students who understand your needs and schedule. " },
+        { icon: <Star className="w-6 h-6" />, value: "Trusted Review", label: "Read reviews from other students to find the best service providers." },
+        { icon: <Clock className="w-6 h-6" />, value: "Flexible scheduling", label: "Book services that fit your busy student schedule." }
+    ]
+
 
     return (
         <div>
+            {/** Header section */}
             <section className="bg-gradient-to-br from-purple-700 via-indigo-800  to-purple-700 text-white h-auto py-12 p-13 ">
                 <h1 className="text-6xl text-center font-bold">Connect with <span className="text-purple-300"> Campus Services</span>
                 </h1>
@@ -31,7 +37,8 @@ function Home() {
                 </div>
             </section>
 
-            <section className="bg-gradient-to-r from-purple-700 to-indigo-800 py-12 flex flex-col md:flex-row justify-center gap-6 flex-wrap">
+            {/*Stats section */}
+            <section className="bg-gradient-to-r from-purple-800 to-indigo-800 py-12 flex flex-col md:flex-row justify-center gap-6 flex-wrap">
                 {stats.map((stat, index) => (
                     <div
                         key={index}
@@ -44,15 +51,33 @@ function Home() {
 
                         {/*Displaying text under numbers */}
                         <div className="text-sm mt-2 text-purple-100">
-                        {stat.label}
+                            {stat.label}
                         </div>
 
                     </div>
                 ))}
 
             </section>
-            <section>
 
+            {/**Reason to choose CampusConnect section */}
+            <section className="bg-gradient-to-b from-purple-50 to-white py-16 px-4" >
+                <h3 className="text-3xl font-bold text-center mb-4 text-gray-900">Why Choose CampusConnect?</h3>
+                <p className="text-lg text-center text-gray-600 mb-12 max-w-2xl mx-auto">We make it easy to find trusted services from fellow students on your campus </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-6xl mx-auto">
+
+                    {reason.map((whyUs, index) => (
+                        <div
+                            key={index}
+                            className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+
+                            <div className="bg-gradient-to-r from-purple-500  to-indigo-500 w-12 h-12 text-white text-center rounded-lg flex items-center justify-center">{whyUs.icon}</div>
+                            <div className="text-lg  font-semibold text-gray-900 mb-2 mt-3">{whyUs.value}</div>
+                            <div className="text-sm text-gray-600">{whyUs.label}</div>
+
+                        </div>
+                    ))}
+                </div>
             </section>
 
             <footer>
