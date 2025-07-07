@@ -1,7 +1,9 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Nav.jsx';
 import Home from './components/Home/home.jsx'
 import HowItWorks from "./components/How It works/Works.jsx"
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Services from "./components/Services/Services.jsx"
+import Providers from "./components/Providers/Providers.jsx"
 
 
 function App() {
@@ -11,6 +13,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Work" element={<HowItWorks />} />
+        <Route path="/Services" element={<Services />}/> 
+        <Route path="/Providers" element={<Providers />}/>
       </Routes>
     </Router>
   )
