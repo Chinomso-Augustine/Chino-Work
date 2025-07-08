@@ -16,15 +16,15 @@ function HowItWorks() {
 
                         <ol className=" ml-15 list-decimal list-outs text-lg">
                             <li className="text-xl font-bold "> Browse Services
-                                <p className="text-gray-300 text-sm mb-5 mt-2"> Explore available services from tutoring to food delivery, all provided by fellow students.</p>
+                                <p className="text-gray-300 text-sm mb-5 mt-2 pr-3"> Explore available services from tutoring to food delivery, all provided by fellow students.</p>
                             </li>
 
                             <li className="text-xl font-bold "> Choose a Provider
-                                <p className="text-gray-300 text-sm mb-5 mt-2"> Read reviews, check availability, and select the provider that best fits your needs. </p>
+                                <p className="text-gray-300 text-sm my-3 pr-3"> Read reviews, check availability, and select the provider that best fits your needs. </p>
                             </li>
 
                             <li className="text-xl font-bold "> Book & Connect
-                                <p className="text-gray-300 text-sm mb-5 mt-2">Contact the provider directly to schedule your service and get the help you need. </p>
+                                <p className="text-gray-300 text-sm mb-5 mt-2 pr-3">Contact the provider directly to schedule your service and get the help you need. </p>
                             </li>
                         </ol>
                     </div>
@@ -36,23 +36,23 @@ function HowItWorks() {
 
                         <ol className=" ml-15 list-decimal list-outs text-lg">
                             <li className="text-xl font-bold "> Create Account
-                                <p className="text-gray-300 text-sm mb-5 mt-2"> Sign up with your student email to join our community of service providers.</p>
+                                <p className="text-gray-300 text-sm mb-5 mt-2 pr-3"> Sign up with your student email to join our community of service providers.</p>
                             </li>
 
                             <li className="text-xl font-bold "> Set Up Profile
-                                <p className="text-gray-300 text-sm mb-5 mt-2"> Create your provider profile with services offered, pricing, and availability. </p>
+                                <p className="text-gray-300 text-sm mb-5 mt-2 pr-3"> Create your provider profile with services offered, pricing, and availability. </p>
                             </li>
 
                             <li className="text-xl font-bold "> Start Earning
-                                <p className="text-gray-300 text-sm mb-5 mt-2">Connect with students who need your services and start building your reputation.
+                                <p className="text-gray-300 text-sm mb-5 mt-2 pr-3">Connect with students who need your services and start building your reputation.
                                 </p>
                             </li>
                         </ol>
                     </div>
                 </div>
-                  
+
                 <div className="mt-12 flex justify-center text-center ">
-                  <button className="bg-gradient-to-r from-pink-500 to-purple-500 w-l py-4 px-7 text-center rounded-lg shadow text-lg hover:opacity-90">
+                    <button className="bg-gradient-to-r from-pink-500 to-purple-500 w-l py-4 px-7 text-center rounded-lg shadow text-lg hover:opacity-90">
                         Get Started Now
                     </button>
                 </div>
