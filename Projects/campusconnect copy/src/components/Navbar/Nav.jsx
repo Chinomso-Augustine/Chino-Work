@@ -1,0 +1,74 @@
+import React, { useState } from "react";
+import { Import, Menu, X } from 'lucide-react'; // if installed
+import { Link } from "react-router-dom"
+
+function Navbar() {
+  // State for mobile menu toggle
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Navigation links
+  const navItems = [
+    { label: "Home", href: "/" },
+    { label: "How It Works", href: "/work" },
+    { label: "View Services", href: "/Services" },
+    { label: "View Providers", href: "/Providers" },
+  ];
+
+  return (
+<nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-purple-800 via-purple-800 to-indigo-800 text-white shadow-md">
+      <div className="flex items-center justify-between h-[80px] px-6">
+        {/* Logo */}
+        <div className="text-3xl font-bold">CampusConnect</div>
+
+        {/* Desktop nav links - hidden on small screens */}
+        <div className="hidden md:flex items-center space-x-4">
+          {navItems.map((item, index) => (
+            <Link
+              key={index}
+              to={item.href}
+                    className="bg-white/8 backdrop-blur-md text-center shadow-md text-white p-3 md:w-auto rounded-lg hover:bg-purple-800"
+            >
+              {item.label}
+            </Link>
+          ))}
+          <a
+            href="#"
+            className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-2 rounded-lg shadow text-lg hover:opacity-90 transition"
+          >
+            Sign In
+          </a>
+        </div>
+
+        {/* Hamburger toggle - shown only on small screens */}
+        <div className="md:hidden">
+          <button onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <X size={30} /> : <Menu size={30} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile nav menu - shown when isOpen is true */}
+      {isOpen && (
+        <div className="md:hidden flex flex-col items-center space-y-4 pb-4">
+          {navItems.map((item, index) => (
+            <Link
+              key={index}
+              to={item.href}
+              className="inline-flex items-center justify-center bg-purple-800 w-[130px] h-[45px] text-white text-lg hover:bg-purple-700 transition rounded-2xl"
+            >
+              {item.label}
+            </Link>
+          ))}
+          <a
+            href="#"
+            className="bg-gradient-to-r from-pink-500 to-purple-500 w-[80%] py-2 text-center rounded-lg shadow text-lg hover:opacity-90"
+          >
+            Sign In
+          </a>
+        </div>
+      )}
+    </nav>
+  );
+}
+
+export default Navbar;
