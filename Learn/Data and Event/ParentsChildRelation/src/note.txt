@@ -1,0 +1,10 @@
+DRY = Don't Repeat Yourself
+This applies when updating multiple section of content, do not update each individually but rather 
+use parent function to update everything
+
+Using parent or a single source of truth avoids mistakes and repetition 
+
+In this Practice, we have Promo, PromoHeading and Footer and we want to update PromoHeading and Footer with 2 info
+"60% off at Chino" and "By today or they gone" 
+
+So create object in the parent function with 2 values, then pass the values as props.
