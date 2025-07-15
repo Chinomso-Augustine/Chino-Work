@@ -69,7 +69,7 @@ function Home() {
                     {reason.map((whyUs, index) => (
                         <div
                             key={index}
-className="bg-white p-6 rounded-lg shadow-sm transition-shadow duration-100 ease-in hover:shadow-lg">
+                            className="bg-white p-6 rounded-lg shadow-sm transition-shadow duration-100 ease-in hover:shadow-lg">
 
                             <div className="bg-gradient-to-r from-purple-500  to-indigo-500 w-12 h-12 text-white text-center rounded-lg flex items-center justify-center">{whyUs.icon}</div>
                             <div className="text-lg  font-semibold text-gray-900 mb-2 mt-3">{whyUs.value}</div>
@@ -81,20 +81,20 @@ className="bg-white p-6 rounded-lg shadow-sm transition-shadow duration-100 ease
             </section>
 
             <footer className="bg-gradient-to-r from-purple-800 to-indigo-800 py-12">
-            <h2 className="text-3xl font-bold text-center mb-4 text-white">Ready to Connect?</h2>
+                <h2 className="text-3xl font-bold text-center mb-4 text-white">Ready to Connect?</h2>
 
-            <p className="text-gray-300 text-lg font-semibold flex text-center justify-center m-4 ">Join our community of students helping students. Find the services you need or offer your skills to others.</p>
-           
-            <div className="flex flex-col md:flex-row justify-center gap-6 flex-wrap font-bold mt-9 mb-7">
-                <button className="bg-white text-purple-800 text-lg rounded-lg p-4  cursor-pointer">
-                    Find Services
+                <p className="text-gray-300 text-lg font-semibold flex text-center justify-center m-4 ">Join our community of students helping students. Find the services you need or offer your skills to others.</p>
 
-                </button>
-                <button className="border text-white text-lg rounded-lg p-4 hover:bg-white hover:text-purple-800 cursor-pointer">
-                Browse Providers
-                </button>
+                <div className="flex flex-col md:flex-row justify-center gap-6 flex-wrap font-bold mt-9 mb-7">
+                    <button className="bg-white text-purple-800 text-lg rounded-lg p-4  cursor-pointer">
+                        Find Services
 
-            </div>
+                    </button>
+                    <button className="border text-white text-lg rounded-lg p-4 hover:bg-white hover:text-purple-800 cursor-pointer">
+                        Browse Providers
+                    </button>
+
+                </div>
             </footer>
         </div>
     )

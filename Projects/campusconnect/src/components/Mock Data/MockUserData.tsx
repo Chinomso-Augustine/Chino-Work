@@ -64,7 +64,7 @@ const ServiceCategory = {
 }
 
 
-{/**Mock data type / structure: This declares the types of each info the user provides/   */ }
+{/**Mock data type / structure: This declares the TYPE of each info the user provides/   */ }
 type MockDataType = {
     name: string;  //User name 
     id: string;     //user id
@@ -124,7 +124,7 @@ const MockProviders: MockDataType[] = [
     rating: 4.7,
     created_at: "2024-01-01T00:00:00Z",
     updated_at: "2024-01-01T00:00:00Z",
-    service_title: "Party Planning / Birthday Setup",
+    service_title: "Party / Birthday Setup",
     services_offered: ["Party Planning / Birthday Setup"]
   },
   {
@@ -191,6 +191,23 @@ const MockProviders: MockDataType[] = [
     updated_at: "2024-01-01T00:00:00Z",
     service_title: "Normal Bike Repair",
     services_offered: ["Normal Bike Repair", "Bike / Scooter Customization"]
-  }
+  },
+  {
+  id: "9",
+  name: "Ravi Patel",
+  service: "Tech Support",
+  description: "Having trouble setting up your PC? I provide custom PC building help, software install, and gaming optimization.",
+  profile_id: "ravi_patel_009",
+  contact_info: "ravi.patel@email.com",
+  rating: 4.9,
+  created_at: "2024-01-01T00:00:00Z",
+  updated_at: "2024-01-01T00:00:00Z",
+  service_title: "PC Building Help/ Setup",
+  services_offered: ["PC Building Help/ Setup", "Software Installation"]
+}
+
 
 ]
+
+
+export { ServiceCategory, MockProviders }; 
