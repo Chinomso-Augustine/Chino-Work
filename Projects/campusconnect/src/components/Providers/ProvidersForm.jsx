@@ -1,6 +1,7 @@
 import Select from 'react-select'
 import { Search, User } from "lucide-react";
 
+
 const category = [
     "Personal Care",
     "Academic Help",
@@ -16,6 +17,8 @@ const ProvidersForm = () => {
         value: list,
         label: list
     }));
+
+
     return (
         <div className="py-12 p-13 mt-20">
             <div>
@@ -34,10 +37,28 @@ const ProvidersForm = () => {
 
                     <div>
                         <h2> Category * </h2>
-                        <Select options={userOptions} placeholder="Select a category" />
+                        <Select options={userOptions} placeholder="Select a category" required />
                     </div>
                 </form>
 
+            </div>
+
+            <div>
+                <Button
+                    component="label"
+                    role={undefined}
+                    variant="contained"
+                    tabIndex={-1}
+                    startIcon={<CloudUploadIcon />}>
+                  
+                    Upload files
+
+                    <VisuallyHiddenInput
+                        type="file"
+                        onChange={(event) => console.log(event.target.files)}
+                        multiple
+                    />
+                </Button>
             </div>
         </div>
 
