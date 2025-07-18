@@ -1,25 +1,28 @@
 import { useState } from "react"
 import axios from "axios"
 
-{/**Process 
+/**Process 
   1. User select file 
   2. Send file to sever 
   3. Check File upload response: success or failure
   4. Handle  errors
-  5.  */}
+  5.  */
 function App() {
 
-  {/**State to monitor when file is clicked  */ }
+  {/**State to monitor when file is clicked */ }
   const [file, setFile] = useState();
 
-  {/**event = change triggered by file input. So we pass it as arg to keep track
-    setFile(event.target.files[0])= gets first file user selected and store it in setFile  */}
+  /**State to monitor percent of the file while uploading*/ 
+  const [uploadProgress, setUploadProgress] = useState(0);
+
+  /*Called when user pick a file 
+    event = change triggered by file input. So we pass it as arg to keep track
+    setFile(event.target.files[0])= gets first file user selected and store it in setFile  */
   function HandleChange(event) {
     setFile(event.target.files[0])
   }
 
-  {/**HTTP Request with axios
-   */}
+  /**HTTP Request with axios*/
   function HandleSubmit(event) {
     event.preventDefault() //prevent page from reloading when image is uploaded which could cause useState to lose onClick state
 
@@ -31,33 +34,47 @@ function App() {
 
     formData.append("fileName", file.name); //Adding another key ("fieName") and value (file.name) to formData
 
-    {/**Config allows to define format of files or image to upload */}
+    /**Config allows to define format of files or image to upload */ 
     const config = {
       headers: {
         'content-type': 'multipart/form-data',//tells server request contains files and need to be separated with /
       },
-    }
+      /**Upload progress tracker  */ 
 
-    {/**captures server response */}
-    axios.post(url, formData, config).then((response) => {
-      console.log(response.data)
-    });
+    onUploadProgress: function(progressEvent) {
+      const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+      setUploadProgress(percentCompleted);
+    }
   }
 
-  return (
-    <>
-      <div className="App">
+  /**captures server response */ 
+  axios.post(url, formData, config)
+    .then((response) => {
+      console.log("Upload success", response.data)
+    })
+    .catch((error) => {
+      console.error("Error uploading file: ", error)
+    });
 
-        {/**Upload form */}
-        <form onSubmit={HandleSubmit}>
-          <h2> File Upload</h2>
-          <input type="file" onChange={HandleChange} />
-          <button type="submit">Upload</button>
-        </form>
-      </div>
+}
 
-    </>
-  )
+return (
+  <>
+    <div className="App">
+
+      {/**Upload form */}
+      <form onSubmit={HandleSubmit}>
+        <h2> File Upload</h2>
+        <input type="file" onChange={HandleChange} />
+        <button type="submit">Upload</button>
+      </form>
+
+      {/*Progress when file is uploading */}
+      {file && <p>Upload Progress: {uploadProgress} </p>}
+    </div>
+
+  </>
+)
 }
 
 export default App

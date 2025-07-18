@@ -29,6 +29,7 @@ const ProvidersForm = () => {
             {/**form info */}
             <div>
                 <div className="flex"> <User className="text-purple-500 " /><h1> Basic information </h1></div>
+
                 <form action={Search} className="flex gap-10 justify-center">
                     <div>
                         <h2> Service Title * </h2>
@@ -39,27 +40,14 @@ const ProvidersForm = () => {
                         <h2> Category * </h2>
                         <Select options={userOptions} placeholder="Select a category" required />
                     </div>
+
+                    <div>
+                        <input type='file'  className='border'/>
+                        <button>Upload Image</button>
+                    </div>
                 </form>
-
             </div>
 
-            <div>
-                <Button
-                    component="label"
-                    role={undefined}
-                    variant="contained"
-                    tabIndex={-1}
-                    startIcon={<CloudUploadIcon />}>
-                  
-                    Upload files
-
-                    <VisuallyHiddenInput
-                        type="file"
-                        onChange={(event) => console.log(event.target.files)}
-                        multiple
-                    />
-                </Button>
-            </div>
         </div>
 
     )
