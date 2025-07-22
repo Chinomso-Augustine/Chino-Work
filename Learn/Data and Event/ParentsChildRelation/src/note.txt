@@ -1,5 +1,5 @@
 DRY = Don't Repeat Yourself
-This applies when updating multiple section of content, do not update each individually but rather 
+This applies when updating multiple section of content, do not update each individually rather 
 use parent function to update everything
 
 Using parent or a single source of truth avoids mistakes and repetition 
