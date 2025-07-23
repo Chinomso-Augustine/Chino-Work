@@ -12,8 +12,9 @@ function Navbar() {
     { label: "Home", href: "/" },
     { label: "About", href: "/About" },
     { label: "Project", href: "/Project" },
-    { label: "Contact", href: "/Contact" },
-    { label: "Skills", href: "/Skills" }
+    { label: "Photography", href: "/Photography" },
+    { label: "Skills", href: "/Skills" },
+    { label: "Contact", href: "/Contact" }
 
 
   ];
