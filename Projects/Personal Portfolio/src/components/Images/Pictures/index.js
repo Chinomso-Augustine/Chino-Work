@@ -29,7 +29,6 @@ import GradPics26 from "./Grad26.JPEG";
 import GradPics27 from "./Grad27.JPEG";
 
 import Bd1 from "./Birthday1.JPEG";
-import Bd2 from "./Birthday2.JPEG";
 import Bd3 from "./Birthday3.JPEG";
 
 import CS1 from "./ColorStack1.JPEG"
@@ -72,7 +71,6 @@ export {
     GradPics27,
 
     Bd1,
-    Bd2,
     Bd3,
 
     CS1,
@@ -80,7 +78,6 @@ export {
     CS3,
     CS4,
     CS5,
-    CS6,
 
     Soccer1,
     Soccer2
