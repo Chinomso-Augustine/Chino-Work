@@ -7,7 +7,7 @@ import ColorStack from "../Images/ColorStack.JPG";
 import News from "../Images/News.png";
 import Marathon from "../Images/LAMarathon.jpg";
 import { Card, CardContent } from "@/components/ui/card";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious,} from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import * as SamplePics from "../Images/Pictures";
 import { SiHtml5, SiCss3, SiJavascript, SiC, SiCplusplus, SiAdobelightroom, SiAdobeillustrator, SiAdobephotoshop, SiCanva, SiObsstudio } from "react-icons/si";
@@ -69,7 +69,7 @@ function Home() {
         { value: "Photoshop", icon: SiAdobephotoshop },
         { value: "Canva", icon: SiCanva },
         { value: "OBS Studio", icon: SiObsstudio },
-        {value: "Photography", icon: MdCameraAlt},
+        { value: "Photography", icon: MdCameraAlt },
     ];
 
 
@@ -173,29 +173,51 @@ function Home() {
 
             {/* skills */}
             <section className="flex flex-col items-center md:flex-row justify-center gap-6 flex-wrap bg-gradient-to-t from-purple-700 to-indigo-800 py-12">
-               <div> <h3 className="text-3xl font-bold text-center mb-4 text-white bg-purple-950/7 backdrop-blur-md py-6 shadow-md rounded-2xl w-sm md:w-50 transition duration-500 ease-in-out hover:translate-y-2">
+                <div> <h3 className="text-3xl font-bold text-center mb-4 text-white bg-purple-950/7 backdrop-blur-md py-6 shadow-md rounded-2xl w-sm md:w-50 transition duration-500 ease-in-out hover:translate-y-2">
                     Skills
                 </h3>
-                </div> 
+                </div>
                 <div className="flex flex-col items-center md:flex-row justify-center gap-6 flex-wrap ">
-                {skills.map((skill, index) => (
-                    <div
-                        key={index}
-                        className="flex items-end gap-3 bg-transparent-50 py-6 px-8 text-center shadow-lg text-white w-full md:w-56 rounded-2xl border border-white-800 transition-all duration-300 ease-in hover:shadow-lg hover:translate-x-6"
-                    >
-                        <div className="text-2xl font-bold">
-                            <skill.icon />
+                    {skills.map((skill, index) => (
+                        <div
+                            key={index}
+                            className="flex items-end gap-3 bg-transparent-50 py-6 px-8 text-center shadow-lg text-white w-full md:w-56 rounded-2xl border border-white-800 transition-all duration-300 ease-in hover:shadow-lg hover:translate-x-6"
+                        >
+                            <div className="text-2xl font-bold">
+                                <skill.icon />
+                            </div>
+                            <div className="text-2xl font-bold">
+                                {skill.value}
+                            </div>
                         </div>
-                        <div className="text-2xl font-bold">
-                            {skill.value}
-                        </div>
-                    </div>
-                ))}
-                 </div>
+                    ))}
+                </div>
             </section>
 
+
+            {/* Contact */}
+            <section className="flex flex-col items-center md:flex-row justify-center gap-6 flex-wrap bg-gradient-to-r from-purple-700 to-indigo-200 py-12">
+                <div>
+                    <h3 className="text-3xl font-bold text-center mb-4 text-white bg-purple-950/7 backdrop-blur-md py-6 shadow-md rounded-2xl w-sm md:w-50 transition duration-500 ease-in-out hover:translate-y-2">
+                        Contact
+                    </h3>
+
+                    <form>
+
+                        
+                    </form>
+                </div>
+
+                <div>
+
+                </div>
+            </section >
+
+
+
             {/* Footer */}
-            <footer className="bg-gradient-to-r from-purple-800 to-indigo-800 py-12">
+        
+            <footer className="bg-gradient-to-r from-purple-800 to-indigo-800 py-12" >
                 <h2 className="text-3xl font-bold text-center mb-4 text-white">
                     Ready to Connect?
                 </h2>
@@ -211,8 +233,8 @@ function Home() {
                         Browse Providers
                     </button>
                 </div>
-            </footer>
-        </div>
+            </footer >
+        </div >
     );
 }
 
