@@ -13,11 +13,7 @@ import * as SamplePics from "../Images/Pictures";
 import { SiHtml5, SiCss3, SiJavascript, SiC, SiCplusplus, SiAdobelightroom, SiAdobeillustrator, SiAdobephotoshop, SiCanva, SiObsstudio } from "react-icons/si";
 import { FaReact } from "react-icons/fa";
 import { MdCameraAlt } from "react-icons/md"
-
-
-
-
-
+import ContactForm from './contactForm'; 
 
 
 function Home() {
@@ -197,26 +193,18 @@ function Home() {
 
             {/* Contact */}
             <section className="flex flex-col items-center md:flex-row justify-center gap-6 flex-wrap bg-gradient-to-r from-purple-700 to-indigo-200 py-12">
-                <div>
-                    <h3 className="text-3xl font-bold text-center mb-4 text-white bg-purple-950/7 backdrop-blur-md py-6 shadow-md rounded-2xl w-sm md:w-50 transition duration-500 ease-in-out hover:translate-y-2">
-                        Contact
-                    </h3>
 
-                    <form>
+                <h3 className="text-3xl font-bold text-center mb-4 text-white bg-purple-950/7 py-6 shadow-md rounded-2xl w-sm md:w-50 transition duration-500 ease-in-out hover:translate-y-2">
+                    Contact
+                </h3>
 
-                        
-                    </form>
-                </div>
-
-                <div>
-
-                </div>
+                <ContactForm />
             </section >
 
 
 
             {/* Footer */}
-        
+
             <footer className="bg-gradient-to-r from-purple-800 to-indigo-800 py-12" >
                 <h2 className="text-3xl font-bold text-center mb-4 text-white">
                     Ready to Connect?
