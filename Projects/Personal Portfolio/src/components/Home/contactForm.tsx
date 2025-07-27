@@ -13,26 +13,6 @@ function ContactForm() {
                 setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const HandleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        const response = await fetch('https://formspree.io/f/xblkoabw', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-            },
-            body: new FormData(e.target as HTMLFormElement),
-        })
-
-        if (response.ok) {
-            alert("form submitted successfully");
-            (e.target as HTMLFormElement).reset();
-        }
-        else {
-            alert("Something went wrong");
-        }
-    }
-
-
     return (
         <form className="bg-blue-700 p-6 rounded-lg shadow-lg max-w-xl mx-auto"
             onSubmit={async (e) => {
