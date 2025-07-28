@@ -1,5 +1,6 @@
 import Select from 'react-select'
-import { User } from "lucide-react";
+import { User, Phone, Mail, Star, Clock, FileSliders } from "lucide-react";
+import { useState } from 'react';
 
 
 const category = [
@@ -11,12 +12,40 @@ const category = [
     "Event & Lifestyle",
 ]
 
+const days = [
+    { id: 1, value: "Monday" },
+    { id: 2, value: "Tuesday" },
+    { id: 3, value: "Wednesday" },
+    { id: 4, value: "Thursday" },
+    { id: 5, value: "Friday" },
+    { id: 6, value: "Saturday" },
+    { id: 7, value: "Sunday" },
+
+]
 const ProvidersForm = () => {
 
     const userOptions = category.map(list => ({
         value: list,
         label: list
     }));
+    {/**For storing checked itmes  */ }
+    const [checklist, setCheckList] = useState([]);
+
+    const handleSelect = (event) => {
+        const value = event.target.value;
+        const isChecked = event.target.checked;
+
+        if (isChecked) {
+            {/**Add check item into checklist */ }
+            setCheckList([...checklist, value]);
+        }
+        else {
+            //remove unchecked item from the list 
+            const filterList = checklist.filter((daysSelected) => daysSelected !== value)
+            setCheckList(filterList);
+        }
+    }
+
 
 
     return (
@@ -57,8 +86,8 @@ const ProvidersForm = () => {
 
                         <div className="mb-4 flex flex-col items-center justify-center border p-4 rounded-md w-full max-w-md mx-auto">
                             <label className="mb-2 font-medium text-center ">Profile Picture</label>
-                            <input type="file" 
-                            className=" w-sm text-md border text-gray-500 file:mr-4 file:py-2 file:px-7 file:rounded-full file:border-0 file:bg-purple-100 file:text-purple-700 hover:file:bg-purple-200" />
+                            <input type="file"
+                                className=" w-sm text-md border text-gray-500 file:mr-4 file:py-2 file:px-7 file:rounded-full file:border-0 file:bg-purple-100 file:text-purple-700 hover:file:bg-purple-200" />
                             <button
                                 type='submit'
                                 className='w-sm mt-2 bg-purple-600 text-white px-3 py-2 rounded hover:bg-purple-700 cursor-pointer'>Submit Profile
@@ -77,15 +106,77 @@ const ProvidersForm = () => {
                     </div>
 
                     {/**Location and pricing */}
+                    <div>
+                        <div>
+                            <h2> Location & Pricing</h2>
+                            <p>Location *</p>
+                            <input type='text' placeholder='e.g Campus Library, Dorm, Apartment'>
+                            </input>
+                        </div>
+                        <div>
+                            <div className='flex'>
+                                <p>Price</p>
+                                <input type='text' placeholder='e.g $20/hr $15/session'></input>
+                            </div>
+                        </div>
+                    </div>
 
+                    {/**Contact */}
 
                     <div>
+                        <div>
+                            <h2><Mail /> Contact Information</h2>
+                            <p>Email *</p>
+                            <input type='text' placeholder='e.g Campus Library, Dorm, Apartment'>
+                            </input>
+                        </div>
+                        <div>
+                            <p>Phone (Optional)</p>
+                            <div className='flex'>
+                                <Phone className='w-5 border' />
+                                <input type='tel' placeholder='(242) 143 5899'></input>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div>
+                        <Star />
+                        <p>Services Offered</p>
+                        <textarea rows={2} className='border'></textarea>
+                        <button className=''>+</button>
+                    </div>
+
+                    <div>
+                        <Clock />
+                        <p>Availability</p>
+                        
+                        {/**For displaying selected days */}
+                        <div className='flex gap-4'> 
+                        <label>You Selected: </label>
+                        {checklist.map((myDays, index) =>{
+                            return(
+                                <p className=''> {myDays} </p>
+                            )
+                        })}
+                        </div>
+                        {days.map((day) => (
+                            <div key={day}>
+                                <input
+                                    type='checkbox'
+                                    name='days'
+                                    id={day.id}
+                                    value={day.value}
+                                    onChange={handleSelect}
+                                />
+                                <label > {day.value} </label>
+
+                            </div>
+                        ))}
                     </div>
                 </form>
-            </div>
+            </div >
 
-        </div>
+        </div >
 
     )
 }
