@@ -1,5 +1,5 @@
 import Select from 'react-select'
-import { User, Phone, Mail, Star, Clock, FileSliders } from "lucide-react";
+import { User, Mail, Star, Clock, MapPin } from "lucide-react";
 import { useState } from 'react';
 
 
@@ -57,7 +57,7 @@ const ProvidersForm = () => {
 
             {/**form info */}
             <div>
-                <div className="">
+                <div className="flex justify-center mb-2">
                     <User className="text-purple-500 " />
                     <h2 className='text-lg font-semibold'> Basic information </h2>
                 </div>
@@ -106,35 +106,41 @@ const ProvidersForm = () => {
                     </div>
 
                     {/**Location and pricing */}
-                    <div>
-                        <div>
-                            <h2> Location & Pricing</h2>
+                    <div className='flex mt-6 mb-2 text-lg text-purple-400 justify-center'>
+                        <MapPin />
+                        <h2 className='font-semibold '> Location & Pricing</h2>
+                    </div>
+
+                    <div className='w-full border flex gap-5 justify-center'>
+                        <div className=''>
                             <p>Location *</p>
-                            <input type='text' placeholder='e.g Campus Library, Dorm, Apartment'>
+                            <input type='text' placeholder='e.g Campus Library, Dorm, Apartment' className='border rounded-sm text-lg mt-1'>
                             </input>
                         </div>
-                        <div>
-                            <div className='flex'>
-                                <p>Price</p>
-                                <input type='text' placeholder='e.g $20/hr $15/session'></input>
-                            </div>
+                        <div className=''>
+                            <p>Price</p>
+                            <input type='text' placeholder='e.g $20/hr $15/session' className='border rounded-sm text-lg mt-1'></input>
+
                         </div>
                     </div>
 
                     {/**Contact */}
+                    <div className='flex mt-6 mb-2 text-lg text-purple-400 justify-center'>
+                        <Mail />
+                        <h2> Contact Information</h2>
+                    </div>
 
-                    <div>
-                        <div>
-                            <h2><Mail /> Contact Information</h2>
+                    <div className='w-full border flex gap-5 justify-center'>
+                        <div className=''>
                             <p>Email *</p>
-                            <input type='text' placeholder='e.g Campus Library, Dorm, Apartment'>
+                            <input type='text' placeholder='e.g Campus Library, Dorm, Apartment' className='border rounded-sm text-lg mt-1'>
                             </input>
                         </div>
-                        <div>
+
+                        <div className=''>
                             <p>Phone (Optional)</p>
                             <div className='flex'>
-                                <Phone className='w-5 border' />
-                                <input type='tel' placeholder='(242) 143 5899'></input>
+                                <input type='tel' placeholder='(242) 143 5899' className='border rounded-sm text-lg mt-1'></input>
                             </div>
                         </div>
                     </div>
@@ -149,15 +155,15 @@ const ProvidersForm = () => {
                     <div>
                         <Clock />
                         <p>Availability</p>
-                        
+
                         {/**For displaying selected days */}
-                        <div className='flex gap-4'> 
-                        <label>You Selected: </label>
-                        {checklist.map((myDays, index) =>{
-                            return(
-                                <p className=''> {myDays} </p>
-                            )
-                        })}
+                        <div className='flex gap-4'>
+                            <label>You Selected: </label>
+                            {checklist.map((myDays, index) => {
+                                return (
+                                    <p className=''> {myDays} </p>
+                                )
+                            })}
                         </div>
                         {days.map((day) => (
                             <div key={day}>
