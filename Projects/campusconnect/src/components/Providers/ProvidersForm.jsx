@@ -1,8 +1,8 @@
-import Select from 'react-select'
+import { useState, useCallback } from "react";
+import Select from "react-select";
 import { User, Mail, Star, Clock, MapPin } from "lucide-react";
-import { useState } from 'react';
 
-
+// Category and Days Data
 const category = [
     "Personal Care",
     "Academic Help",
@@ -10,7 +10,7 @@ const category = [
     "Transportation Repair",
     "Creative Service",
     "Event & Lifestyle",
-]
+];
 
 const days = [
     { id: 1, value: "Monday" },
@@ -20,16 +20,13 @@ const days = [
     { id: 5, value: "Friday" },
     { id: 6, value: "Saturday" },
     { id: 7, value: "Sunday" },
-]
+];
 
 const ProvidersForm = () => {
+    const userOptions = category.map((list) => ({ value: list, label: list }));
 
-    const userOptions = category.map(list => ({ value: list, label: list }));
-
-    {/**Form state  to track state of inputs*/}
     const [formData, setFormData] = useState({
         serviceTitle: "",
-        category: "",
         description: "",
         location: "",
         price: "",
@@ -37,246 +34,302 @@ const ProvidersForm = () => {
         phone: "",
         bio: "",
         experience: "",
+        text: "",
+        offers: [],
+        checklist: [],
+        category: null,
+    });
 
-    })
+    //Runs whenever a checkbox is clicked
+    const handleSelect = (e) => {
+        const { value, checked } = e.target;
+        setFormData((prevFormData) => {
+            if (checked) {
+                return {
+                    ...prevFormData,
+                    checklist: [...prevFormData.checklist, value],
+                };
+            } else {
+                return {
+                    ...prevFormData,
+                    checklist: prevFormData.checklist.filter((day) => day !== value),
+                };
+            }
+        });
+    };
 
-    const [checklist, setCheckList] = useState([]); //monitoring user availability
-    const [text, setText] = useState(""); //capture service offered from input textarea 
-    const [offers, setOffers] = useState([]) //for storing offers
-
-    {/**Input handler to update inputs in formData dynamically*/}
-    const handleInputChange = (e) =>{
-        const {name, value} = e.target; 
-        setFormData({...formData, [name]: value }) //updates key in formData
-    }
-
-    {/**Returning object for category instead of input */}
-    const handleCategoryChange = (selectedOption)=> {
-        setFormData({...formData, category:selectedOption.value}); 
-    }; 
-
-    {/** Handles checking and unchecking availability */ }
-    const handleSelect = (event) => {
-        const value = event.target.value; //capture typed value
-        const isChecked = event.target.checked; //Used for monitoring check
-        if (isChecked) {
-            /**Add check item into checklist */
-            setCheckList([...checklist, value]);
+    // Handle service input addition
+    const handleService = useCallback(() => {
+        if (formData.text.trim() !== "") {
+            setFormData((prev) => ({
+                ...prev,
+                offers: [...prev.offers, prev.text],
+                text: "",
+            }));
         }
-        else {
-            //remove unchecked item from the list 
-            setCheckList(checklist.filter((daysSelected) => daysSelected !== value));
-        }
-    }
+    }, [formData.text]);
 
-    {/**Handling add service  */ }
-    const handleService = (e) => {
+    // Handle generic input updates
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        //If text is not empty, add the texts to offers and clear textarea
-        if (text.trim() !== "") {
-            setOffers([...offers, text]) //add to offers
-            setText(""); //clear text area 
-        }
-    }
+        console.log("Submitted Form:", formData);
+    };
 
-    {/**Form submission */}
-const handleSubmit = (e)=>{
-    e.preventDefault(); 
-    console.log(({...formData, offers, availability: checklist})); 
-}
+    
+
     return (
-        <div className="bg-gradient-to-b from-purple-100 to-white py-3 px-4 mt-18 border w-full">
-
-
-            <form className="gap-10 justify-center" onSubmit={handleSubmit}>
+        <div className="bg-gradient-to-b from-purple-100 to-white py-6 px-6 mt-16 border w-full max-w-4xl mx-auto rounded-lg shadow">
+            <form className="space-y-6" onSubmit={handleSubmit}>
                 <HeaderInfo />
-                <BasicInfo userOptions={userOptions} />
-                <LocationPricing />
-                <ContactInfo />
-                <ServiceOffered text={text} setText={setText} offers={offers} handleService={handleService} />
-                <Availability days={days} checklist={checklist} handleSelect={handleSelect} />
-                <AboutYou />
+                <BasicInfo
+                    userOptions={userOptions}
+                    formData={formData}
+                    setFormData={setFormData}
+                    handleChange={handleChange}
+                />
+                <LocationPricing formData={formData} handleChange={handleChange} />
+                <ContactInfo formData={formData} handleChange={handleChange} />
+                <ServiceOffered
+                    text={formData.text}
+                    setText={(val) => setFormData((prev) => ({ ...prev, text: val }))}
+                    offers={formData.offers}
+                    handleService={handleService}
+                />
+                <Availability
+                    days={days}
+                    checklist={formData.checklist}
+                    handleSelect={handleSelect}
+                />
+                <AboutYou formData={formData} handleChange={handleChange} />
                 <CreateAccountBtn />
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default ProvidersForm; 
+export default ProvidersForm;
 
-
+/*  SUB COMPONENTS */
 const HeaderInfo = () => (
-    <div>
-         <h2 className="text-lg  md:text-2xl text-center font-bold mt-3"> Create Your Provider Profile </h2>
-        <p className='text-center mt-1'> Tell Students about your services and availability</p>
-
-    </div>
-)
-
-{/**Basic Info function  */ }
-const BasicInfo = ({ userOptions }) => (
-    <div>
-        <h2 className="text-lg font-semibold">Basic Information</h2>
-        <div className="flex gap-4 justify-center">
-            <div>
-                <p>Service Title *</p>
-                <input
-                    name="serviceTitle"
-                    
-                    placeholder="Ex, Haircut"
-                    className="bg-grey-300 border rounded border-amber-200 h-9 px-5 w-full text-black mb-4"
-                />
-            </div>
-            <div>
-                <h2>Category *</h2>
-                <Select options={userOptions} placeholder="Select a category" required className="min-w-sm" />
-            </div>
-
-        </div>
-        <div className='w-full rounded-2xl'>
-            <p>Description*</p>
-            <textarea rows={4} required placeholder="Describe your service in detail" className="bg-blue-400 p-3 rounded-lg w-full" />
-        </div>
+    <div className="text-center">
+        <h2 className="text-lg md:text-2xl font-bold">Create Your Provider Profile</h2>
+        <p className="mt-1">Tell students about your services and availability</p>
     </div>
 );
 
-{/**Location and pricing  */ }
-const LocationPricing = () => (
-    <div>
-        <div className='flex mt-6 mb-2 text-lg text-purple-400 justify-center'>
+const BasicInfo = ({ userOptions, formData, setFormData, handleChange }) => (
+    <section>
+        <div className="flex items-center gap-2 mb-2 text-lg text-purple-400">
+            <User />
+            <h2 className="font-semibold">Basic Information</h2>
+        </div>
+
+        <div className="flex gap-4 flex-wrap justify-center">
+            <div className="flex-1 min-w-[200px]">
+                <p>Service Title *</p>
+                <input
+                    className="border rounded-sm text-lg mt-1 w-full p-2"
+                    name="serviceTitle"
+                    placeholder="Ex, Haircut"
+                    value={formData.serviceTitle}
+                    onChange={handleChange}
+                />
+            </div>
+
+            <div className="flex-1 min-w-[200px]">
+                <p>Category *</p>
+                <Select
+                    options={userOptions}
+                    placeholder="Select a category"
+                    value={formData.category}
+                    onChange={(option) =>
+                        setFormData((prev) => ({ ...prev, category: option }))
+                    }
+                />
+            </div>
+        </div>
+
+        <div className="mt-4">
+            <p>Description*</p>
+            <textarea
+                rows={4}
+                required
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Describe your service in detail"
+                className="border p-3 rounded-lg w-full"
+            />
+        </div>
+    </section>
+);
+
+const LocationPricing = ({ formData, handleChange }) => (
+    <section>
+        <div className="flex items-center gap-2 mb-2 text-lg text-purple-400">
             <MapPin />
-            <h2 className='font-semibold '> Location & Pricing</h2>
+            <h2 className="font-semibold">Location & Pricing</h2>
         </div>
-
-        <div className='w-full border flex gap-5 justify-center'>
-            <div className=''>
+        <div className="flex gap-5 flex-wrap">
+            <div className="flex-1 min-w-[200px]">
                 <p>Location *</p>
-                <input type='text' placeholder='e.g Campus Library, Dorm, Apartment' className='border rounded-sm text-lg mt-1'>
-                </input>
+                <input
+                    className="border rounded-sm text-lg mt-1 w-full p-2"
+                    name="location"
+                    placeholder="e.g Campus Library, Dorm"
+                    value={formData.location}
+                    onChange={handleChange}
+                />
             </div>
-            <div className=''>
+
+            <div className="flex-1 min-w-[200px]">
                 <p>Price</p>
-                <input type='text' placeholder='e.g $20/hr $15/session' className='border rounded-sm text-lg mt-1'></input>
-
+                <input
+                    className="border rounded-sm text-lg mt-1 w-full p-2"
+                    name="price"
+                    placeholder="e.g $20/hr"
+                    value={formData.price}
+                    onChange={handleChange}
+                />
             </div>
         </div>
-    </div>
-)
+    </section>
+);
 
-{/**Contact Info */ }
-const ContactInfo = () => (
-    <div>
-        <div className='flex mt-6 mb-2 text-lg text-purple-400 justify-center'>
+const ContactInfo = ({ formData, handleChange }) => (
+    <section>
+        <div className="flex items-center gap-2 mb-2 text-lg text-purple-400">
             <Mail />
-            <h2> Contact Information</h2>
+            <h2 className="font-semibold">Contact Information</h2>
         </div>
-
-        <div className='w-full border flex gap-5 justify-center'>
-            <div className=''>
+        <div className="flex gap-5 flex-wrap">
+            <div className="flex-1 min-w-[200px]">
                 <p>Email *</p>
-                <input type='text' placeholder='e.g Campus Library, Dorm, Apartment' className='border rounded-sm text-lg mt-1'>
-                </input>
+                <input
+                    className="border rounded-sm text-lg mt-1 w-full p-2"
+                    name="email"
+                    type="email"
+                    placeholder="example@email.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                />
             </div>
 
-            <div className=''>
+            <div className="flex-1 min-w-[200px]">
                 <p>Phone (Optional)</p>
-                <div className='flex'>
-                    <input type='tel' placeholder='(242) 143 5899' className='border rounded-sm text-lg mt-1'></input>
-                </div>
+                <input
+                    className="border rounded-sm text-lg mt-1 w-full p-2"
+                    name="phone"
+                    type="tel"
+                    placeholder="(242) 143 5899"
+                    value={formData.phone}
+                    onChange={handleChange}
+                />
             </div>
         </div>
-    </div>
-)
+    </section>
+);
 
-{/**Service Offered */ }
 const ServiceOffered = ({ text, setText, offers, handleService }) => (
-    <div>
-        <div className='flex mt-5 gap-1'>
+    <section>
+        <div className="flex items-center gap-2 mb-2 text-lg text-purple-400">
             <Star />
-            <p className='font-semibold '>Services Offered</p>
+            <h2 className="font-semibold">Services Offered</h2>
         </div>
-        <div className='flex gap-4'>
+        <div className="flex gap-4">
             <textarea
                 rows={2}
-                className='border w-full rounded-sm'
+                className="border w-full rounded-sm"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
             />
-
             <button
-                type='button'
-                className='w-12 border rounded-sm bg-purple-400 cursor-pointer'
+                type="button"
+                className="w-12 border rounded-sm bg-purple-400 cursor-pointer text-white font-bold"
                 onClick={handleService}
+                aria-label="Add Service"
             >
-                <p className='font-semibold text-white'> +</p>
+                +
             </button>
         </div>
-        {/**Displaying text */}
-        {offers.map((service, index) => (
-            <p> {service}</p>
-        ))}
-    </div>
-)
+        <ul className="mt-2 list-disc pl-5 text-sm">
+            {offers.map((service, index) => (
+                <li key={index}>{service}</li>
+            ))}
+        </ul>
+    </section>
+);
 
-{/**Availability */ }
 const Availability = ({ days, checklist, handleSelect }) => (
-    <div>
-        <Clock />
-        <p>Availability</p>
-
-        {/**For displaying selected days */}
-        <div className='flex gap-4'>
-            <label>You Selected: </label>
-            {checklist.map((myDays, index) => {
-                return (
-                    <p className=''> {myDays} </p>
-                )
-            })}
+    <section>
+        <div className="flex items-center gap-2 mb-2 text-lg text-purple-400">
+            <Clock />
+            <h2 className="font-semibold">Availability</h2>
         </div>
-        {days.map((day) => (
-            <div key={day}>
-                <input
-                    type='checkbox'
-                    name='days'
-                    id={day.id}
-                    value={day.value}
-                    onChange={handleSelect}
-                />
-                <label > {day.value} </label>
-
-            </div>
-        ))}
-    </div>
-)
-
-{/**About you function */ }
-const AboutYou = () => (
-    <div>
-        <p>Bio* </p>
-        <div className='border' >
-            <textarea
-                rows={3}
-                placeholder="Tell Students about yourself, your background, experience, and qualification"
-                className='border w-full'
-            />
+        <div className="flex gap-2 flex-wrap mb-2">
+            <label className="font-medium">Selected: </label>
+            {checklist.map((day, index) => (
+                <span key={index} className="bg-purple-200 px-2 py-1 rounded text-sm">
+                    {day}
+                </span>
+            ))}
         </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            {days.map(({ id, value }) => (
+                <label key={id} className="flex items-center gap-2">
+                    <input
+                        type="checkbox"
+                        value={value}
+                        checked={checklist.includes(value)}
+                        onChange={handleSelect}
+                    />
+                    {value}
+                </label>
+            ))}
+        </div>
+    </section>
+);
 
-        <div className='mt-5'>
-            <p> Experience</p>
+const AboutYou = ({ formData, handleChange }) => (
+    <section>
+        <p>Bio *</p>
+        <textarea
+            rows={3}
+            name="bio"
+            value={formData.bio}
+            onChange={handleChange}
+            placeholder="Tell students about yourself, background, experience..."
+            className="border w-full rounded p-2"
+        />
+        <div className="mt-4">
+            <p>Experience</p>
             <textarea
                 rows={2}
-                className='border w-full'
-                placeholder='Describe your relevant experience, qualifications, or achievement'
+                name="experience"
+                value={formData.experience}
+                onChange={handleChange}
+                placeholder="Describe relevant experience or achievements"
+                className="border w-full rounded p-2"
             />
-
         </div>
-    </div>
-)
+    </section>
+);
 
-{/**Create account btn */ }
 const CreateAccountBtn = () => (
-    <div>
-        <button> Cancel </button>
-        <button> Create Provider Profile</button>
+    <div className="flex justify-end gap-4">
+        <button type="button" className="px-4 py-2 border rounded">
+            Cancel
+        </button>
+        <button
+            type="submit"
+            className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600"
+        >
+            Create Provider Profile
+        </button>
     </div>
-)
+);
