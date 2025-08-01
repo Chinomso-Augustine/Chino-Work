@@ -26,6 +26,8 @@ const ProvidersForm = () => {
     const userOptions = category.map((list) => ({ value: list, label: list }));
 
     const [formData, setFormData] = useState({
+        firstName: "",
+        lastName: "",
         serviceTitle: "",
         description: "",
         location: "",
@@ -59,17 +61,32 @@ const ProvidersForm = () => {
     };
 
     // Handle service input addition
+    /*if input is not empty, keep prev data, add current input prev.text, and clear input  */
     const handleService = useCallback(() => {
         if (formData.text.trim() !== "") {
             setFormData((prev) => ({
                 ...prev,
-                offers: [...prev.offers, prev.text],
+                offers: [...prev.offers, {id: Date.now(), text: prev.text} ],//stores offer as obj
                 text: "",
             }));
         }
     }, [formData.text]);
 
+    {/**Functionality: Pass the id of the offer to be deleted into the function. 
+    setFormData takes the previous form data, filters the offers array to create a new one 
+    that excludes the offer with the matching id, and updates offers with this new array.
+    The matching offer is removed, and all other offers remain." */}
+    const deleteOffer = (id) =>{
+        setFormData((prev)=>({
+            ...prev, 
+            offers: prev.offers.filter((offer) =>offer.id !==id), 
+        })); 
+    }
+
+
     // Handle generic input updates
+    {/**listen to input, then extract name and value, call setFormData with prev data then
+        create new array with prev data and update the field that matches name. */}
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -79,8 +96,6 @@ const ProvidersForm = () => {
         e.preventDefault();
         console.log("Submitted Form:", formData);
     };
-
-    
 
     return (
         <div className="bg-gradient-to-b from-purple-100 to-white py-6 px-6 mt-16 border w-full max-w-4xl mx-auto rounded-lg shadow">
@@ -93,12 +108,15 @@ const ProvidersForm = () => {
                     handleChange={handleChange}
                 />
                 <LocationPricing formData={formData} handleChange={handleChange} />
+
                 <ContactInfo formData={formData} handleChange={handleChange} />
+
                 <ServiceOffered
                     text={formData.text}
                     setText={(val) => setFormData((prev) => ({ ...prev, text: val }))}
                     offers={formData.offers}
                     handleService={handleService}
+                    deleteOffer={deleteOffer}
                 />
                 <Availability
                     days={days}
@@ -127,6 +145,28 @@ const BasicInfo = ({ userOptions, formData, setFormData, handleChange }) => (
         <div className="flex items-center gap-2 mb-2 text-lg text-purple-400">
             <User />
             <h2 className="font-semibold">Basic Information</h2>
+        </div>
+
+        <div className="flex gap-4 flex-wrap justify-center">
+            <div className="flex-1 min-w-[200px]">
+                <p>First name *</p>
+                <input
+                    className="border rounded-sm text-lg mt-1 w-full p-2"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                />
+            </div>
+
+            <div className="flex-1 min-w-[200px]">
+                <p>Last name *</p>
+                <input
+                    className="border rounded-sm text-lg mt-1 w-full p-2"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                />
+            </div>
         </div>
 
         <div className="flex gap-4 flex-wrap justify-center">
@@ -235,7 +275,7 @@ const ContactInfo = ({ formData, handleChange }) => (
     </section>
 );
 
-const ServiceOffered = ({ text, setText, offers, handleService }) => (
+const ServiceOffered = ({ text, setText, offers, handleService, deleteOffer }) => (
     <section>
         <div className="flex items-center gap-2 mb-2 text-lg text-purple-400">
             <Star />
@@ -250,16 +290,31 @@ const ServiceOffered = ({ text, setText, offers, handleService }) => (
             />
             <button
                 type="button"
-                className="w-12 border rounded-sm bg-purple-400 cursor-pointer text-white font-bold"
+                className="w-12 rounded-sm bg-purple-400 cursor-pointer text-white font-bold"
                 onClick={handleService}
                 aria-label="Add Service"
             >
                 +
             </button>
         </div>
-        <ul className="mt-2 list-disc pl-5 text-sm">
-            {offers.map((service, index) => (
-                <li key={index}>{service}</li>
+        <ul className="mt-3 gap-3 w-lg">
+            {offers.map((offer) => (
+                <li 
+                key={offer.id}
+                className="flex justify-between bg-purple-200 rounded mt-2  w-auto"
+                
+                >
+                 <span> {offer.text} </span>
+                 
+                 <button 
+                  type="button"
+                  className="flex mt-3 font-bold text-red-500 text-[30px] cursor-pointer mr-3"
+                  onClick={()=> deleteOffer(offer.id)}
+                  >
+                    X
+                </button>
+                </li>
+               
             ))}
         </ul>
     </section>
