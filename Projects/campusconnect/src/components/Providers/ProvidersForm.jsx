@@ -1,6 +1,7 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Select from "react-select";
 import { User, Mail, Star, Clock, MapPin } from "lucide-react";
+import { supabase } from "../../supabaseClient";
 
 // Category and Days Data
 const category = [
@@ -66,37 +67,86 @@ const ProvidersForm = () => {
         if (formData.text.trim() !== "") {
             setFormData((prev) => ({
                 ...prev,
-                offers: [...prev.offers, {id: Date.now(), text: prev.text} ],//stores offer as obj
+                offers: [...prev.offers, { id: Date.now(), text: prev.text }],//stores offer as obj
                 text: "",
             }));
         }
     }, [formData.text]);
 
-    {/**Functionality: Pass the id of the offer to be deleted into the function. 
+    /**Functionality: Pass the id of the offer to be deleted into the function. 
     setFormData takes the previous form data, filters the offers array to create a new one 
     that excludes the offer with the matching id, and updates offers with this new array.
-    The matching offer is removed, and all other offers remain." */}
-    const deleteOffer = (id) =>{
-        setFormData((prev)=>({
-            ...prev, 
-            offers: prev.offers.filter((offer) =>offer.id !==id), 
-        })); 
+    The matching offer is removed, and all other offers remain." */
+    const deleteOffer = (id) => {
+        setFormData((prev) => ({
+            ...prev,
+            offers: prev.offers.filter((offer) => offer.id !== id),
+        }));
     }
 
 
     // Handle generic input updates
-    {/**listen to input, then extract name and value, call setFormData with prev data then
-        create new array with prev data and update the field that matches name. */}
+    /**listen to input, then extract name and value, call setFormData with prev data then
+        create new array with prev data and update the field that matches name. */
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Submitted Form:", formData);
+
+        // Basic validation
+        if (!formData.firstName || !formData.lastName || !formData.serviceTitle ||
+            !formData.category || !formData.description || !formData.location || !formData.email) {
+            alert("Please fill out all required fields.");
+            return;
+        }
+
+        const { error } = await supabase.from('providers').insert([
+            {
+                first_name: formData.firstName,
+                last_name: formData.lastName,
+                service_title: formData.serviceTitle,
+                category: formData.category?.label, // safe check
+                description: formData.description,
+                location: formData.location,
+                price: formData.price,
+                email: formData.email,
+                phone: formData.phone,
+                bio: formData.bio,
+                experience: formData.experience,
+                availability: formData.checklist.length ? formData.checklist : null,
+                offers: formData.offers.length ? formData.offers : null,
+            },
+        ]);
+
+        if (error) {
+            console.error("Supabase Insert Error:", error);
+            alert('Error creating profile!');
+        } else {
+            alert('Profile created successfully!');
+            // Reset form
+            setFormData({
+                firstName: "",
+                lastName: "",
+                serviceTitle: "",
+                description: "",
+                location: "",
+                price: "",
+                email: "",
+                phone: "",
+                bio: "",
+                experience: "",
+                text: "",
+                offers: [],
+                checklist: [],
+                category: null,
+            });
+        }
     };
 
+    /*Form */
     return (
         <div className="bg-gradient-to-b from-purple-100 to-white py-6 px-6 mt-16 border w-full max-w-4xl mx-auto rounded-lg shadow">
             <form className="space-y-6" onSubmit={handleSubmit}>
@@ -124,7 +174,9 @@ const ProvidersForm = () => {
                     handleSelect={handleSelect}
                 />
                 <AboutYou formData={formData} handleChange={handleChange} />
+
                 <CreateAccountBtn />
+
             </form>
         </div>
     );
@@ -299,22 +351,22 @@ const ServiceOffered = ({ text, setText, offers, handleService, deleteOffer }) =
         </div>
         <ul className="mt-3 gap-3 w-lg">
             {offers.map((offer) => (
-                <li 
-                key={offer.id}
-                className="flex justify-between bg-purple-200 rounded mt-2  w-auto"
-                
+                <li
+                    key={offer.id}
+                    className="flex justify-between bg-purple-200 rounded mt-2  w-auto"
+
                 >
-                 <span> {offer.text} </span>
-                 
-                 <button 
-                  type="button"
-                  className="flex mt-3 font-bold text-red-500 text-[30px] cursor-pointer mr-3"
-                  onClick={()=> deleteOffer(offer.id)}
-                  >
-                    X
-                </button>
+                    <span> {offer.text} </span>
+
+                    <button
+                        type="button"
+                        className="flex mt-3 font-bold text-red-500 text-[30px] cursor-pointer mr-3"
+                        onClick={() => deleteOffer(offer.id)}
+                    >
+                        X
+                    </button>
                 </li>
-               
+
             ))}
         </ul>
     </section>
