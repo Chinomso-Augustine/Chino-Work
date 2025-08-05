@@ -1,2 +1,24 @@
 Note testing 
 still testing 
+
+Steps to creating provider's page dynamically when profile is click
+1. Define route in App.js with id allowing react to capture id of the profile
+    <Route path="/provider/:id" element={<ProvidersPage />} />
+
+2. Use imported Link to navigate to the route. Wrap it around provider card
+    <Link to={`/provider/${p.id}`}>...</Link>
+
+3. Use useParam() to extract id to allow reading id from url
+    const {id} = useParam(); 
+
+4. Fetch provider's data base on id 
+const { data } = await supabase
+  .from("providers")
+  .select("*")
+  .eq("id", id)
+  .single();
+setProvider(data);
+
+5. Monitor loading progress using 
+    if (loading) return <p>Loading...</p>;
+    if (!provider) return <p>Provider not found.</p>;

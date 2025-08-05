@@ -3,8 +3,10 @@ import Navbar from './components/Navbar/Nav.jsx';
 import Home from './components/Home/home.jsx'
 import HowItWorks from "./components/How It works/Works.jsx"
 import Services from "./components/Services/Services.jsx"
-import Providers from "./components/Providers/Providers.jsx"
+import ProvidersData from "./components/Providers/ProviderData.js"
 import ProvidersForm from "./components/Providers/ProvidersForm.jsx"
+import ProvidersPage from "./components/Providers/ProvidersPage.tsx"; 
+
 
 
 function App() {
@@ -15,8 +17,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/Work" element={<HowItWorks />} />
         <Route path="/Services" element={<Services />}/> 
-        <Route path="/Providers" element={<Providers />}/>
+        <Route path="/Providers" element={<ProvidersData />}/>
         <Route path="/ProvidersForm" element={<ProvidersForm />}/>
+        <Route path='/Provider/:id' element={<ProvidersPage />} /> {/**adding :id extracts id from provider's profile */}
       </Routes>
     </Router>
   )

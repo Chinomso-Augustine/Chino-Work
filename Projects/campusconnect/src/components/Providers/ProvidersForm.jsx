@@ -3,6 +3,14 @@ import Select from "react-select";
 import { User, Mail, Star, Clock, MapPin } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 
+
+/*To Do
+1. Add time to availability 
+2. Add price to each offer listed
+3. Adjust offer listed 
+4. Add option for users to add links to their sites
+5. Change category to easier names
+*/
 // Category and Days Data
 const category = [
     "Personal Care",
