@@ -1,5 +1,5 @@
 import { Star, User, Clock } from "lucide-react";
-
+import { Link } from "react-router-dom"
 
 function Home() {
 
@@ -29,11 +29,17 @@ function Home() {
                     Quality services at student-friendly prices. </p>
 
                 <div className="flex flex-col md:flex-row justify-center items-center gap-4">
-                    <button className="bg-gradient-to-r from bg-purple-500 via-pink-400px to-pink-500 text-center px-6 py-3 m-5 rounded-2xl text-lg font-semibold shadow-lg hover:scale-105 transition-transform">
-                        Browse Services </button>
+
+                    <Link to="/Services">
+                        <button className="bg-gradient-to-r from bg-purple-500 via-pink-400px to-pink-500 text-center px-6 py-3 m-5 rounded-2xl text-lg font-semibold shadow-lg hover:scale-105 transition-transform">
+                            Browse Services </button> 
+                    </Link>
+                    
+                    <Link to="/Providers">
                     <button className="border text-center px-6 py-3 m-3 rounded-2xl text-lg font-semibold shadow-lg transition-transform hover:scale-105 hover:bg-purple-200 hover:text-purple-600">
                         View All Providers
                     </button>
+                    </Link>
                 </div>
             </section>
 
@@ -86,17 +92,22 @@ function Home() {
                 <p className="text-gray-300 text-lg font-semibold flex text-center justify-center m-4 ">Join our community of students helping students. Find the services you need or offer your skills to others.</p>
 
                 <div className="flex flex-col md:flex-row justify-center gap-6 flex-wrap font-bold mt-9 mb-7">
-                    <button className="bg-white text-purple-800 text-lg rounded-lg p-4  cursor-pointer">
-                        Find Services
 
-                    </button>
-                    <button className="border text-white text-lg rounded-lg p-4 hover:bg-white hover:text-purple-800 cursor-pointer">
-                        Browse Providers
-                    </button>
+                    <Link to="/Services">
+                        <button className="bg-white text-purple-800 text-lg rounded-lg p-4  cursor-pointer">
+                            Find Services
+                        </button>
+                    </Link>
+
+                    <Link to="/Providers">
+                        <button className="border text-white text-lg rounded-lg p-4 hover:bg-white hover:text-purple-800 cursor-pointer">
+                            Browse Providers
+                        </button>
+                    </Link>
 
                 </div>
-            </footer>
-        </div>
+            </footer >
+        </div >
     )
 }
 export default Home; 

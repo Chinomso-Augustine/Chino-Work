@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Import, Menu, X } from 'lucide-react'; // if installed
+import { Menu, X } from 'lucide-react'; // if installed
 import { Link } from "react-router-dom"
 
 function Navbar() {
@@ -13,6 +13,7 @@ function Navbar() {
     { label: "View Services", href: "/Services" },
     { label: "View Providers", href: "/Providers" },
     { label: "Become A Providers", href: "/ProvidersForm" },
+    { label: "Sign In", href: "/LoginSignUp"},
 
   ];
 
@@ -33,12 +34,7 @@ function Navbar() {
               {item.label}
             </Link>
           ))}
-          <a
-            href="#"
-            className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-2 rounded-lg shadow text-lg hover:opacity-90 transition"
-          >
-            Sign In
-          </a>
+          
         </div>
 
         {/* Hamburger toggle - shown only on small screens */}
@@ -61,14 +57,10 @@ function Navbar() {
               {item.label}
             </Link>
           ))}
-          <a
-            href="#"
-            className="bg-gradient-to-r from-pink-500 to-purple-500 w-[80%] py-2 text-center rounded-lg shadow text-lg hover:opacity-90"
-          >
-            Sign In
-          </a>
         </div>
+        
       )}
+      
     </nav>
   );
 }

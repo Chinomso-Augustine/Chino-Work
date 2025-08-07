@@ -1,5 +1,4 @@
 import { MockProviders } from "../Mock Data/MockUserData";
-import DisplayInfo from "../Providers/ProviderData"
 
 
 function Services() {

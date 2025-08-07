@@ -1,0 +1,97 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 600px;
+    margin-top: 200px;
+    background: rgb(247, 207, 207);
+    padding-bottom: 30px;
+    border-radius: 20px;
+}
+
+.header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.text{
+    color: blue;
+    font-size: 30px;
+    font-weight: 800;
+}
+.underline{
+    width: 60px;
+    height: 7px;
+    background-color: red;
+    border-radius: 10px;
+}
+.inputs{
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+}
+
+.input{
+    display:flex;
+    align-items: center;
+    margin: auto;
+    width: 400px;
+    height: 70px;
+    background-color: antiquewhite;
+    border-radius: 10px;
+}
+
+.icon{
+    margin: 0px 30px;
+    color: blue;
+}
+.input input{
+    height: 50px;
+    width: 400px;
+    background:transparent;
+    border:none;
+    outline: none;
+    font-size: 20px;
+}
+.submit-container, button{
+   display: flex;
+   flex-direction: row;
+   margin-left: 70px;
+   border: none;
+
+}
+.submit{
+    display: flex;
+    flex-direction:row;
+    gap: 10px;
+    width: 120px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    color: white;
+    font-size: 24px;
+    background: blue;
+    border-radius: 15px;
+    cursor: pointer;
+    
+}
+.forgot-password{
+    padding-left:150px;
+    margin-top: 30px;
+    color: purple;
+    font-size: 20px;    
+}
+.forgot-password span{
+    color: red;
+    cursor: pointer;
+}
+.gray{
+    background-color: gray;
+    color: rgb(59, 3, 59);
+}
