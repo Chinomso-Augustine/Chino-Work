@@ -34,6 +34,7 @@ const days = [
 const ProvidersForm = () => {
     const userOptions = category.map((list) => ({ value: list, label: list }));
 
+
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -48,6 +49,7 @@ const ProvidersForm = () => {
         text: "",
         offers: [],
         checklist: [],
+        availability: {},
         category: null,
     });
 
@@ -59,15 +61,34 @@ const ProvidersForm = () => {
                 return {
                     ...prevFormData,
                     checklist: [...prevFormData.checklist, value],
+                    availability: {
+                        ...prevFormData.availability,
+                        [value]: prevFormData.availability[value] || { start: "09:00 AM", end: "04:00 PM" },
+                    }
                 };
             } else {
                 return {
-                    ...prevFormData,
-                    checklist: prevFormData.checklist.filter((day) => day !== value),
+                    ...prevFormData, /*Keep everything the same */
+                    checklist: prevFormData.checklist.filter((day) => day !== value), /*Removes day from checklist */
+                    availability: Object.fromEntries(Object.entries(prevFormData.availability).filter(([k]) => k !== value)), //remove day from availability time 
                 };
             }
         });
     };
+
+    const setDayTime = (day, field, hhmm) => {
+        setFormData((prev) => ({
+            ...prev,
+            availability: {
+                ...prev.availability,
+                [day]: {
+                    ...(prev.availability[day] || { start: "", end: "" }),
+                    [field]: hhmm,
+                },
+            },
+        }));
+    };
+
 
     // Handle service input addition
     /*if input is not empty, keep prev data, add current input prev.text, and clear input  */
@@ -110,6 +131,12 @@ const ProvidersForm = () => {
             alert("Please fill out all required fields.");
             return;
         }
+        const availabilityArr = formData.checklist.map((day) => ({
+  day,
+  start: formData.availability[day]?.start ?? "",
+  end: formData.availability[day]?.end ?? "",
+}));
+
 
         const { error } = await supabase.from('providers').insert([
             {
@@ -124,7 +151,8 @@ const ProvidersForm = () => {
                 phone: formData.phone,
                 bio: formData.bio,
                 experience: formData.experience,
-                availability: formData.checklist.length ? formData.checklist : null,
+                //availability: formData.checklist.length ? formData.checklist : null,
+                availability: availabilityArr.length ? availabilityArr : null,
                 offers: formData.offers.length ? formData.offers : null,
             },
         ]);
@@ -180,6 +208,8 @@ const ProvidersForm = () => {
                     days={days}
                     checklist={formData.checklist}
                     handleSelect={handleSelect}
+                    availability={formData.availability}
+                    setDayTime={setDayTime}
                 />
                 <AboutYou formData={formData} handleChange={handleChange} />
 
@@ -380,12 +410,13 @@ const ServiceOffered = ({ text, setText, offers, handleService, deleteOffer }) =
     </section>
 );
 
-const Availability = ({ days, checklist, handleSelect }) => (
+const Availability = ({ days, checklist, handleSelect, availability, setDayTime}) => (
     <section>
         <div className="flex items-center gap-2 mb-2 text-lg text-purple-400">
             <Clock />
             <h2 className="font-semibold">Availability</h2>
         </div>
+
         <div className="flex gap-2 flex-wrap mb-2">
             <label className="font-medium">Selected: </label>
             {checklist.map((day, index) => (
@@ -394,18 +425,49 @@ const Availability = ({ days, checklist, handleSelect }) => (
                 </span>
             ))}
         </div>
+
+        {/*Loop through each day and create a checkbox for it */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-            {days.map(({ id, value }) => (
-                <label key={id} className="flex items-center gap-2">
-                    <input
-                        type="checkbox"
-                        value={value}
-                        checked={checklist.includes(value)}
-                        onChange={handleSelect}
-                    />
-                    {value}
-                </label>
-            ))}
+            {days.map(({ id, value: day }) => {
+                const checked = checklist.includes(day);
+                const times = availability[day] || { start: "", end: "" };
+
+                return (
+                    <div key={id} className="flex items-center gap-3 border rounded p-2 flex-wrap">
+                        <label className="flex items-center gap-2 min-w-[120px]">
+                            <input
+                                type="checkbox"
+                                value={day}
+                                checked={checked}
+                                onChange={handleSelect}
+                            />
+                            {day}
+                        </label>
+
+                        <div className="flex-col flex-wrap ">
+                            <label className="text-sm text-gray-600">Start</label>
+                            <input
+                                type="time"
+                                step={900} // 15 min
+                                value={times.start}
+                                disabled={!checked}
+                                onChange={(e) => setDayTime(day, "start", e.target.value)}
+                                className="border rounded px-2 py-1 disabled:opacity-30"
+                            />
+
+                            <label className="text-sm text-gray-600 ml-2">End</label>
+                            <input
+                                type="time"
+                                step={900}
+                                value={times.end}
+                                disabled={!checked}
+                                onChange={(e) => setDayTime(day, "end", e.target.value)}
+                                className="border rounded px-2 py-1 disabled:opacity-30"
+                            />
+                        </div>
+                    </div>
+                );
+            })}
         </div>
     </section>
 );

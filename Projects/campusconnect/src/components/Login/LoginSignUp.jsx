@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 
 const LoginSignUp = () => {
-    const [action, setAction] = useState("Form"); // This is where we perform action. It's currently on Sign UP which means Login btn is gray
+    const [action, setAction] = useState("Sign Up"); // This is where we perform action. It's currently on Sign UP which means Login btn is gray
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-100 via-purple-200 to-purple-300 px-4">

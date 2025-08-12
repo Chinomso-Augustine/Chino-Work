@@ -49,8 +49,8 @@ const ProvidersPage = () => {
 
 
     return (
-        <div className="mt-6 bg-linear-to-b from-purple-700 via-indigo-800 to-purple-800">
-            <div className="h-auto py-12 p-13 mt-20">
+        <div className="mt-6 bg-linear-to-b from-purple-700 via-indigo-800 to-purple-800 h-auto">
+            <div className="h-auto py-12 p-13 mt-20 border">
                 <h1 className="text-3xl text-white md:text-5xl text-center font-bold">
                     {provider.first_name} {provider.last_name}
                 </h1>
