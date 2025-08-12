@@ -1,0 +1,5 @@
+When importing tailwindcs plugin, make sure to keep react plugin as well. 
+Just incorporate tailwindcs to it
+
+Code Core:  
+<div className={`min-h-screen transition-colors duration-900 flex justify-between ${lightMode ? "bg-white text-black" : "bg-black text-white"}`}
