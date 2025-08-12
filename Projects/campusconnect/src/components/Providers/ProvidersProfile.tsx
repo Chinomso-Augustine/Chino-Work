@@ -10,6 +10,7 @@ interface Provider {
     service_title: string;
     category: string;
     description: string;
+    site: string; 
     location: string;
     price?: string;
     email: string;
@@ -65,6 +66,7 @@ const ProvidersPage = () => {
                 <p><strong>Price:</strong> {provider.price || "N/A"}</p>
                 <p><strong>Email:</strong> {provider.email}</p>
                 <p><strong>Phone:</strong> {provider.phone || "N/A"}</p>
+                <p><strong>Person Site:</strong> {provider.site || "N/A"}</p>
                 <p><strong>Availability:</strong> {provider.availability?.join(", ") || "N/A"}</p>
                 <p><strong>Offers:</strong> {provider.offers?.map((o) => o.text).join(", ") || "None"}</p>
                 <p><strong>Bio:</strong> {provider.bio || "No bio provided"}</p>

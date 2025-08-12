@@ -2,13 +2,14 @@ import { useState, useCallback, useEffect } from "react";
 import Select from "react-select";
 import { User, Mail, Star, Clock, MapPin } from "lucide-react";
 import { supabase } from "../../supabaseClient";
+import TimeSelection from "./TimeSelection"
 
 
 /*To Do
 1. Add time to availability 
 2. Add price to each offer listed
 3. Adjust offer listed 
-4. Add option for users to add links to their sites
+4. Add option for users to add links to their sites - done
 5. Change category to easier names
 */
 // Category and Days Data
@@ -40,6 +41,7 @@ const ProvidersForm = () => {
         lastName: "",
         serviceTitle: "",
         description: "",
+        site: "",
         location: "",
         price: "",
         email: "",
@@ -50,7 +52,10 @@ const ProvidersForm = () => {
         offers: [],
         checklist: [],
         availability: {},
+        start_time: "",
+        end_time: "",
         category: null,
+
     });
 
     //Runs whenever a checkbox is clicked
@@ -132,10 +137,10 @@ const ProvidersForm = () => {
             return;
         }
         const availabilityArr = formData.checklist.map((day) => ({
-  day,
-  start: formData.availability[day]?.start ?? "",
-  end: formData.availability[day]?.end ?? "",
-}));
+            day,
+            start: formData.availability[day]?.start ?? "",
+            end: formData.availability[day]?.end ?? "",
+        }));
 
 
         const { error } = await supabase.from('providers').insert([
@@ -145,6 +150,7 @@ const ProvidersForm = () => {
                 service_title: formData.serviceTitle,
                 category: formData.category?.label, // safe check
                 description: formData.description,
+                site: formData.site,
                 location: formData.location,
                 price: formData.price,
                 email: formData.email,
@@ -153,6 +159,8 @@ const ProvidersForm = () => {
                 experience: formData.experience,
                 //availability: formData.checklist.length ? formData.checklist : null,
                 availability: availabilityArr.length ? availabilityArr : null,
+                start_time: formData.start_time,
+                end_time: formData.end_time,
                 offers: formData.offers.length ? formData.offers : null,
             },
         ]);
@@ -168,6 +176,7 @@ const ProvidersForm = () => {
                 lastName: "",
                 serviceTitle: "",
                 description: "",
+                site: "",
                 location: "",
                 price: "",
                 email: "",
@@ -178,6 +187,8 @@ const ProvidersForm = () => {
                 offers: [],
                 checklist: [],
                 category: null,
+                start_time: "",
+                end_time: "",
             });
         }
     };
@@ -287,12 +298,24 @@ const BasicInfo = ({ userOptions, formData, setFormData, handleChange }) => (
         <div className="mt-4">
             <p>Description*</p>
             <textarea
-                rows={4}
+                rows={3}
                 required
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
                 placeholder="Describe your service in detail"
+                className="border p-3 rounded-lg w-full"
+            />
+        </div>
+
+        <div className="mt-4">
+            <p>Link to personal site</p>
+            <textarea
+                rows={1}
+                name="site"
+                value={formData.site}
+                onChange={handleChange}
+                placeholder="Provide link to your personal website if you have one"
                 className="border p-3 rounded-lg w-full"
             />
         </div>
@@ -410,13 +433,15 @@ const ServiceOffered = ({ text, setText, offers, handleService, deleteOffer }) =
     </section>
 );
 
-const Availability = ({ days, checklist, handleSelect, availability, setDayTime}) => (
+const Availability = ({ days, checklist, handleSelect, availability, setDayTime }) => (
     <section>
+
         <div className="flex items-center gap-2 mb-2 text-lg text-purple-400">
             <Clock />
             <h2 className="font-semibold">Availability</h2>
         </div>
 
+        {/**Days list */}
         <div className="flex gap-2 flex-wrap mb-2">
             <label className="font-medium">Selected: </label>
             {checklist.map((day, index) => (
@@ -434,7 +459,7 @@ const Availability = ({ days, checklist, handleSelect, availability, setDayTime}
 
                 return (
                     <div key={id} className="flex items-center gap-3 border rounded p-2 flex-wrap">
-                        <label className="flex items-center gap-2 min-w-[120px]">
+                        <label className="flex items-center gap-2 min-w-[120px] font-bold text-lg">
                             <input
                                 type="checkbox"
                                 value={day}
@@ -443,28 +468,7 @@ const Availability = ({ days, checklist, handleSelect, availability, setDayTime}
                             />
                             {day}
                         </label>
-
-                        <div className="flex-col flex-wrap ">
-                            <label className="text-sm text-gray-600">Start</label>
-                            <input
-                                type="time"
-                                step={900} // 15 min
-                                value={times.start}
-                                disabled={!checked}
-                                onChange={(e) => setDayTime(day, "start", e.target.value)}
-                                className="border rounded px-2 py-1 disabled:opacity-30"
-                            />
-
-                            <label className="text-sm text-gray-600 ml-2">End</label>
-                            <input
-                                type="time"
-                                step={900}
-                                value={times.end}
-                                disabled={!checked}
-                                onChange={(e) => setDayTime(day, "end", e.target.value)}
-                                className="border rounded px-2 py-1 disabled:opacity-30"
-                            />
-                        </div>
+                         <TimeSelection />
                     </div>
                 );
             })}
