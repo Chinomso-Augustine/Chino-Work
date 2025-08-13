@@ -10,16 +10,22 @@ interface Provider {
     service_title: string;
     category: string;
     description: string;
-    site: string; 
+    site: string;
     location: string;
     price?: string;
     email: string;
     phone?: string;
     bio?: string;
     experience?: string;
-    availability?: string[];
+    availability?: AvailabilitySlot[] | null;
     offers?: { text: string }[];
     created_at?: string;
+}
+
+interface AvailabilitySlot {
+    day: string;
+    start: string;
+    end: string;
 }
 
 const ProvidersPage = () => {
@@ -50,27 +56,62 @@ const ProvidersPage = () => {
 
 
     return (
-        <div className="mt-6 bg-linear-to-b from-purple-700 via-indigo-800 to-purple-800 h-auto">
-            <div className="h-auto py-12 p-13 mt-20 border">
-                <h1 className="text-3xl text-white md:text-5xl text-center font-bold">
-                    {provider.first_name} {provider.last_name}
-                </h1>
-                <p className="text-2xl text-gray-100 text-center mt-9 mb-9">
-                    {provider.service_title} - {provider.category}
-                </p>
+        <div className="border mt-6 bg-linear-to-b from-purple-700 via-indigo-800 to-purple-800">
+
+
+            <div className=" flex w-full p-13 mt-10 bg-[url('/sample1.jpg')] bg-cover">
+                <div className="w-xs ">
+                    <img src="../../../sample1.jpg" className="h-80 rounded-full"></img>
+                </div>
+                <div className="ml-60 ">
+                    <h1 className="text-3xl text-white md:text-5xl text-center font-bold">
+                        {provider.first_name} {provider.last_name}
+                    </h1>
+                    <p className="text-2xl text-gray-100 text-center mt-12 mb-9">
+                        {provider.service_title} - {provider.category}
+                    </p>
+                    <p><strong>Description:</strong> {provider.description}</p>
+                </div>
             </div>
 
-            <div className="max-w-3xl mx-auto bg-purple-500 backdrop-blur-sm shadow-md text-white rounded-2xl p-6">
-                <p><strong>Description:</strong> {provider.description}</p>
-                <p><strong>Location:</strong> {provider.location}</p>
-                <p><strong>Price:</strong> {provider.price || "N/A"}</p>
-                <p><strong>Email:</strong> {provider.email}</p>
-                <p><strong>Phone:</strong> {provider.phone || "N/A"}</p>
-                <p><strong>Person Site:</strong> {provider.site || "N/A"}</p>
-                <p><strong>Availability:</strong> {provider.availability?.join(", ") || "N/A"}</p>
-                <p><strong>Offers:</strong> {provider.offers?.map((o) => o.text).join(", ") || "None"}</p>
-                <p><strong>Bio:</strong> {provider.bio || "No bio provided"}</p>
-                <p><strong>Experience:</strong> {provider.experience || "N/A"}</p>
+            <div className="backdrop-blur-sm shadow-md text-white rounded-2xl p-6">
+
+                <div className="bg-white/14 backdrop-blur-md shadow-md text-white text-center mb-6 rounded-2xl p-3 duration-300 ease-in hover:shadow-lg hover:-translate-y-2">
+                    <h1 className="font-bold text-xl mb-7 "> About</h1>
+                    <p className="p-2"><strong>Bio:</strong> {provider.bio || "No bio provided"}</p>
+                    <p className="p-2"><strong>Experience:</strong> {provider.experience || "N/A"}</p>
+                    <p className="p-2"><strong>Offers:</strong> {provider.offers?.map((o) => o.text).join(", ") || "None"}</p>
+                    <p className="p-2"><strong>Person Site:</strong> {provider.site || "N/A"}</p>
+                </div>
+
+                <div className="flex justify-between border">
+                    <div className="w-full bg-white/14 backdrop-blur-md shadow-md text-white text-left mb-6 rounded-2xl hover:shadow-lg hover:-translate-y-2 mr-4">
+                        <h1 className="font-bold text-xl mb-5 mt-5">Contact Details</h1>
+                        <p className="p-2"><strong>Phone:</strong> {provider.phone || "N/A"}</p>
+                        <p className="p-2"><strong>Email:</strong> {provider.email}</p>
+                        <p className="p-2"><strong>Location:</strong> {provider.location}</p>
+                        <p className="p-2"><strong>Price:</strong> {provider.price || "N/A"}</p>
+                    </div>
+                    <div className="w-full bg-white/14 backdrop-blur-md shadow-md text-white text-left mb-6 rounded-2xl hover:shadow-lg hover:-translate-y-2 mr-4">
+                        <h1 className="font-bold text-xl mb-5 mt-5">Availability</h1>
+                        <p className="p-2">
+                            {provider.availability && provider.availability.length
+                                ? (<div> {provider.availability.map((a, index) => (
+                                    <p className="m-2 " key={index} >
+                                        {a.day}: {a.start} – {a.end}
+                                    </p>
+                                ))}
+                                </div>
+
+                                ) : (<p> "N/A". </p>)}
+                        </p>
+                    </div>
+
+
+                </div>
+                <div className="bg-gradient-to-b from-white to-purple-600 text-green-200 text-center mb-6 rounded-2xl p-3 duration-300 ease-in hover:shadow-lg hover:-translate-y-2">
+                    <h1> Schedule Appointment</h1>
+                </div>
             </div>
         </div>
     );

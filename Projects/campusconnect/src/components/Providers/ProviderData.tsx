@@ -2,6 +2,12 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../supabaseClient"
 import { Link } from "react-router-dom"
 
+
+interface AvailabilitySlot{
+    day: string;
+    start: string; 
+    end: string; 
+}
 /**Providers data type  */
 interface Provider {
     id: number;
@@ -16,7 +22,7 @@ interface Provider {
     phone?: string;
     bio?: string;
     experience?: string;
-    availability?: string[];
+    availability?: AvailabilitySlot[] | null;
     offers?: { text: string }[];
     created_at?: string;
 }
