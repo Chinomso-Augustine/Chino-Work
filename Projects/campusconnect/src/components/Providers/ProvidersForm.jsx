@@ -52,8 +52,8 @@ const ProvidersForm = () => {
         offers: [],
         checklist: [],
         availability: {},
-        start_time: "",
-        end_time: "",
+        start: "",
+        end: "",
         category: null,
 
     });
@@ -159,8 +159,8 @@ const ProvidersForm = () => {
                 experience: formData.experience,
                 //availability: formData.checklist.length ? formData.checklist : null,
                 availability: availabilityArr.length ? availabilityArr : null,
-                start_time: formData.start_time,
-                end_time: formData.end_time,
+                start: formData.start,
+                end: formData.end,
                 offers: formData.offers.length ? formData.offers : null,
             },
         ]);
@@ -186,9 +186,10 @@ const ProvidersForm = () => {
                 text: "",
                 offers: [],
                 checklist: [],
+                availability:{},
                 category: null,
-                start_time: "",
-                end_time: "",
+                start: "",
+                end: "",
             });
         }
     };
@@ -468,7 +469,14 @@ const Availability = ({ days, checklist, handleSelect, availability, setDayTime 
                             />
                             {day}
                         </label>
-                         <TimeSelection />
+
+                         <TimeSelection 
+                         checked={checked}
+                         start={times.start}
+                         end={times.end} 
+                         onStart={(str) => setDayTime(day, "start", str)}
+                         onEnd={(str) => setDayTime(day, "end", str)}
+                         />
                     </div>
                 );
             })}
