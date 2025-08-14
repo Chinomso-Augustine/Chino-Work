@@ -58,19 +58,23 @@ const ProvidersPage = () => {
     return (
         <div className="border mt-6 bg-linear-to-b from-purple-700 via-indigo-800 to-purple-800">
 
-
-            <div className=" flex w-full p-13 mt-10 bg-[url('/sample1.jpg')] bg-cover">
-                <div className="w-xs ">
-                    <img src="../../../sample1.jpg" className="h-80 rounded-full"></img>
+            <div className="flex w-full p-13 mt-10 bg-[url('/sample1.jpg')] bg-cover items-center">
+                <div className="w-xs flex-shrink-0">
+                    <img src="../../../sample1.jpg" className="h-80 rounded-full" />
                 </div>
-                <div className="ml-60 ">
-                    <h1 className="text-3xl text-white md:text-5xl text-center font-bold">
-                        {provider.first_name} {provider.last_name}
-                    </h1>
-                    <p className="text-2xl text-gray-100 text-center mt-12 mb-9">
-                        {provider.service_title} - {provider.category}
-                    </p>
-                    <p><strong>Description:</strong> {provider.description}</p>
+
+                <div className="flex-grow flex justify-center">
+                    <div className="bg-linear-to-r from-purple-900/40 to-blue-400/40 rounded-2xl text-center">
+                        <h1 className="text-3xl text-white md:text-5xl font-bold">
+                            {provider.first_name} {provider.last_name}
+                        </h1>
+                        <p className="text-2xl text-gray-100 mt-12 mb-9">
+                            {provider.service_title} - {provider.category}
+                        </p>
+                        <p className="text-2xl text-gray-100 mt-12 mb-9">
+                            {provider.description}
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -84,7 +88,7 @@ const ProvidersPage = () => {
                     <p className="p-2"><strong>Person Site:</strong> {provider.site || "N/A"}</p>
                 </div>
 
-                <div className="flex justify-between border">
+                <div className="flex justify-between">
                     <div className="w-full bg-white/14 backdrop-blur-md shadow-md text-white text-left mb-6 rounded-2xl hover:shadow-lg hover:-translate-y-2 mr-4">
                         <h1 className="font-bold text-xl mb-5 mt-5">Contact Details</h1>
                         <p className="p-2"><strong>Phone:</strong> {provider.phone || "N/A"}</p>
@@ -109,9 +113,13 @@ const ProvidersPage = () => {
 
 
                 </div>
-                <div className="bg-gradient-to-b from-white to-purple-600 text-green-200 text-center mb-6 rounded-2xl p-3 duration-300 ease-in hover:shadow-lg hover:-translate-y-2">
-                    <h1> Schedule Appointment</h1>
+
+                <div className="flex text-center justify-center w-full ">
+                    <div className="w-md bg-white text-black text-center text-2xl mb-6 rounded-2xl p-3 duration-300 ease-in hover:shadow-lg hover:-translate-y-2 cursor-pointer">
+                        <h1> Schedule Appointment</h1>
+                    </div>
                 </div>
+
             </div>
         </div>
     );
