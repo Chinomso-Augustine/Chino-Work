@@ -3,7 +3,7 @@ import Select from "react-select";
 import { User, Mail, Star, Clock, MapPin } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import TimeSelection from "./TimeSelection"
-
+import ProfileImagePicker from "./ProfileImagePicker";
 
 /*To Do
 1. Add time to availability 
@@ -35,6 +35,15 @@ const days = [
 const ProvidersForm = () => {
     const userOptions = category.map((list) => ({ value: list, label: list }));
 
+    {/**user storage id */ }
+    const [userId, setUserId] = useState("");
+
+    useEffect(() => {
+        (async () => {
+            const { data: {user} } = await supabase.auth.getUser();
+            setUserId(user?.id ?? "");
+        })();
+    }, []);
 
     const [formData, setFormData] = useState({
         firstName: "",
@@ -52,9 +61,9 @@ const ProvidersForm = () => {
         offers: [],
         checklist: [],
         availability: {},
-        start: "",
-        end: "",
         category: null,
+        profileImageUrl: "",
+        profileImagePath: ""
 
     });
 
@@ -162,6 +171,8 @@ const ProvidersForm = () => {
                 start: formData.start,
                 end: formData.end,
                 offers: formData.offers.length ? formData.offers : null,
+                profile_image_url: formData.profileImageUrl || null,
+                profile_image_path: formData.profileImagePath || null,
             },
         ]);
 
@@ -186,10 +197,12 @@ const ProvidersForm = () => {
                 text: "",
                 offers: [],
                 checklist: [],
-                availability:{},
+                availability: {},
                 category: null,
                 start: "",
                 end: "",
+                profileImageUrl: "",
+                profileImagePath: "",
             });
         }
     };
@@ -197,14 +210,30 @@ const ProvidersForm = () => {
     /*Form */
     return (
         <div className="bg-gradient-to-b from-purple-100 to-white py-6 px-6 mt-16 border w-full max-w-4xl mx-auto rounded-lg shadow">
+
             <form className="space-y-6" onSubmit={handleSubmit}>
                 <HeaderInfo />
+
                 <BasicInfo
                     userOptions={userOptions}
                     formData={formData}
                     setFormData={setFormData}
                     handleChange={handleChange}
                 />
+                <ProfileImagePicker
+                    supabase={supabase}
+                    userId={userId || ""}
+                    value={formData.profileImageUrl}
+                    objectPath={formData.profileImagePath}
+                    onChange={(url, path) =>
+                        setFormData(f => ({
+                            ...f,
+                            profileImageUrl: url,
+                            profileImagePath: path || ""
+                        }))
+                    }
+                />
+
                 <LocationPricing formData={formData} handleChange={handleChange} />
 
                 <ContactInfo formData={formData} handleChange={handleChange} />
@@ -322,6 +351,7 @@ const BasicInfo = ({ userOptions, formData, setFormData, handleChange }) => (
         </div>
     </section>
 );
+
 
 const LocationPricing = ({ formData, handleChange }) => (
     <section>
@@ -470,13 +500,13 @@ const Availability = ({ days, checklist, handleSelect, availability, setDayTime 
                             {day}
                         </label>
 
-                         <TimeSelection 
-                         checked={checked}
-                         start={times.start}
-                         end={times.end} 
-                         onStart={(str) => setDayTime(day, "start", str)}
-                         onEnd={(str) => setDayTime(day, "end", str)}
-                         />
+                        <TimeSelection
+                            checked={checked}
+                            start={times.start}
+                            end={times.end}
+                            onStart={(str) => setDayTime(day, "start", str)}
+                            onEnd={(str) => setDayTime(day, "end", str)}
+                        />
                     </div>
                 );
             })}

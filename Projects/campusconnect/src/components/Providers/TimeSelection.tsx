@@ -32,25 +32,3 @@ return(
 )
 
 }
-
-/*
-export default function TimePickerValue() {
-  const [value, setValue] = React.useState(dayjs('2025-08-17T15:30'));
-
-  return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={['TimePicker', 'TimePicker']}>
-        <TimePicker
-          label="Start"
-          defaultValue={dayjs('2025-08-17T15:30')}
-        />
-        <TimePicker
-          label="End"
-          value={value}
-          onChange={(newValue) => setValue(newValue)}
-        />
-      </DemoContainer>
-    </LocalizationProvider>
-  );
-}
-*/
