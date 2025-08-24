@@ -20,6 +20,8 @@ interface Provider {
     availability?: AvailabilitySlot[] | null;
     offers?: { text: string }[];
     created_at?: string;
+    profile_image_url?: string | null;
+    profile_image_path?: string | null;
 }
 
 interface AvailabilitySlot {
@@ -57,26 +59,37 @@ const ProvidersPage = () => {
 
     return (
         <div className="border mt-6 bg-linear-to-b from-purple-700 via-indigo-800 to-purple-800">
-
-            <div className="flex w-full p-13 mt-10 bg-[url('/sample1.jpg')] bg-cover items-center">
-                <div className="w-xs flex-shrink-0">
-                    <img src="../../../sample1.jpg" className="h-80 rounded-full" />
+            <div
+                className="flex w-full p-13 mt-10 bg-cover items-center relative"
+                style={{
+                    backgroundImage: `url(${provider.profile_image_url || "/sample1.jpg"})`,
+                }}
+            >
+                {/* optional dark overlay for text legibility */}
+                <div className="absolute inset-0 bg-black/30" />
+                <div className="relative w-xs flex-shrink-0">
+                    <img
+                        src={provider.profile_image_url || "/avatar-fallback.png"}
+                        alt={`${provider.first_name} ${provider.last_name}`}
+                        className="h-80 w-80 rounded-full object-cover border"
+                    />
                 </div>
 
-                <div className="flex-grow flex justify-center">
-                    <div className="bg-linear-to-r from-purple-900/40 to-blue-400/40 rounded-2xl text-center">
+                <div className="relative flex-grow flex justify-center">
+                    <div className="bg-white/10 backdrop-blur-md rounded-2xl text-center p-6">
                         <h1 className="text-3xl text-white md:text-5xl font-bold">
                             {provider.first_name} {provider.last_name}
                         </h1>
-                        <p className="text-2xl text-gray-100 mt-12 mb-9">
+                        <p className="text-2xl text-gray-100 mt-6">
                             {provider.service_title} - {provider.category}
                         </p>
-                        <p className="text-2xl text-gray-100 mt-12 mb-9">
+                        <p className="text-lg text-gray-100 mt-6">
                             {provider.description}
                         </p>
                     </div>
                 </div>
             </div>
+
 
             <div className="backdrop-blur-sm shadow-md text-white rounded-2xl p-6">
 

@@ -38,9 +38,11 @@ const ProvidersForm = () => {
     {/**user storage id */ }
     const [userId, setUserId] = useState("");
 
+    const [isUploadingImage, setIsUploadingImage] = useState(false);
+
     useEffect(() => {
         (async () => {
-            const { data: {user} } = await supabase.auth.getUser();
+            const { data: { user } } = await supabase.auth.getUser();
             setUserId(user?.id ?? "");
         })();
     }, []);
@@ -139,6 +141,15 @@ const ProvidersForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if(isUploadingImage){
+            alert("Please wait for the image to finish uploading");
+            return; 
+        }
+
+        if(!formData.profileImagePath){
+            alert("Please upload a profile image before submitting.");
+            return;
+        }
         // Basic validation
         if (!formData.firstName || !formData.lastName || !formData.serviceTitle ||
             !formData.category || !formData.description || !formData.location || !formData.email) {
@@ -154,6 +165,7 @@ const ProvidersForm = () => {
 
         const { error } = await supabase.from('providers').insert([
             {
+                user_id: userId,
                 first_name: formData.firstName,
                 last_name: formData.lastName,
                 service_title: formData.serviceTitle,
@@ -168,8 +180,6 @@ const ProvidersForm = () => {
                 experience: formData.experience,
                 //availability: formData.checklist.length ? formData.checklist : null,
                 availability: availabilityArr.length ? availabilityArr : null,
-                start: formData.start,
-                end: formData.end,
                 offers: formData.offers.length ? formData.offers : null,
                 profile_image_url: formData.profileImageUrl || null,
                 profile_image_path: formData.profileImagePath || null,
@@ -177,8 +187,13 @@ const ProvidersForm = () => {
         ]);
 
         if (error) {
-            console.error("Supabase Insert Error:", error);
-            alert('Error creating profile!');
+            console.error("Supabase Insert Error:", {
+                message: error.message,
+                details: error.details,
+                hint: error.hint,
+                code: error.code,
+            });
+            alert(`Error creating profile!: ${error.message}`);
         } else {
             alert('Profile created successfully!');
             // Reset form
@@ -228,10 +243,12 @@ const ProvidersForm = () => {
                     onChange={(url, path) =>
                         setFormData(f => ({
                             ...f,
-                            profileImageUrl: url,
+                            profileImageUrl: url || "",
                             profileImagePath: path || ""
                         }))
                     }
+                    onUploadingChange={setIsUploadingImage}
+
                 />
 
                 <LocationPricing formData={formData} handleChange={handleChange} />
@@ -254,7 +271,7 @@ const ProvidersForm = () => {
                 />
                 <AboutYou formData={formData} handleChange={handleChange} />
 
-                <CreateAccountBtn />
+ <CreateAccountBtn disabled={isUploadingImage} />
 
             </form>
         </div>
@@ -539,7 +556,7 @@ const AboutYou = ({ formData, handleChange }) => (
     </section>
 );
 
-const CreateAccountBtn = () => (
+const CreateAccountBtn = ({disabled = false}) => (
     <div className="flex justify-end gap-4">
         <button type="button" className="px-4 py-2 border rounded">
             Cancel
@@ -547,6 +564,8 @@ const CreateAccountBtn = () => (
         <button
             type="submit"
             className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600"
+            disabled={disabled}
+
         >
             Create Provider Profile
         </button>

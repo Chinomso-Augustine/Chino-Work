@@ -6,11 +6,12 @@ import { uploadProfileImage, deleteProfileImage } from './Storage';
 type Props = {
     supabase: SupabaseClient;
     userId: string;
-    value: string;               // current avatar URL (formData.profileImageUrl)
-    objectPath?: string;         // current storage path (formData.profileImagePath)
-    onChange: (url: string, path?: string) => void; // update parent
+    value: string;               // current avatar URL
+    objectPath?: string;         // current storage path
+    onChange: (url: string, path?: string) => void;
     bucket?: string;             // default 'profile-images'
-    privateBucket?: boolean;     // set true if bucket is private (uses signed URLs)
+    privateBucket?: boolean;     // true if bucket is private
+    onUploadingChange?: (uploading: boolean) => void; // optional: let parent disable submit
 };
 
 export default function ProfileImagePicker({
@@ -21,9 +22,9 @@ export default function ProfileImagePicker({
     onChange,
     bucket = 'profile-images',
     privateBucket = false,
+    onUploadingChange,
 }: Props) {
     const inputRef = useRef<HTMLInputElement | null>(null);
-    const [selected, setSelected] = useState<File | null>(null);
     const [preview, setPreview] = useState<string>(value || '');
     const [uploading, setUploading] = useState(false);
     const [err, setErr] = useState<string | null>(null);
@@ -32,81 +33,97 @@ export default function ProfileImagePicker({
         setPreview(value || '');
     }, [value]);
 
-    function onPick(e: React.ChangeEvent<HTMLInputElement>) {
-        const f = e.target.files?.[0];
-        if (!f) return;
-        setSelected(f);
-        setPreview(URL.createObjectURL(f));
-        setErr(null);
-    }
-
-    async function onUpload() {
-        if (!selected) return;
+    async function doUpload(file: File) {
         if (!userId) {
             setErr('You must be signed in to upload an image.');
             return;
         }
         setUploading(true);
+        onUploadingChange?.(true);
         setErr(null);
         try {
-            // Optional: delete previous object to avoid orphans
+            // (Optional) delete the previous object to avoid orphans
             if (objectPath) {
                 await deleteProfileImage(supabase, objectPath, bucket);
             }
 
-            const res = await uploadProfileImage(supabase, userId, selected, {
+            const res = await uploadProfileImage(supabase, userId, file, {
                 bucket,
                 makeSignedUrl: privateBucket,
                 filenamePrefix: 'avatar',
             });
 
+            // Update parent form (this must populate profile_image_url + profile_image_path)
             onChange(res.url, res.path);
-            setSelected(null);
+
+            // Local preview
+            setPreview(res.url);
         } catch (e: any) {
+            console.error('Image upload failed:', e);
             setErr(e?.message || 'Upload failed');
+            // Clear parent values on failure
+            onChange('', undefined);
         } finally {
             setUploading(false);
+            onUploadingChange?.(false);
         }
     }
 
+    async function onPick(e: React.ChangeEvent<HTMLInputElement>) {
+        const f = e.target.files?.[0];
+        if (!f) return;
+        // Optional: instant local preview
+        setPreview(URL.createObjectURL(f));
+        await doUpload(f); // <-- auto-upload on pick so user can’t forget to click “Upload”
+        // clear file input so picking same file again still triggers change
+        if (inputRef.current) inputRef.current.value = '';
+    }
+
     async function onRemove() {
-        // If you want to actually delete the stored file when user removes:
-        if (objectPath) {
-            await deleteProfileImage(supabase, objectPath, bucket);
+        try {
+            if (objectPath) {
+                await deleteProfileImage(supabase, objectPath, bucket);
+            }
+        } catch (e) {
+            console.warn('Delete image failed (non-fatal):', e);
         }
-        setSelected(null);
         setPreview('');
         onChange('', undefined);
         if (inputRef.current) inputRef.current.value = '';
     }
 
     return (
-        <div>
-            <label className="block mb-2 font-medium">Profile picture</label>
-            <input
-                ref={inputRef}
-                type="file"
-                accept="image/*"
-                onChange={onPick}
-                className="hidden"
-            />
+        <div className="space-y-2">
+            <label className="block font-medium">Profile picture</label>
 
-            <div className="flex gap-3 mt-3">
+            {preview ? (
+                <img
+                    src={preview}
+                    alt="Profile preview"
+                    className="w-28 h-28 rounded-full object-cover border"
+                />
+            ) : (
+                <div className="w-28 h-28 rounded-full border grid place-items-center text-sm text-gray-500">
+                    No image
+                </div>
+            )}
+
+            <div className="flex gap-3 mt-2">
+                <input
+                    ref={inputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={onPick}
+                    className="hidden"
+                />
+
                 <button
                     type="button"
                     onClick={() => inputRef.current?.click()}
                     className="px-3 py-1 rounded border"
+                    disabled={uploading}
                 >
                     Choose image
-                </button>
-
-                <button
-                    type="button"
-                    onClick={onUpload}
-                    disabled={!selected || uploading}
-                    className="px-3 py-1 rounded bg-purple-500 text-white hover:bg-purple-600 disabled:opacity-50"
-                >
-                    {uploading ? 'Uploading…' : 'Upload'}
                 </button>
 
                 {preview && (
@@ -114,14 +131,15 @@ export default function ProfileImagePicker({
                         type="button"
                         onClick={onRemove}
                         className="px-3 py-1 rounded border"
+                        disabled={uploading}
                     >
                         Remove
                     </button>
                 )}
             </div>
 
-
-            {err && <p className="text-red-600 text-sm mt-2">{err}</p>}
+            {uploading && <p className="text-xs text-purple-600">Uploading…</p>}
+            {err && <p className="text-red-600 text-sm">{err}</p>}
         </div>
     );
 }
