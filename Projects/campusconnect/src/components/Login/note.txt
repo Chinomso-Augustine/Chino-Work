@@ -1,0 +1,6 @@
+
+Steps to implementing Supabase to form
+
+1. Adding states -> action, name, email, password, confirm, loading, err, and msg
+2. converting inputs to controlled inputs ie value + onChange
+3. Ass submit handler that submit import to supabase 

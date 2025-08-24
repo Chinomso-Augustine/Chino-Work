@@ -7,8 +7,7 @@ import ProvidersData from "./components/Providers/ProviderData.js"
 import ProvidersForm from "./components/Providers/ProvidersForm.jsx"
 import ProvidersProfile from "./components/Providers/ProvidersProfile.js"; 
 import LoginSignUp from "./components/Login/LoginSignUp.jsx"; 
-
-
+import ResetPassword from "./components/Login/ResetPassword.jsx"
 
 function App() {
   return (
@@ -22,6 +21,7 @@ function App() {
         <Route path="/ProvidersForm" element={<ProvidersForm />}/>
         <Route path='/Provider/:id' element={<ProvidersProfile />} /> {/**adding :id extracts id from provider's profile */}
         <Route path='/LoginSignUp' element={<LoginSignUp />} />
+        <Route path='/auth/reset' element={<ResetPassword />} />
       </Routes>
     </Router>
   )
