@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Nav.jsx';
 import Home from './components/Home/home.jsx'
 import HowItWorks from "./components/How It works/Works.jsx"
-import Services from "./components/Services/Services.jsx"
+import Services from "./components/Services/Services.js"
 import ProvidersData from "./components/Providers/ProviderData.js"
 import ProvidersForm from "./components/Providers/ProvidersForm.jsx"
 import ProvidersProfile from "./components/Providers/ProvidersProfile.js"; 

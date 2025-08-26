@@ -1,34 +1,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../supabaseClient"
 import { useParams } from "react-router-dom";
-
-/**Providers data type  */
-interface Provider {
-    id: number;
-    first_name: string;
-    last_name: string;
-    service_title: string;
-    category: string;
-    description: string;
-    site: string;
-    location: string;
-    price?: string;
-    email: string;
-    phone?: string;
-    bio?: string;
-    experience?: string;
-    availability?: AvailabilitySlot[] | null;
-    offers?: { text: string }[];
-    created_at?: string;
-    profile_image_url?: string | null;
-    profile_image_path?: string | null;
-}
-
-interface AvailabilitySlot {
-    day: string;
-    start: string;
-    end: string;
-}
+import type { Provider } from "../DataTypes/types"
 
 const ProvidersPage = () => {
     /*Storing providers fetched */
@@ -69,7 +42,7 @@ const ProvidersPage = () => {
                 <div className="absolute inset-0 bg-black/30" />
                 <div className="relative w-xs flex-shrink-0">
                     <img
-                        src={provider.profile_image_url || "/avatar-fallback.png"}
+                        src={provider.profile_image_url || "/sample1.jpg"}
                         alt={`${provider.first_name} ${provider.last_name}`}
                         className="h-80 w-80 rounded-full object-cover border"
                     />
