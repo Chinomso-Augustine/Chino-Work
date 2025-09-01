@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 function Home() {
 
-    {/*Stats for stat section  */ }
+    /*Stats for stat section  */ 
     const stats = [
         { value: "500+", label: "Active Students" },
         { value: "4.5", label: "Average Rating", icon: <Star className="inline w-8 h-7 ml-1" /> },

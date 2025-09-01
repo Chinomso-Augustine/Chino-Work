@@ -12,7 +12,7 @@ function Navbar() {
     { label: "How It Works", href: "/work" },
     { label: "View Services", href: "/Services" },
     { label: "View Providers", href: "/Providers" },
-    { label: "Become A Providers", href: "/ProvidersForm" },
+    { label: "Become A Provider", href: "/ProvidersForm" },
     { label: "Sign In", href: "/LoginSignUp"},
 
   ];

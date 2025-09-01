@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 import { supabase } from "../../supabaseClient"
+import { useNavigate } from 'react-router-dom'
 
 const LoginSignUp = () => {
+        const navigate = useNavigate(); 
+
     //1. sign up and Login initial State
     const [action, setAction] = useState("Sign Up"); // This is where we perform action. It's currently on Sign UP which means Login btn is gray
 
     //2. Form input states 
     //Since initial stats for these inputs are empty, use one useState -> forDate which covers name, email, password, and confirm
-
 
     const [formData, setFormData] = useState({
         name: "",
@@ -90,7 +92,7 @@ const LoginSignUp = () => {
 
                 //If work, redirect back to campusconnect
                 if (data?.session) {
-                    window.location.href = "/home"
+                  navigate("/"); 
                 }
             }
         }
@@ -100,28 +102,6 @@ const LoginSignUp = () => {
         finally {
             setLoading(false)
         }
-
-        //Forget Password 
-        const handleForgot = async () => {
-            setErr(null); setMsg(null);
-
-            if (!formData.email) {
-                setErr("Enter your email first.");
-                return;
-            }
-            setLoading(true);
-            try {
-                const { error } = await supabase.auth.resetPasswordForEmail(formData.email, {
-                    redirectTo: `${window.location.origin}/auth/reset`,
-                });
-                if (error) throw error;
-                setMsg("Reset link sent. Check your email.");
-            } catch (err) {
-                setErr(err?.message || "Could not send reset email.");
-            } finally {
-                setLoading(false);
-            }
-        };
 
     }
 

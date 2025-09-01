@@ -3,6 +3,12 @@ import { supabase } from "../../supabaseClient";
 import { Link } from "react-router-dom";
 import type { Provider } from "../DataTypes/types";
 
+function getCurrentDate() {
+    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const currentDay = new Date().getDay();
+    return daysOfWeek[currentDay];
+}
+
 export default function DisplayInfo() {
     const [providers, setProviders] = useState<Provider[]>([]);
     const [loading, setLoading] = useState(true);
@@ -28,12 +34,19 @@ export default function DisplayInfo() {
     if (loading) {
         return <p className="text-white text-center mt-20">Loading...</p>;
     }
+    {/**.some = check if something appears at least once
+    1. filter through providers and store inside p
+    2. Access availability inside providers ie p through p.availability
+    3. .some((a)=>a.day ===currentDay) checks if any provider's availability matches today
+    
+    */}
 
-    function getCurrentDate() {
-        const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-        const currentDay = new Date().getDay();
-        return daysOfWeek[currentDay];
-    }
+    const availableToday = providers.filter((p) =>
+        p.availability?.some((a) => a.day === currentDay)
+    );
+
+    {/* similar thing but only store unavailable days*/ }
+    const unavailableToday = providers.filter((p) => !p.availability?.some((a) => a.day === currentDay))
 
     return (
         <div className="mt-6 bg-gradient-to-b from-purple-700 via-indigo-800 to-purple-800">
@@ -47,58 +60,58 @@ export default function DisplayInfo() {
                 </p>
             </div>
 
-            <div className="h-auto py-2 ">
-                <h3 className="text-2xl text-white md:text-3xl text-center font-bold">
-                    Available Today
-                </h3>
-            </div>
-            {/**Profile grid */}
+
+            {/**Currently available */}
             <section>
+                <div className="h-auto py-2 ">
+                    <h3 className="text-2xl text-white md:text-3xl text-center font-bold">
+                        Available Today
+                    </h3>
+                </div>
+
+                {/**Loop through availableToday and if not available, I leave message */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-5xl mx-auto cursor-pointer">
-                    {providers.length > 0 ? (
-                        providers.map((p) => (
-                            p.availability?.some((availability) => availability.day === currentDay) ? (
-                                <div
-                                    key={p.id}
-                                    className="bg-white/14 backdrop-blur-sm shadow-md text-white rounded-2xl p-3 duration-300 ease-in hover:shadow-lg hover:-translate-y-2 "
-                                    style={{
-                                        backgroundImage: `url(${p.profile_image_url || "/sample1.jpg"})`
-                                    }}
-                                >
-                                    <img src={p.profile_image_url || "/sample1.jpg"} alt="profile" />
-                                    <h2 className="text-2xl font-bold flex justify-center m-3 text-purple-300">
-                                        {p.first_name} {p.last_name}
-                                    </h2>
+                    {availableToday.length > 0 ? (
+                        availableToday.map((p) => (
+                            <div
+                                key={p.id}
+                                className="bg-white/14 backdrop-blur-sm shadow-md text-white rounded-4xl p-3 duration-300 ease-in hover:shadow-lg hover:-translate-y-2 "
 
-                                    <div className="text-center font-sans text-sm m-2">
-                                        <p className="font-bold text-xl pb-2">{p.service_title}</p>
-                                        <p> About: {p.bio}</p>
-                                        <p>Location: {p.location} </p>
-                                        <p>Price: {p.price} </p>
-                                    </div>
-                                    <div className="text-center">
-                                        <h2 className="text-xl font-semibold mt-2">Availability</h2>
-                                        <h3>
-                                            {p.availability && p.availability.length ? (<div> {p.availability.map((a, index) => (
-                                                <p className="m-2" key={index}>
-                                                    {a.day}: {a.start} - {a.end} </p>
-                                            ))}
-                                            </div>) : (<p> "N/A"</p>)}
-                                        </h3>
-                                    </div>
+                            >
+                                <img src={p.profile_image_url || "/sample1.jpg"} alt="profile" className="rounded-4xl" />
+                                <h2 className="text-2xl font-bold flex justify-center m-3">
+                                    {p.first_name} {p.last_name}
 
-                                    <div className="flex justify-center py-4">
-                                        <Link key={p.id} to={`/Provider/${p.id}`}>
-                                            <button className="bg-white/8 backdrop-blur-md shadow-md text-white p-3 rounded-lg hover:bg-purple-800">
-                                                View Provider
-                                            </button>
-                                        </Link>
-                                    </div>
+                                </h2>
+                                <p className=" text-center font-bold text-xl pb-2">{p.service_title}</p>
+
+                                <div className="font-sans text-sm m-2 flex gap-4 justify-between">
+                                    <p>Location: {p.location} </p>
+                                    <p>Price: {p.price} </p>
                                 </div>
-                            ) : <p> </p>
-                        ))) : (
-                        <p className="text-white">No providers yet.</p>
-                    )}
+                                <div className="text-center">
+                                    <h2 className="text-xl font-semibold mt-2">Availability</h2>
+                                    <h3>
+                                        {p.availability && p.availability.length ? (<div> {p.availability.map((a, index) => (
+                                            <p className="m-2 flex justify-center text-sm" key={index}>
+                                                {a.day}: {a.start} - {a.end} </p>
+                                        ))}
+                                        </div>) : (<p> "N/A"</p>)}
+                                    </h3>
+                                </div>
+
+                                <div className="flex justify-center py-2">
+                                    <Link key={p.id} to={`/Provider/${p.id}`}>
+                                        <button className="bg-white/8 backdrop-blur-md shadow-md text-white p-3 rounded-lg hover:bg-purple-800">
+                                            Provider Page
+                                        </button>
+                                    </Link>
+                                </div>
+                            </div>
+                        ))
+                        ): (
+                        <p className="text-white">No providers yet</p>
+                   ) }
                 </div>
             </section>
 
@@ -113,19 +126,15 @@ export default function DisplayInfo() {
 
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto ">
-                    {providers.length > 0 ? (
-                        providers.map((p) => (
+                    {unavailableToday.length > 0 ? (
+                        unavailableToday.map((p) => (
                             <div
                                 key={p.id}
-                                className="bg-white/14 backdrop-blur-sm shadow-md text-white rounded-2xl p-3 duration-300 ease-in hover:shadow-lg hover:-translate-y-2 "
-                                style={{
-                                    backgroundImage: `url(${p.profile_image_url || "/sample1.jpg"})`,
-                                    backgroundSize:`fit`,
-                                    backgroundPosition: `no-repeat`
-                                }}
+                                className="bg-white/14 backdrop-blur-sm shadow-md text-white rounded-4xl p-3 duration-300 ease-in hover:shadow-lg hover:-translate-y-2 "
+
                             >
                                 <img src={p.profile_image_url || "/sample1.jpg"} alt="profile" className="rounded-4xl" />
-                                <h2 className="text-2xl font-bold flex justify-center m-3 text-purple-300">
+                                <h2 className="text-2xl font-bold flex justify-center m-3">
                                     {p.first_name} {p.last_name}
 
                                 </h2>
@@ -155,7 +164,7 @@ export default function DisplayInfo() {
                                 </div>
                             </div>
                         ))) : (
-                        <p className="text-white">No providers yet.</p>
+                        <p className="w-xl text-xl text-white md:text-lg font-bold flex justify-center border ">All Providers are unavailable today</p>
                     )}
                 </div>
             </section>
