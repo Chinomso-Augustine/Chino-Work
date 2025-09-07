@@ -19,7 +19,7 @@ export default function DisplayInfo() {
     useEffect(() => {
         (async () => {
             const { data, error } = await supabase
-                .from<Provider>("providers")
+                .from<Provider>("providers_public")
                 .select("*")
                 .order("created_at", { ascending: false });
 

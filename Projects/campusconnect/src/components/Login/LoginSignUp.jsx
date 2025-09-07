@@ -3,8 +3,11 @@ import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 import { supabase } from "../../supabaseClient"
 import { useNavigate } from 'react-router-dom'
 
+
+
+
 const LoginSignUp = () => {
-        const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     //1. sign up and Login initial State
     const [action, setAction] = useState("Sign Up"); // This is where we perform action. It's currently on Sign UP which means Login btn is gray
@@ -25,6 +28,33 @@ const LoginSignUp = () => {
     const [msg, setMsg] = useState(null);
 
 
+    const refreshUser = async () => {
+        try {
+            //starts loading
+            setLoading(true);
+
+            //get current seesion + user 
+            const { data, error } = await supabase.auth.getSession();
+            if (error) throw error;
+
+            const session = data?.session;
+
+            if (session?.user) {
+                //meaning user is signed out
+                setUser(null);
+                setProviderProfile(null);
+            }
+        }
+        catch (err) {
+            console.log("enter refreshing user:", err.message);
+            setUser(null)
+            setProviderProfile(null);
+        }
+        finally {
+            //stop loading
+            setAuthLoading(false)
+        }
+    };
     //Handler updater
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -92,7 +122,7 @@ const LoginSignUp = () => {
 
                 //If work, redirect back to campusconnect
                 if (data?.session) {
-                  navigate("/"); 
+                    navigate("/");
                 }
             }
         }
