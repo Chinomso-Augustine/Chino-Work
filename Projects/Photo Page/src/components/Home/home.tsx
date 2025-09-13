@@ -32,7 +32,7 @@ function Home() {
         <div>
             <section className="relative bg-gradient-to-br from-purple-700 via-indigo-800 to-purple-700 text-white h-[50vh] p-10 px-6 flex-col items-center justify-center ">
                 <div
-                    className="absolute inset-0 bg-center filter blur-xsm opacity-85"
+                    className="absolute inset-0 bg-center "
                     style={{
                         backgroundImage: `url(${profileImg})`,
                     }}>
@@ -50,6 +50,16 @@ function Home() {
 
             </section>
            
+           <section  className="bg-gradient-to-r from-purple-200 to-white py-12">
+                    <div className="flex flex-wrap justify-center gap-7 mt-5">
+                        {Images.map((pics, index) =>(
+                            <img src={pics.img}
+                            className="w-xs rounded-2xl transition duration-500 ease-in-out hover:translate-y-2"
+                            />
+                        ))}
+                    </div>
+
+           </section>
 
 
             {/* Photography */}
