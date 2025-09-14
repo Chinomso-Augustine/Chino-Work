@@ -14,6 +14,11 @@ function ContactForm() {
     };
 
     return (
+
+        <div> 
+                    <section className="py-50 bg-gradient-to-b from-purple-200 via-yellow-100 to-purple-100">
+
+   
         <form className="bg-blue-700 p-6 rounded-lg shadow-lg max-w-xl mx-auto"
             onSubmit={async (e) => {
                 e.preventDefault();
@@ -68,6 +73,8 @@ function ContactForm() {
             </div>
             <input type="submit" value="Submit" required className="bg-blue-600 text-white font-semibold py-2 px-6 rounded hover:bg-blue-800 cursor-pointer mt-6" />
         </form>
+        </section>
+             </div>
     )
 };
 

@@ -30,22 +30,17 @@ function Home() {
 
     return (
         <div>
-            <section className="relative bg-center bg-contain text-yellow-100 p-10 flex flex-col items-center justify-center"
-                    style={{ backgroundImage: `url(${profileImg})` }}
-                >
-                
-        
-                <div className="text-center">
-                    <h1 className="text-3xl md:text-6xl font-bold">
-                        Glad you made it! 
-                    </h1>
+            {/*<section className="relative bg-center bg-contain text-yellow-100 p-10 flex flex-col items-center justify-center"
+                    style={{ backgroundImage: `url(${profileImg})` }} >
+                */}
 
-                    <h1 className="text-3xl md:text-6xl font-bold mt-4">
-                        I&apos;m <span className="text-white">Chinomso Augustine</span>
+            
+            <section className="py-30 z-60 bg-gradient-to-bl from-purple-800 via-purple-800 to-indigo-800">
+                
+                <div className="text-center text-purple-100 font-sans ">
+                    <h1 className="text-5xl md:text-7xl font-bold ">
+                      Chinomso Augustine
                     </h1>
-                    <p className="text-2xl text-center mt-9 mb-9">
-                        Your photographer
-                    </p>
                 </div>
 
             </section>
@@ -105,35 +100,23 @@ function Home() {
             </section>
 
 
-            {/* Contact */}
-            <section className="items-center md:flex-row justify-center gap-6 flex-wrap bg-gradient-to-r from-purple-300 to-indigo-200 py-12">
-                <div className="flex justify-center">
-                    <h3 className="text-3xl font-bold text-center mb-4 text-purple-900 bg-purple-950/7 py-6 shadow-md rounded-2xl w-sm md:w-50 transition duration-500 ease-in-out hover:translate-y-2">
-                        Contact
-                    </h3>
-                </div>
-
-                <div>
-                    <ContactForm />
-                </div>
-
-            </section >
-
-
 
             {/* Footer */}
 
-            <footer className="bg-gradient-to-r from-purple-800 to-indigo-800" >
-                <div className="text-center font-bold text-4xl mb-3 text-white">
+            <footer className="bg-gradient-to-r from-purple-800 to-indigo-800 h-auto" >
+                <div className="text-center font-bold text-4xl p-6 text-white">
                     <h1>Connect on social</h1>
                 </div>
 
-                <div className="text-center flex justify-center gap-4 text-purple-900">
+                <div className="text-center flex justify-center gap-4 text-purple-900 p-4">
                     <a href="https://www.instagram.com/chino_clickss/" className=" rounded-sm bg-yellow-100 h-7 text-center font-semibold w-[150px]">Instagram</a>
                     <a href="https://www.linkedin.com/in/chinomso-agwamba-augustine-ba9a29258/" className=" rounded-sm bg-yellow-100 h-7 text-center font-semibold w-[150px]">LinkedIn</a>
                 </div>
 
-                <p className=" bg-yellow-100 text-center font-semibold mt-6 text-purple-900"> Created by Chinomso Augustine</p>
+<div className="text-center w-full flex justify-center">
+                 <p className=" bg-yellow-100 text-center font-semibold my-2 text-purple-900 rounded-2xl"> Created by Chinomso Augustine</p>
+
+</div>
             </footer >
         </div >
     );
