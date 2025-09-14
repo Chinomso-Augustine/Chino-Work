@@ -1,27 +1,28 @@
 import Osh1 from "./Osh1.JPG";
 import Osh9 from "./Osh9.JPG";
-import AGradPics4 from "./Grad4.JPG"
-import AGradPics5 from "./Grad5.JPG";
-import AGradPics8 from "./Grad8.JPEG";
-import AGradPics9 from "./Grad9.JPEG";
-import AGradPics10 from "./Grad10.JPEG";
+import GradPics4 from "./Grad4.JPG"
+import GradPics5 from "./Grad5.JPG";
+import GradPics8 from "./Grad8.JPEG";
+import GradPics9 from "./Grad9.JPEG";
+import GradPics10 from "./Grad10.JPEG";
 
-import Yaw1 from "./Yaw1.JPEG";
-import Yaw2 from "./Yaw2.JPEG";
-import Yaw3 from "./Yaw3.JPEG";
-import Yaw5 from "./Yaw5.JPEG";
-import Yaw6 from "./Yaw6.JPEG";
-import Osh2 from "./Osh2.JPEG";
-import AOsh3 from "./Osh3.JPEG";
-import AOsh4 from "./Osh4.JPEG";
-import Osh5 from "./Osh5.JPEG";
+import BYaw1 from "./Yaw1.JPEG";
+import BYaw2 from "./Yaw2.JPEG";
+import BYaw3 from "./Yaw3.JPEG";
+import BYaw5 from "./Yaw5.JPEG";
+import BYaw6 from "./Yaw6.JPEG";
 
-import Osh6 from "./Osh6.JPEG";
-import Osh7 from "./Osh7.JPEG";
-import AGradPics23 from "./Osh8.JPEG";
-import AGradPics25 from "./Grad25.JPEG";
-import AGradPics26 from "./Grad26.JPEG";
-import AGradPics27 from "./Grad27.JPEG";
+import COsh2 from "./Osh2.JPEG";
+import COsh3 from "./Osh3.JPEG";
+import COsh4 from "./Osh4.JPEG";
+import COsh5 from "./Osh5.JPEG";
+
+import COsh6 from "./Osh6.JPEG";
+import COsh7 from "./Osh7.JPEG";
+import GradPics23 from "./Osh8.JPEG";
+import GradPics25 from "./Grad25.JPEG";
+import GradPics26 from "./Grad26.JPEG";
+import GradPics27 from "./Grad27.JPEG";
 
 import Bk from "./BK.JPG";
 
@@ -37,41 +38,52 @@ import CS5 from "./CS5.JPEG"
 
 import Soccer1 from "./Soccer1.JPG"
 import Soccer2 from "./Soccer2.JPG"
-import Soc3 from "../Soc3.JPG"
-import Soc4 from "../Soc4.JPG"
+import BSoc3 from "../Soc3.JPG"
+import BSoc4 from "../Soc4.JPG"
 import Soc5 from "../Soc5.JPG"
 import Soc6 from "../Soc6.JPG"
 
-import Wal1 from "../Wal1.JPEG"
-import Wal2 from "../Wal2.JPG"
-import Wal3 from "../Wal3.JPG"
-import Wal4 from "../Wal4.JPEG"
-import Wal5 from "../Wal5.JPG"
-import Wal6 from "../Wal6.JPG"
+import AWal1 from "../Wal1.JPEG"
+import AWal2 from "../Wal2.JPG"
+import AWal3 from "../Wal3.JPG"
+import AWal4 from "../Wal4.JPEG"
+import AWal5 from "../Wal5.JPG"
+import AWal6 from "../Wal6.JPG"
 
 export {
+       AWal1,
+    AWal2,
+    AWal3,
+    AWal4,
+    AWal5,
+    AWal6,
+
     Osh1,
     Osh9,
-    AGradPics4,
-    AGradPics5,
-    AGradPics8,
-    AGradPics9,
-    AGradPics10,
-    Yaw1,
-    Yaw2,
-    Yaw3,
-    Yaw5,
-    Yaw6,
-    Osh2,
-    AOsh3,
-    AOsh4,
-    Osh5,
-    Osh6,
-    Osh7,
-    AGradPics23,
-    AGradPics25,
-    AGradPics26,
-    AGradPics27,
+
+    GradPics4,
+    GradPics5,
+    GradPics8,
+    GradPics9,
+    GradPics10,
+
+    BYaw1,
+    BYaw2,
+    BYaw3,
+    BYaw5,
+    BYaw6,
+
+    COsh2,
+    COsh3,
+    COsh4,
+    COsh5,
+    COsh6,
+    COsh7,
+
+    GradPics23,
+    GradPics25,
+    GradPics26,
+    GradPics27,
 
     Bk,
 
@@ -87,16 +99,11 @@ export {
 
     Soccer1,
     Soccer2,
-    Soc3,
-    Soc4,
+    BSoc3,
+    BSoc4,
     Soc5,
     Soc6,
 
-    Wal1,
-    Wal2,
-    Wal3,
-    Wal4,
-    Wal5,
-    Wal6,
+ 
 
 }
