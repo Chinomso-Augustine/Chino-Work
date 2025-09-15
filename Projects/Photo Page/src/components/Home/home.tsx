@@ -34,12 +34,12 @@ function Home() {
                     style={{ backgroundImage: `url(${profileImg})` }} >
                 */}
 
-            
+
             <section className="py-30 z-60 bg-gradient-to-bl from-purple-800 via-purple-800 to-indigo-800">
-                
+
                 <div className="text-center text-purple-100 font-sans ">
                     <h1 className="text-5xl md:text-7xl font-bold ">
-                      Chinomso Augustine
+                        Chinomso Augustine
                     </h1>
                 </div>
 
@@ -113,10 +113,10 @@ function Home() {
                     <a href="https://www.linkedin.com/in/chinomso-agwamba-augustine-ba9a29258/" className=" rounded-sm bg-yellow-100 h-7 text-center font-semibold w-[150px]">LinkedIn</a>
                 </div>
 
-<div className="text-center w-full flex justify-center">
-                 <p className=" bg-yellow-100 text-center font-semibold my-2 text-purple-900 rounded-2xl"> Created by Chinomso Augustine</p>
+                <div className="text-center w-full flex justify-center">
+                    <p className=" bg-yellow-100 text-center font-semibold my-2 text-purple-900 rounded-2xl"> Created by Chinomso Augustine</p>
 
-</div>
+                </div>
             </footer >
         </div >
     );
