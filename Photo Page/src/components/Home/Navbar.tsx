@@ -8,13 +8,13 @@ function Navbar() {
   const navItems = [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
-    { label: "Contact", href: "/contactform" }
+    { label: "Contact", href: "/contactform" },
   ];
 
   return (
     <nav className="fixed w-full z-50 bg-gradient-to-r from-purple-800 via-purple-800 to-indigo-800 text-white shadow-md">
       <div className="flex items-center justify-end h-[80px] px-6">
-        {/* Desktop links */}
+        {/* Desktop nav links */}
         <div className="hidden md:flex items-center space-x-4">
           {navItems.map((item, index) => (
             <Link
@@ -27,7 +27,7 @@ function Navbar() {
           ))}
         </div>
 
-        {/* Hamburger */}
+        {/* Hamburger toggle */}
         <div className="md:hidden">
           <button onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X size={30} /> : <Menu size={30} />}
