@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from "./components/Home/home.js"
+import Home from "./components/Home/Home.js"
 import Navbar from './components/Home/Navbar.js'
 import About from './components/Aboutme/About.js'
 import ContactForm from './components/Home/contactForm.js';
@@ -10,8 +10,8 @@ function App() {
      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/About" element = {<About />} />
-        <Route path='/ContactForm' element={<ContactForm />} />
+        <Route path="/about" element = {<About />} />
+        <Route path='/contactForm' element={<ContactForm />} />
       </Routes>
     </Router>
   );

@@ -4,8 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import * as SamplePics from "../Images/Pictures";
-import ContactForm from './contactForm';
-import profileImg from "../Images/Pictures/Me.JPG"
+
 
 
 function Home() {

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Menu, X } from 'lucide-react'; // if installed
-import { href, Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 function Navbar() {
     // State for mobile menu toggle
