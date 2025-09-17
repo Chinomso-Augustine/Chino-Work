@@ -24,7 +24,7 @@ function Navbar() {
               <Link
                 key={index}
                 to={item.href}
-                className="border border-white bg-white/8 backdrop-blur-md text-center shadow-md text-white p-3 md:w-auto rounded-lg hover:bg-purple-800 sm:border-red-300"
+                className="border border-white bg-white/8 backdrop-blur-md text-center shadow-md text-white p-3 md:w-auto rounded-lg hover:bg-purple-800 sm:border-red-300 flex justify-end"
               >
                 {item.label}
               </Link>
@@ -41,12 +41,12 @@ function Navbar() {
 
         {/* Mobile menu display */}
         {isOpen && (
-          <div className="md:hidden flex flex-row items-center space-y-4 pb-4 h-auto border border-amber-300">
+          <div className="md:hidden fixed top-2 left-70 flex flex-row items-center gap-2 justify-center text-center h-auto ">
             {navItems.map((item, index) => (
               <Link
                 key={index}
                 to={item.href}
-                className="border border-white bg-white/8 backdrop-blur-md text-center shadow-md text-white p-3 md:w-auto rounded-lg hover:bg-purple-800 sm:border-red-300"
+                className="border border-red-300 bg-white/8 backdrop-blur-md text-center shadow-md text-white p-3 md:w-auto rounded-lg hover:bg-purple-800"
               >
                 {item.label}
               </Link>
