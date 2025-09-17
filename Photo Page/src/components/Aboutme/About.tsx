@@ -3,17 +3,21 @@ import BgPic from "../Images/Pictures/Chicago.JPG";
 
 function About() {
     return (
-        <div className=' bg-gradient-to-tr from-purple-200 via-yellow-50 to-purple-200 h-screen'>
+        <div> 
+        <div className=' bg-gradient-to-tr from-purple-200 via-yellow-50 to-purple-200  py-20'>
 
-            <div className='py-30 text-center font-mono font-bold text-5xl text-purple-900'>About Me</div>
-            <section className='flex justify-center py-20 gap-10 h-auto'>
+            <div className='py-10 text-center font-mono font-bold text-5xl text-purple-900'>About Me</div>
+            <section className='flex justify-center gap-10 h-auto pb-20 '>
 
                 {/**background images  */}
-                <div className='w-lg bg-contain py-40 rounded-2xl'
+                <div   className="rounded-[4px] sm:rounded-[9990px] lg:rounded-[12px] w-lg bg-contain py-40 max-h-lg ml-2"
+
                     style={{
                         backgroundImage: `url(${BgPic})`,
                         backgroundSize: "100%",
-                        backgroundPosition: "center"
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                        
                     }}>
 
                 </div>
@@ -35,6 +39,7 @@ function About() {
                     </p>
                 </div>
             </section>
+              </div>
 
             <footer className="bg-gradient-to-r from-purple-800 to-indigo-800 h-auto" >
                 <div className="text-center font-bold text-4xl p-6 text-white">
@@ -52,6 +57,7 @@ function About() {
                 </div>
             </footer >
 
+      
         </div>
     )
 }
