@@ -16,7 +16,7 @@ function ContactForm() {
     return (
 
         <div>
-            <section className="py-20 bg-gradient-to-b from-purple-200 via-yellow-100 to-purple-100 h-screen border border-blue-800">
+            <section className="py-20 bg-gradient-to-b from-purple-200 via-yellow-100 to-purple-100 h-screen">
 
                 <div className="text-center text-purple-900 font-sans my-7">
                     <h1 className="text-4xl md:text-5xl font-bold ">
@@ -25,7 +25,7 @@ function ContactForm() {
                     <p className="p-2 text-purple-900 text-lg">Want to get in touch? Fill out this form</p>
                 </div>
 
-                <form className="bg-purple-900 p-6 rounded-lg shadow-lg max-w-3xl mx-auto h-auto border border-blue-700 "
+                <form className="bg-purple-900 p-6 rounded-lg shadow-lg max-w-3xl mx-auto h-auto "
                     onSubmit={async (e) => {
                         e.preventDefault();
                         const response = await fetch("https://formspree.io/f/xblkoabw", {

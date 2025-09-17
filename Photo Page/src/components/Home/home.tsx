@@ -71,11 +71,11 @@ function Home() {
 
 
             {/* Photography */}
-            <section className="bg-gradient-to-b from-purple-200 to-white py-16 flex flex-col justify-center items-center overflow-auto border border-amber-500">
+            <section className="bg-gradient-to-b from-purple-200 to-white py-16 flex flex-col justify-center items-center overflow-auto">
 
 
                 <div className="flex justify-center w-full px-4">
-                    <Carousel plugins={[autoplayPlugin.current]} className="w-full max-w-5xl h-full max-h-5xl border m-12 border-amber-300">
+                    <Carousel plugins={[autoplayPlugin.current]} className="w-full max-w-5xl h-full max-h-5xl m-12">
                         <CarouselContent>
                             {Images.map((image, index) => (
                                 <CarouselItem key={index} className="basis-1/2 md:basis-1/2 lg:basis-1/3 p-2 ">
