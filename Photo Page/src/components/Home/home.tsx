@@ -53,16 +53,16 @@ function Home() {
                     </h2>
                 </div>
                 <div>
-                    <p className="ext-lg text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+                    <p className="text-lg text-center text-gray-700 mb-12 max-w-2xl mx-auto">
                         A glimpse of memorable moments captured in time.
 
                     </p>
 
                 </div>
-                <div className="flex flex-wrap justify-center gap-7 mt-5">
+                <div className="flex flex-wrap justify-center gap-7 mt-5 ">
                     {Images.map((pics, index) => (
                         <img src={pics.img}
-                            className="max-w-lg max-h-80 object-contain rounded-2xl transition duration-500 ease-in-out hover:translate-y-2"
+                            className="w-sm sm:w-1/2 lg:w-1/4 object-contain rounded-2xl transition duration-500 ease-in-out hover:translate-y-2 "
                         />
                     ))}
                 </div>
@@ -79,12 +79,12 @@ function Home() {
                         <CarouselContent>
                             {Images.map((image, index) => (
                                 <CarouselItem key={index} className="basis-1/2 md:basis-1/2 lg:basis-1/3 p-2 ">
-                                    <Card className="h-[530px] flex flex-col justify-between">
+                                    <Card className="h-auto flex flex-col justify-between">
 
                                         <CardContent className="flex items-center justify-center flex-grow">
                                             <img
                                                 src={image.img}
-                                                className="w-full h-full object-cover rounded-md text-center"
+                                                className="w-full sm:w-xl sm:h-auto object-cover rounded-md text-center"
                                                 alt={image.value}
                                             />
                                         </CardContent>

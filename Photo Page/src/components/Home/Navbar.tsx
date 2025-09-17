@@ -14,17 +14,17 @@ function Navbar() {
   return (
     <nav className="fixed w-full z-50 bg-gradient-to-r from-purple-800 via-purple-800 to-indigo-800 text-white shadow-md">
 
-      <div className="flex justify-end border border-amber-400">
+      <div className="flex justify-end ">
 
         {/**X and menu divs */}
-        <div className=" border border-red-900 flex items-center justify-end h-auto p-3">
+        <div className=" flex items-center justify-end h-auto p-3">
           {/* Desktop nav links */}
           <div className="hidden md:flex items-center justify-center text-center space-x-4">
             {navItems.map((item, index) => (
               <Link
                 key={index}
                 to={item.href}
-                className="border border-white bg-white/8 backdrop-blur-md text-center shadow-md text-white p-3 md:w-auto rounded-lg hover:bg-purple-800 sm:border-red-300 flex justify-end"
+                className=" bg-white/8 backdrop-blur-md text-center shadow-md text-white p-3 md:w-auto rounded-lg hover:bg-purple-800 sm:border-red-300 flex justify-end"
               >
                 {item.label}
               </Link>
@@ -32,7 +32,7 @@ function Navbar() {
           </div>
 
           {/* Hamburger toggle */}
-          <div className="lg:hidden border border-amber-50">
+          <div className="lg:hidden">
             <button onClick={() => setIsOpen(!isOpen)}>
               {isOpen ? <X size={30} /> : <Menu size={30} />}
             </button>
@@ -41,7 +41,7 @@ function Navbar() {
 
         {/* Mobile menu display */}
         {isOpen && (
-          <div className="md:hidden fixed top-2 left-70 flex flex-row items-center gap-2 justify-center text-center h-auto ">
+          <div className=" fixed top-1.5 flex flex-row items-center gap-2 justify-center text-center h-auto mr-13">
             {navItems.map((item, index) => (
               <Link
                 key={index}
