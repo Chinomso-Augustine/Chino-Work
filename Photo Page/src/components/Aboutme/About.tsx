@@ -10,7 +10,7 @@ function About() {
             <section className='flex justify-center gap-10 h-auto pb-20 '>
 
                 {/**background images  */}
-                <div   className="rounded-[4px] sm:rounded-[9990px] lg:rounded-[12px] w-lg bg-contain py-40 max-h-lg ml-2"
+                <div   className="rounded-lg lg:rounded-lg w-lg bg-contain py-40 max-h-lg ml-2"
 
                     style={{
                         backgroundImage: `url(${BgPic})`,
