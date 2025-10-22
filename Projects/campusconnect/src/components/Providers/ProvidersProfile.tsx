@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../supabaseClient"
 import { useParams } from "react-router-dom";
 import type { Provider } from "../DataTypes/types"
-import { userAuth } from "../cont"
 
 const ProvidersPage = () => {
     /*Storing providers fetched */

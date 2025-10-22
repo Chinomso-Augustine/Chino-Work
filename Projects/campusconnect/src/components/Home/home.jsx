@@ -44,11 +44,11 @@ function Home() {
             </section>
 
             {/*Stats section */}
-            <section className="bg-gradient-to-r from-purple-800 to-indigo-800 py-12 flex flex-col items-center md:flex-row justify-center gap-6 flex-wrap">
+            <section className="bg-gradient-to-r from-purple-800 to-indigo-800 py-10 flex flex-wrap items-center md:flex-row  sm:flex-row justify-center gap-3 ">
                 {stats.map((stat, index) => (
                     <div
                         key={index}
-                        className="bg-white/8 backdrop-blur-md rounded-1xl py-6 text-center shadow-md text-white w-lg md:w-56 rounded-2xl"
+                        className="bg-white/8 backdrop-blur-md rounded-1xl py-5 m-3 text-center shadow-md text-white w-lg md:w-56 rounded-2xl"
                     >
                         <div className="text-3xl font-bold">
                             {stat.value}
@@ -77,9 +77,11 @@ function Home() {
                             key={index}
                             className="bg-white p-6 rounded-lg shadow-sm transition-shadow duration-100 ease-in hover:shadow-lg">
 
+                            <div className="flex gap-3"> 
                             <div className="bg-gradient-to-r from-purple-500  to-indigo-500 w-12 h-12 text-white text-center rounded-lg flex items-center justify-center">{whyUs.icon}</div>
                             <div className="text-lg  font-semibold text-gray-900 mb-2 mt-3">{whyUs.value}</div>
-                            <div className="text-sm text-gray-600">{whyUs.label}</div>
+                            </div>
+                            <div className="text-sm text-gray-600 mt-4">{whyUs.label}</div>
 
                         </div>
                     ))}
@@ -91,7 +93,7 @@ function Home() {
 
                 <p className="text-gray-300 text-lg font-semibold flex text-center justify-center m-4 ">Join our community of students helping students. Find the services you need or offer your skills to others.</p>
 
-                <div className="flex flex-col md:flex-row justify-center gap-6 flex-wrap font-bold mt-9 mb-7">
+                <div className="flex lg:flex-row md:flex-row justify-center gap-6 flex-wrap font-bold mt-9 mb-7">
 
                     <Link to="/Services">
                         <button className="bg-white text-purple-800 text-lg rounded-lg p-4  cursor-pointer">

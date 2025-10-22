@@ -8,7 +8,7 @@ function HowItWorks() {
             </section>
 
             {/**Step By step of how it works */}
-            <section className="bg-gradient-to-r from-purple-900 from-55% to-pink-800 to-100% text-white h-auto py-12 p-13">
+            <section className="bg-gradient-to-r from-purple-900 from-55% to-pink-800 to-100% text-white h-auto py-10 p-13 flex flex-wrap">
                 <div className="mt-6 flex flex-col md:flex-row justify-center items-center flex-wrap gap-12">
 
                     <div className="bg-white/8 backdrop-blur-md py-8 shadow-md text-white rounded-2xl w-lg">
