@@ -63,40 +63,51 @@ export default function DisplayInfo() {
 
             {/**Currently available */}
             <section>
-                <div className="h-auto py-2 ">
-                    <h3 className="text-2xl text-white md:text-3xl text-center font-bold">
+                <div className="h-auto">
+                    <h3 className="text-2xl text-white md:text-3xl text-center font-bold mb-4">
                         Available Today
                     </h3>
                 </div>
 
                 {/**Loop through availableToday and if not available, I leave message */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-5xl mx-auto cursor-pointer">
+                <div className="grid [grid-template-columns:repeat(auto-fit,minmax(100px,1fr))] w-full gap-9 cursor-pointer">
                     {availableToday.length > 0 ? (
                         availableToday.map((p) => (
                             <div
                                 key={p.id}
-                                className="bg-white/14 backdrop-blur-sm shadow-md text-white rounded-4xl p-3 duration-300 ease-in hover:shadow-lg hover:-translate-y-2 "
-
+                                className="bg-white/10 backdrop-blur-sm shadow-md text-white rounded-3xl p-3 duration-300 ease-in hover:shadow-lg hover:-translate-y-2"
                             >
-                                <img src={p.profile_image_url || "/sample1.jpg"} alt="profile" className="rounded-4xl" />
-                                <h2 className="text-2xl font-bold flex justify-center m-3">
+                                <img
+                                    src={p.profile_image_url || '/sample1.jpg'}
+                                    alt="profile"
+                                    className="rounded-4xl"
+                                />
+                                <h2 className="text-base sm:text-lg md:text-xl font-bold text-center m-3">
                                     {p.first_name} {p.last_name}
-
                                 </h2>
-                                <p className=" text-center font-bold text-xl pb-2">{p.service_title}</p>
+                                <p className="text-sm sm:text-base text-center font-semibold">
+                                    {p.service_title}
+                                </p>
 
-                                <div className="font-sans text-sm m-2 flex gap-4 justify-between">
-                                    <p>Location: {p.location} </p>
-                                    <p>Price: {p.price} </p>
+                                <div className="text-xs sm:text-sm m-2 flex gap-4 justify-between">
+                                    <p>Location: {p.location}</p>
+                                    <p>Price: {p.price}</p>
                                 </div>
+
                                 <div className="text-center">
-                                    <h2 className="text-xl font-semibold mt-2">Availability</h2>
+                                    <h2 className="text-lg font-semibold mt-2">Availability</h2>
                                     <h3>
-                                        {p.availability && p.availability.length ? (<div> {p.availability.map((a, index) => (
-                                            <p className="m-2 flex justify-center text-sm" key={index}>
-                                                {a.day}: {a.start} - {a.end} </p>
-                                        ))}
-                                        </div>) : (<p> "N/A"</p>)}
+                                        {p.availability && p.availability.length ? (
+                                            <div>
+                                                {p.availability.map((a, index) => (
+                                                    <p className="m-2 flex justify-center text-sm" key={index}>
+                                                        {a.day}: {a.start} - {a.end}
+                                                    </p>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <p>N/A</p>
+                                        )}
                                     </h3>
                                 </div>
 
@@ -109,10 +120,11 @@ export default function DisplayInfo() {
                                 </div>
                             </div>
                         ))
-                        ): (
+                    ) : (
                         <p className="text-white">No providers yet</p>
-                   ) }
+                    )}
                 </div>
+
             </section>
 
 
