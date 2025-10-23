@@ -75,12 +75,12 @@ export default function DisplayInfo() {
                         availableToday.map((p) => (
                             <div
                                 key={p.id}
-                                className="bg-white/10 backdrop-blur-sm shadow-md text-white rounded-3xl p-3 duration-300 ease-in hover:shadow-lg hover:-translate-y-2"
+                                className="bg-white/10 backdrop-blur-sm shadow-md text-white rounded-xl p-3 m-4 duration-300 ease-in hover:shadow-lg hover:-translate-y-2"
                             >
                                 <img
                                     src={p.profile_image_url || '/sample1.jpg'}
                                     alt="profile"
-                                    className="rounded-4xl"
+                                    className="w-50 h-auto rounded-t-full"
                                 />
                                 <h2 className="text-base sm:text-lg md:text-xl font-bold text-center m-3">
                                     {p.first_name} {p.last_name}
@@ -137,35 +137,40 @@ export default function DisplayInfo() {
                     </h2>
 
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto ">
+                <div className="grid grid-cols-2 xs:grid-cols-4 sm:grid-cols-4 md:grid-cols-5 gap-10 w-full pl-3 border border-amber-300 justify-center text-center">
                     {unavailableToday.length > 0 ? (
                         unavailableToday.map((p) => (
                             <div
                                 key={p.id}
-                                className="bg-white/14 backdrop-blur-sm shadow-md text-white rounded-4xl p-3 duration-300 ease-in hover:shadow-lg hover:-translate-y-2 "
+                                className="bg-white/14 backdrop-blur-sm shadow-md w-50 text-white rounded-2xl p-3 duration-300 ease-in hover:shadow-lg hover:-translate-y-2  border border-amber-600"
 
                             >
-                                <img src={p.profile_image_url || "/sample1.jpg"} alt="profile" className="rounded-4xl" />
-                                <h2 className="text-2xl font-bold flex justify-center m-3">
+                                <img src={p.profile_image_url || "/sample1.jpg"} alt="profile" className="w-50 rounded-t-full border " />
+                                
+                                <h2 className="text-md font-bold text-center">
                                     {p.first_name} {p.last_name}
 
                                 </h2>
-                                <p className=" text-center font-bold text-xl pb-2">{p.service_title}</p>
+                                <p className=" text-sm font-bold text-center">{p.service_title} </p>
 
-                                <div className="font-sans text-sm m-2 flex gap-4 justify-between">
+                                <div className="font-sans flex pt-2">
                                     <p>Location: {p.location} </p>
                                     <p>Price: {p.price} </p>
                                 </div>
+                                {/*
                                 <div className="text-center">
-                                    <h2 className="text-xl font-semibold mt-2">Availability</h2>
-                                    <h3>
+                                    <h2 className="text-sm font-bold mt-2">Availability</h2>
+                                    
+                                  <h3>
                                         {p.availability && p.availability.length ? (<div> {p.availability.map((a, index) => (
                                             <p className="m-2 flex justify-center text-sm" key={index}>
                                                 {a.day}: {a.start} - {a.end} </p>
                                         ))}
                                         </div>) : (<p> "N/A"</p>)}
                                     </h3>
+                                   
                                 </div>
+                                */}
 
                                 <div className="flex justify-center py-2">
                                     <Link key={p.id} to={`/Provider/${p.id}`}>

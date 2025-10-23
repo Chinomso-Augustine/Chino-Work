@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Menu, X } from 'lucide-react';
+import { Flag, Menu, X } from 'lucide-react';
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../../supabaseClient"; // adjust path
+import { useLocation } from "react-router-dom";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,6 +30,15 @@ function Navbar() {
     navigate("/"); // redirect home
   };
 
+  {/*Important func: 
+    Initial state is false. 
+    Get route info which is location from router and start tracking the location. 
+    use useEffect to watch changes in location.pathname. 
+    Whenever location.pathname changes, we call setIsOpen and set it to be false which closes the menue. */}
+  const location = useLocation(); 
+  useEffect(() =>{
+    setIsOpen(false); 
+  }, [location.pathname]); 
   
   const navItems = [
     { label: "Home", href: "/" },
@@ -82,6 +92,7 @@ function Navbar() {
         </div>
       </div>
 
+
       {/* Mobile nav */}
       {isOpen && (
         <div className="md:hidden flex flex-col items-center space-y-4 pb-4">
@@ -98,6 +109,7 @@ function Navbar() {
           {user ? (
             <button
               onClick={handleSignOut}
+              
               className="inline-flex items-center justify-center bg-red-600 w-[130px] h-[45px] text-white text-lg hover:bg-red-700 transition rounded-2xl"
             >
               Sign Out
