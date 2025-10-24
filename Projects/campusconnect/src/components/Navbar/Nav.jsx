@@ -49,7 +49,7 @@ function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-purple-800 via-purple-800 to-indigo-800 text-white shadow-md">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 text-white shadow-md">
       <div className="flex items-center justify-between h-[80px] px-6">
         {/* Logo */}
         <div className="text-3xl font-bold">CampusConnect</div>
@@ -100,7 +100,7 @@ function Navbar() {
             <Link
               key={index}
               to={item.href}
-              className="inline-flex items-center justify-center bg-purple-800 w-[130px] h-[45px] text-white text-lg hover:bg-purple-700 transition rounded-2xl"
+              className="inline-flex items-center justify-center bg-purple-800 w-[130px] h-[45px] text-white text-sm hover:bg-purple-700 transition rounded-2xl"
             >
               {item.label}
             </Link>

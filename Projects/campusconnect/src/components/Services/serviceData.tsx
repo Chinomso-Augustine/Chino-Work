@@ -75,32 +75,32 @@ export default function DisplayInfo() {
                         availableToday.map((p) => (
                             <div
                                 key={p.id}
-                                className="bg-white/10 backdrop-blur-sm shadow-md text-white rounded-xl p-3 m-4 duration-300 ease-in hover:shadow-lg hover:-translate-y-2"
+                                className="bg-white/14 backdrop-blur-sm shadow-md w-42 text-white rounded-2xl p-3 ml-2 duration-300 ease-in hover:shadow-lg hover:-translate-y-2  border border-amber-600"
                             >
                                 <img
                                     src={p.profile_image_url || '/sample1.jpg'}
                                     alt="profile"
-                                    className="w-50 h-auto rounded-t-full"
+                                    className="w-50 rounded-t-full border"
                                 />
-                                <h2 className="text-base sm:text-lg md:text-xl font-bold text-center m-3">
+                                <h2 className="text-sm font-bold text-center">
                                     {p.first_name} {p.last_name}
                                 </h2>
-                                <p className="text-sm sm:text-base text-center font-semibold">
+                                <p className="text-xs font-bold text-center">
                                     {p.service_title}
                                 </p>
 
-                                <div className="text-xs sm:text-sm m-2 flex gap-4 justify-between">
+                                <div className="font-sans text-xs flex pt-2">
                                     <p>Location: {p.location}</p>
                                     <p>Price: {p.price}</p>
                                 </div>
 
                                 <div className="text-center">
-                                    <h2 className="text-lg font-semibold mt-2">Availability</h2>
+                                    <h2 className="text-xs font-semibold mt-2">Availability</h2>
                                     <h3>
                                         {p.availability && p.availability.length ? (
                                             <div>
                                                 {p.availability.map((a, index) => (
-                                                    <p className="m-2 flex justify-center text-sm" key={index}>
+                                                    <p className="m-2 flex justify-center text-xs" key={index}>
                                                         {a.day}: {a.start} - {a.end}
                                                     </p>
                                                 ))}
@@ -142,18 +142,18 @@ export default function DisplayInfo() {
                         unavailableToday.map((p) => (
                             <div
                                 key={p.id}
-                                className="bg-white/14 backdrop-blur-sm shadow-md w-50 text-white rounded-2xl p-3 duration-300 ease-in hover:shadow-lg hover:-translate-y-2  border border-amber-600"
+                                className="bg-white/14 backdrop-blur-sm shadow-md w-42 text-white rounded-2xl p-3 duration-300 ease-in hover:shadow-lg hover:-translate-y-2  border border-amber-600"
 
                             >
                                 <img src={p.profile_image_url || "/sample1.jpg"} alt="profile" className="w-50 rounded-t-full border " />
                                 
-                                <h2 className="text-md font-bold text-center">
+                                <h2 className="text-sm font-bold text-center">
                                     {p.first_name} {p.last_name}
 
                                 </h2>
-                                <p className=" text-sm font-bold text-center">{p.service_title} </p>
+                                <p className=" text-xs font-bold text-center">{p.service_title} </p>
 
-                                <div className="font-sans flex pt-2">
+                                <div className="font-sans text-xs flex pt-2">
                                     <p>Location: {p.location} </p>
                                     <p>Price: {p.price} </p>
                                 </div>
