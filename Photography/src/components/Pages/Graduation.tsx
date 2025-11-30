@@ -1,11 +1,9 @@
-import * as React from "react";
-
 //1. Import all soccer images as object
-import {GradArray} from "../Images/Graduation/imageImporter"
+import { GradArray } from "../Images/Graduation/imageImporter";
 
 function Grad() {
 
-    //2. Convert object into array 
+    //2. Convert object into arrays 
     const pics = GradArray;
 
 
