@@ -9,9 +9,26 @@ function getCurrentDate() {
     return daysOfWeek[currentDay];
 }
 
+// Format full day name into three-letter abbreviation (e.g., Monday -> Mon)
+function formatDay(day: string) {
+    if (!day) return day;
+    const dayNormalized = day.charAt(0).toUpperCase() + day.slice(1).toLowerCase();
+    const map: Record<string, string> = {
+        Sunday: 'Sun',
+        Monday: 'Mon',
+        Tuesday: 'Tue',
+        Wednesday: 'Wed',
+        Thursday: 'Thu',
+        Friday: 'Fri',
+        Saturday: 'Sat',
+    };
+    return map[dayNormalized] ?? day.slice(0, 3);
+}
+
 export default function DisplayInfo() {
     const [providers, setProviders] = useState<Provider[]>([]);
     const [loading, setLoading] = useState(true);
+    const [expandedAvailability, setExpandedAvailability] = useState<Record<string, boolean>>({});
 
     {/**Current day */ }
     const currentDay = getCurrentDate();
@@ -70,17 +87,17 @@ export default function DisplayInfo() {
                 </div>
 
                 {/**Loop through availableToday and if not available, I leave message */}
-                <div className="grid [grid-template-columns:repeat(auto-fit,minmax(100px,1fr))] w-full gap-9 cursor-pointer">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
                     {availableToday.length > 0 ? (
                         availableToday.map((p) => (
                             <div
                                 key={p.id}
-                                className="bg-white/14 backdrop-blur-sm shadow-md w-42 text-white rounded-2xl p-3 ml-2 duration-300 ease-in hover:shadow-lg hover:-translate-y-2  border border-amber-600"
+                                className="bg-white/14 backdrop-blur-sm shadow-md text-white rounded-2xl p-3 max-w-xs mx-auto duration-300 ease-in hover:shadow-lg hover:-translate-y-1 border border-amber-600"
                             >
                                 <img
                                     src={p.profile_image_url || '/sample1.jpg'}
                                     alt="profile"
-                                    className="w-50 rounded-t-full border"
+                                    className="w-28 h-28 object-cover rounded-full mx-auto border"
                                 />
                                 <h2 className="text-sm font-bold text-center">
                                     {p.first_name} {p.last_name}
@@ -99,11 +116,19 @@ export default function DisplayInfo() {
                                     <h3>
                                         {p.availability && p.availability.length ? (
                                             <div>
-                                                {p.availability.map((a, index) => (
+                                                {(expandedAvailability[String(p.id)] ? p.availability : p.availability.slice(0, 3)).map((a, index) => (
                                                     <p className="m-2 flex justify-center text-xs" key={index}>
-                                                        {a.day}: {a.start} - {a.end}
+                                                        {formatDay(a.day)}: {a.start} - {a.end}
                                                     </p>
                                                 ))}
+                                                {p.availability.length > 3 && (
+                                                    <button
+                                                        className="text-xs text-blue-300 hover:underline mt-1"
+                                                        onClick={() => setExpandedAvailability(prev => ({ ...prev, [String(p.id)]: !prev[String(p.id)] }))}
+                                                    >
+                                                        {expandedAvailability[String(p.id)] ? "View less" : `View ${p.availability.length - 3} more`}
+                                                    </button>
+                                                )}
                                             </div>
                                         ) : (
                                             <p>N/A</p>
@@ -113,7 +138,7 @@ export default function DisplayInfo() {
 
                                 <div className="flex justify-center py-2">
                                     <Link key={p.id} to={`/Provider/${p.id}`}>
-                                        <button className="bg-white/8 backdrop-blur-md shadow-md text-white p-3 rounded-lg hover:bg-purple-800">
+                                        <button className="bg-white/8 backdrop-blur-md shadow-md text-white px-3 py-2 text-sm rounded-lg hover:bg-purple-800">
                                             Provider Page
                                         </button>
                                     </Link>
@@ -137,16 +162,16 @@ export default function DisplayInfo() {
                     </h2>
 
                 </div>
-                <div className="grid grid-cols-2 xs:grid-cols-4 sm:grid-cols-4 md:grid-cols-5 gap-10 w-full pl-3 border border-amber-300 justify-center text-center">
+                <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-6 w-full pl-3 border border-amber-300 justify-center text-center">
                     {unavailableToday.length > 0 ? (
                         unavailableToday.map((p) => (
                             <div
                                 key={p.id}
-                                className="bg-white/14 backdrop-blur-sm shadow-md w-42 text-white rounded-2xl p-3 duration-300 ease-in hover:shadow-lg hover:-translate-y-2  border border-amber-600"
+                                className="bg-white/14 backdrop-blur-sm shadow-md text-white rounded-2xl p-3 max-w-xs mx-auto duration-300 ease-in hover:shadow-lg hover:-translate-y-1 border border-amber-600"
 
                             >
-                                <img src={p.profile_image_url || "/sample1.jpg"} alt="profile" className="w-50 rounded-t-full border " />
-                                
+                                <img src={p.profile_image_url || "/sample1.jpg"} alt="profile" className="w-28 h-28 object-cover rounded-full mx-auto border " />
+
                                 <h2 className="text-sm font-bold text-center">
                                     {p.first_name} {p.last_name}
 
@@ -164,7 +189,7 @@ export default function DisplayInfo() {
                                   <h3>
                                         {p.availability && p.availability.length ? (<div> {p.availability.map((a, index) => (
                                             <p className="m-2 flex justify-center text-sm" key={index}>
-                                                {a.day}: {a.start} - {a.end} </p>
+                                                {formatDay(a.day)}: {a.start} - {a.end} </p>
                                         ))}
                                         </div>) : (<p> "N/A"</p>)}
                                     </h3>
@@ -174,7 +199,7 @@ export default function DisplayInfo() {
 
                                 <div className="flex justify-center py-2">
                                     <Link key={p.id} to={`/Provider/${p.id}`}>
-                                        <button className="bg-white/8 backdrop-blur-md shadow-md text-white p-3 rounded-lg hover:bg-purple-800">
+                                        <button className="bg-white/8 backdrop-blur-md shadow-md text-white px-3 py-2 text-sm rounded-lg hover:bg-purple-800">
                                             Provider Page
                                         </button>
                                     </Link>

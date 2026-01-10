@@ -42,7 +42,6 @@ function Navbar() {
   
   const navItems = [
     { label: "Home", href: "/" },
-    { label: "How It Works", href: "/work" },
     { label: "View Services", href: "/Services" },
     { label: "View Providers", href: "/Providers" },
     { label: "Become A Provider", href: "/ProvidersForm" },

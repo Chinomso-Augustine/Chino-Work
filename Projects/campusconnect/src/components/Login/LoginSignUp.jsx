@@ -72,8 +72,12 @@ const LoginSignUp = () => {
         setLoading(true);
 
         try {
+            // Use an explicit app URL env var when available to ensure redirect is correct
+            const redirectTo = `${import.meta.env.VITE_APP_URL ?? window.location.origin}/auth/reset`;
+            console.log('Password reset redirectTo:', redirectTo);
+
             const { error } = await supabase.auth.resetPasswordForEmail(formData.email, {
-                redirectTo: `${window.location.origin}/auth/reset`,
+                redirectTo,
             });
             if (error) throw error;
             setMsg("Reset link sent. Check your email")
@@ -99,11 +103,14 @@ const LoginSignUp = () => {
 
         try {
             if (action === "Sign Up") {
+                // Use explicit app URL when available to ensure callback redirect matches dev server
+                const appUrl = import.meta.env.VITE_APP_URL ?? window.location.origin;
+                console.log('Sign-up emailRedirectTo:', `${appUrl}/auth/callback`);
                 const { error } = await supabase.auth.signUp({
                     email: formData.email,
                     password: formData.password,
                     options: {
-                        emailRedirectTo: `${window.location.origin}/auth/callback`,
+                        emailRedirectTo: `${appUrl}/auth/callback`,
                         data: { full_name: formData.name },
                     },
                 });
