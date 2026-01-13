@@ -4,9 +4,8 @@ import { useParams } from "react-router-dom";
 import type { Provider } from "../DataTypes/types";
 
 const ProvidersPage = () => {
-  /*───────────────────────────────────────────
-    STATE MANAGEMENT
-  ───────────────────────────────────────────*/
+  // STATE MANAGEMENT
+
   const [sessionUserId, setSessionUserId] = useState<string | null>(null); // Logged-in user id
   const [provider, setProvider] = useState<Provider | null>(null); // Provider data
   const [form, setForm] = useState<Partial<Provider>>({}); // Editable form data
@@ -19,7 +18,9 @@ const ProvidersPage = () => {
   ───────────────────────────────────────────*/
   useEffect(() => {
     const fetchUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       setSessionUserId(session?.user?.id ?? null);
     };
     fetchUser();
@@ -105,7 +106,9 @@ const ProvidersPage = () => {
       <div
         className="flex w-full p-13 mt-10 bg-cover items-center relative"
         style={{
-          backgroundImage: `url(${provider.profile_image_url || "/sample1.jpg"})`,
+          backgroundImage: `url(${
+            provider.profile_image_url || "/sample1.jpg"
+          })`,
         }}
       >
         <div className="absolute inset-0 bg-black/30" />
@@ -124,9 +127,7 @@ const ProvidersPage = () => {
             <p className="text-2xl text-gray-100 mt-6">
               {provider.service_title} - {provider.category}
             </p>
-            <p className="text-lg text-gray-100 mt-6">
-              {provider.description}
-            </p>
+            <p className="text-lg text-gray-100 mt-6">{provider.description}</p>
           </div>
         </div>
       </div>
@@ -206,15 +207,13 @@ const ProvidersPage = () => {
                 <input
                   className="text-black w-full p-2 rounded"
                   value={form.price || ""}
-                  onChange={(e) =>
-                    setForm({ ...form, price: e.target.value })
-                  }
+                  onChange={(e) => setForm({ ...form, price: e.target.value })}
                 />
               </div>
 
               {/* Location */}
               <div>
-                <label>Location</label>
+                <label>Location </label>
                 <input
                   className="text-black w-full p-2 rounded"
                   value={form.location || ""}
@@ -252,9 +251,7 @@ const ProvidersPage = () => {
                 <input
                   className="text-black w-full p-2 rounded"
                   value={form.site || ""}
-                  onChange={(e) =>
-                    setForm({ ...form, site: e.target.value })
-                  }
+                  onChange={(e) => setForm({ ...form, site: e.target.value })}
                 />
               </div>
             </div>
@@ -339,9 +336,7 @@ const ProvidersPage = () => {
                     : "bg-gray-400 text-white cursor-not-allowed opacity-70"
                 }`}
               >
-                {sessionUserId && isOwner
-                  ? "Edit Profile"
-                  : "Login to Edit"}
+                {sessionUserId && isOwner ? "Edit Profile" : "Login to Edit"}
               </button>
             </div>
           </div>
