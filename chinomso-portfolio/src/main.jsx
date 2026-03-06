@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import About from "./About";
@@ -10,7 +10,7 @@ import Refill from "./Refill";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/about" element={<About />} />
@@ -18,6 +18,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/case1" element={<Case1 />} />
         <Route path="/refill" element={<Refill />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>
 );
