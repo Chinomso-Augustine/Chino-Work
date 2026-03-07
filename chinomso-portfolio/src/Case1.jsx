@@ -54,10 +54,10 @@ export default function Case1() {
           </div>
 
           <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <MetaItem label="Role" value="Undercover FBI agent" />
-            <MetaItem label="Type" value="johnny appleseed" />
-            <MetaItem label="Audience" value="Colin Bridgerton" />
-            <MetaItem label="Focus" value="Lady Gaga's blonde wig" />
+            <MetaItem label="Role" value="UI/UX Designer" />
+            <MetaItem label="Type" value="UX Case Study" />
+            <MetaItem label="Audience" value="College Students" />
+            <MetaItem label="Focus" value="Affordability + Visibility" />
           </div>
 
           <div className="mt-6">
