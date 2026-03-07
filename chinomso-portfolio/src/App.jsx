@@ -261,7 +261,7 @@ function Contact() {
       <div className="space-y-4">
         <a
           href="mailto:chinomsoaugustine073@gmail.com"
-          className="block w-full bg-blue-50 hover:bg-blue-100 transition px-4 py-3 rounded-lg text-sm text-center"
+          className="block w-full bg-purple-200 hover:bg-blue-100 transition px-4 py-3 rounded-lg text-lg text-center text-black"
         >
           Email
         </a>

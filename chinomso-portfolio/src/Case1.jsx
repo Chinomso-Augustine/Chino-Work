@@ -40,6 +40,7 @@ export default function Case1() {
               <p className="mt-4 max-w-2xl text-sm leading-7 text-violet-950/90">
                 CampusConnect connects college students who need affordable services with students who offer them.
                 It is designed to reduce costs, grow student entrepreneurship, and strengthen campus community trust.
+                
               </p>
             </div>
 
@@ -53,10 +54,10 @@ export default function Case1() {
           </div>
 
           <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <MetaItem label="Role" value="UI/UX Designer" />
-            <MetaItem label="Type" value="UX Case Study" />
-            <MetaItem label="Audience" value="College Students" />
-            <MetaItem label="Focus" value="Affordability + Visibility" />
+            <MetaItem label="Role" value="Undercover FBI agent" />
+            <MetaItem label="Type" value="johnny appleseed" />
+            <MetaItem label="Audience" value="Colin Bridgerton" />
+            <MetaItem label="Focus" value="Lady Gaga's blonde wig" />
           </div>
 
           <div className="mt-6">
