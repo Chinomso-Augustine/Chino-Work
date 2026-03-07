@@ -56,7 +56,7 @@ export default function Case1() {
           <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <MetaItem label="Role" value="UI/UX Designer" />
             <MetaItem label="Type" value="UX Case Study" />
-            <MetaItem label="Audience" value="College Students" />
+            <MetaItem label="Audience" value="College Student" />
             <MetaItem label="Focus" value="Affordability + Visibility" />
           </div>
 
