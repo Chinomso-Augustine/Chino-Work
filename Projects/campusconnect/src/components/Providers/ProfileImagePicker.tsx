@@ -138,7 +138,7 @@ export default function ProfileImagePicker({
                 )}
             </div>
 
-            {uploading && <p className="text-xs text-purple-600">Uploading…</p>}
+            {uploading && <p className="text-xs text-purple-500">Uploading…</p>}
             {err && <p className="text-red-600 text-sm">{err}</p>}
         </div>
     );

@@ -40,16 +40,16 @@ const ResetPassword = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-100 via-purple-200 to-purple-300 px-4">
-            <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
-                <h2 className="text-2xl font-bold text-purple-800 text-center mb-4">
+        <div className="min-h-screen flex items-center justify-center bg-purple-50/40 px-4">
+            <div className="bg-white p-8 rounded-2xl shadow-sm border border-amber-200/60 w-full max-w-md">
+                <h2 className="text-2xl font-semibold text-purple-900 text-center mb-4">
                     Reset Password
                 </h2>
                 <form className="space-y-4" onSubmit={handleReset}>
                     <input
                         type="password"
                         placeholder="New Password"
-                        className="w-full border rounded-lg px-4 py-2 bg-purple-50 outline-none"
+                        className="w-full border border-purple-200/60 rounded-lg px-4 py-2 bg-purple-50 outline-none text-sm"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
@@ -57,7 +57,7 @@ const ResetPassword = () => {
                     <input
                         type="password"
                         placeholder="Confirm Password"
-                        className="w-full border rounded-lg px-4 py-2 bg-purple-50 outline-none"
+                        className="w-full border border-purple-200/60 rounded-lg px-4 py-2 bg-purple-50 outline-none text-sm"
                         value={confirm}
                         onChange={(e) => setConfirm(e.target.value)}
                         required

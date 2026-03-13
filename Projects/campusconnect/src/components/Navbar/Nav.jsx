@@ -47,19 +47,38 @@ function Navbar() {
     { label: "Become A Provider", href: "/ProvidersForm" },
   ];
 
+  const getInitials = (authUser) => {
+    if (!authUser) return "";
+    const fullName = authUser?.user_metadata?.full_name?.trim();
+    if (fullName) {
+      const parts = fullName.split(/\s+/).filter(Boolean);
+      if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
+      const first = parts[0].charAt(0);
+      const last = parts[parts.length - 1].charAt(0);
+      return `${first}${last}`.toUpperCase();
+    }
+    const email = authUser?.email || "";
+    return email ? email.charAt(0).toUpperCase() : "";
+  };
+
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 text-white shadow-md">
-      <div className="flex items-center justify-between h-[80px] px-6">
+    <nav className="fixed top-0 left-0 w-full z-50 border-b border-purple-200/70 bg-white/90 text-slate-900 shadow-sm backdrop-blur">
+      <div className="flex items-center justify-between h-[78px] px-6">
         {/* Logo */}
-        <div className="text-3xl font-bold">CampusConnect</div>
+        <Link
+          to="/"
+          className="text-2xl font-semibold tracking-tight text-purple-900 hover:text-purple-800"
+        >
+          CampusConnect
+        </Link>
 
         {/* Desktop nav links */}
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="hidden md:flex items-center space-x-3">
           {navItems.map((item, index) => (
             <Link
               key={index}
               to={item.href}
-              className="bg-white/8 backdrop-blur-md text-center shadow-md text-white p-3 rounded-lg hover:bg-purple-800"
+              className="rounded-lg border border-purple-200/70 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-purple-300 hover:text-purple-900"
             >
               {item.label}
             </Link>
@@ -67,16 +86,24 @@ function Navbar() {
 
           {/* Conditional Sign In / Sign Out */}
           {user ? (
-            <button
-              onClick={handleSignOut}
-              className="bg-red-400 p-3 rounded-lg hover:bg-red-700 transition"
-            >
-              Sign Out
-            </button>
+            <>
+              <div
+                title={user?.user_metadata?.full_name || user?.email || "Logged in"}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-purple-200/70 bg-white text-xs font-semibold text-purple-700"
+              >
+                {getInitials(user)}
+              </div>
+              <button
+                onClick={handleSignOut}
+                className="rounded-lg border border-purple-200/70 bg-purple-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-purple-800"
+              >
+                Sign Out
+              </button>
+            </>
           ) : (
             <Link
               to="/LoginSignUp"
-              className="bg-white/8 backdrop-blur-md text-center shadow-md text-white p-3 rounded-lg hover:bg-purple-800"
+              className="rounded-lg border border-purple-200/70 bg-purple-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-purple-800"
             >
               Log In
             </Link>
@@ -94,12 +121,17 @@ function Navbar() {
 
       {/* Mobile nav */}
       {isOpen && (
-        <div className="md:hidden flex flex-col items-center space-y-4 pb-4">
+        <div className="md:hidden flex flex-col items-center space-y-3 pb-4">
+          {user && (
+            <div className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-purple-200/70 bg-white text-sm font-semibold text-purple-700">
+              {getInitials(user)}
+            </div>
+          )}
           {navItems.map((item, index) => (
             <Link
               key={index}
               to={item.href}
-              className="inline-flex items-center justify-center bg-purple-800 w-[130px] h-[45px] text-white text-sm hover:bg-purple-700 transition rounded-2xl"
+              className="inline-flex items-center justify-center w-[160px] rounded-xl border border-purple-200/70 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-purple-300 hover:text-purple-900"
             >
               {item.label}
             </Link>
@@ -109,14 +141,14 @@ function Navbar() {
             <button
               onClick={handleSignOut}
               
-              className="inline-flex items-center justify-center bg-red-600 w-[130px] h-[45px] text-white text-lg hover:bg-red-700 transition rounded-2xl"
+              className="inline-flex items-center justify-center w-[160px] rounded-xl bg-purple-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-purple-800"
             >
               Sign Out
             </button>
           ) : (
             <Link
               to="/LoginSignUp"
-              className="inline-flex items-center justify-center bg-purple-800 w-[130px] h-[45px] text-white text-lg hover:bg-purple-700 transition rounded-2xl"
+              className="inline-flex items-center justify-center w-[160px] rounded-xl bg-purple-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-purple-800"
             >
               Sign In
             </Link>

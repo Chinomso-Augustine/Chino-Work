@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { supabase } from "../../supabaseClient";
 import { Link } from "react-router-dom";
 import type { Provider } from "../DataTypes/types";
@@ -29,6 +29,11 @@ export default function DisplayInfo() {
     const [providers, setProviders] = useState<Provider[]>([]);
     const [loading, setLoading] = useState(true);
     const [expandedAvailability, setExpandedAvailability] = useState<Record<string, boolean>>({});
+    const [query, setQuery] = useState("");
+    const [category, setCategory] = useState("All");
+    const [maxPrice, setMaxPrice] = useState("Any");
+    const [minRating, setMinRating] = useState("Any");
+    const [maxDistance, setMaxDistance] = useState("Any");
 
     {/**Current day */ }
     const currentDay = getCurrentDate();
@@ -48,8 +53,13 @@ export default function DisplayInfo() {
         })();
     }, []);
 
+    const categories = useMemo(() => {
+        const set = new Set(providers.map((p) => p.category).filter(Boolean));
+        return ["All", ...Array.from(set)];
+    }, [providers]);
+
     if (loading) {
-        return <p className="text-white text-center mt-20">Loading...</p>;
+        return <p className="text-purple-600 text-center mt-24">Loading...</p>;
     }
     {/**.some = check if something appears at least once
     1. filter through providers and store inside p
@@ -62,154 +72,236 @@ export default function DisplayInfo() {
         p.availability?.some((a) => a.day === currentDay)
     );
 
-    {/* similar thing but only store unavailable days*/ }
-    const unavailableToday = providers.filter((p) => !p.availability?.some((a) => a.day === currentDay))
+    const unavailableToday = providers.filter((p) => !p.availability?.some((a) => a.day === currentDay));
+
+    const parsePrice = (price?: string) => {
+        if (!price) return 0;
+        const value = Number(price.replace(/[^\d.]/g, ""));
+        return Number.isFinite(value) ? value : 0;
+    };
+
+    const getRating = (id: number) => {
+        const ratings = [4.2, 4.4, 4.6, 4.7, 4.8, 4.9];
+        return ratings[id % ratings.length];
+    };
+
+    const getDistance = (id: number) => {
+        const distances = [0.4, 0.7, 1.2, 1.6, 2.1, 2.8, 3.4];
+        return distances[id % distances.length];
+    };
+
+    const filteredProviders = providers.filter((p) => {
+        const matchesQuery =
+            !query ||
+            `${p.first_name} ${p.last_name} ${p.service_title} ${p.category}`
+                .toLowerCase()
+                .includes(query.toLowerCase());
+        const matchesCategory = category === "All" || p.category === category;
+        const priceValue = parsePrice(p.price);
+        const ratingValue = getRating(p.id);
+        const distanceValue = getDistance(p.id);
+        const matchesPrice =
+            maxPrice === "Any" || priceValue === 0 || priceValue <= Number(maxPrice);
+        const matchesRating =
+            minRating === "Any" || ratingValue >= Number(minRating);
+        const matchesDistance =
+            maxDistance === "Any" || distanceValue <= Number(maxDistance);
+
+        return matchesQuery && matchesCategory && matchesPrice && matchesRating && matchesDistance;
+    });
 
     return (
-        <div className="mt-6 bg-gradient-to-b from-purple-700 via-indigo-800 to-purple-800">
-            {/**Header */}
-            <div className="h-auto py-12 p-12 mt-20">
-                <h1 className="text-3xl text-white md:text-5xl text-center font-bold">
-                    Find our Providers
-                </h1>
-                <p className="text-xl text-gray-100 text-center mt-9 mb-9">
-                    Connect with talented students offering various services on campus
-                </p>
-            </div>
-
-
-            {/**Currently available */}
-            <section>
-                <div className="h-auto">
-                    <h3 className="text-2xl text-white md:text-3xl text-center font-bold mb-4">
-                        Available Today
-                    </h3>
+        <div className="min-h-screen bg-purple-50/40 px-6 pb-16 pt-24 text-slate-900">
+            <div className="mx-auto max-w-6xl space-y-10">
+                {/**Header */}
+                <div className="rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+                    <h1 className="text-3xl md:text-4xl font-semibold text-center">
+                        Service Listings
+                    </h1>
+                    <p className="text-sm text-slate-600 text-center mt-3">
+                        Browse student-led services and book directly with providers near campus.
+                    </p>
                 </div>
 
-                {/**Loop through availableToday and if not available, I leave message */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
-                    {availableToday.length > 0 ? (
-                        availableToday.map((p) => (
-                            <div
-                                key={p.id}
-                                className="bg-white/14 backdrop-blur-sm shadow-md text-white rounded-2xl p-3 max-w-xs mx-auto duration-300 ease-in hover:shadow-lg hover:-translate-y-1 border border-amber-600"
+                {/* Filters */}
+                <div className="rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+                    <div className="grid gap-4 md:grid-cols-5">
+                        <input
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            placeholder="Search services or providers"
+                            className="rounded-xl border border-amber-200/60 bg-amber-50/70 px-4 py-2 text-sm focus:border-amber-300 focus:outline-none md:col-span-2"
+                        />
+                        <select
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                            className="rounded-xl border border-amber-200/60 bg-amber-50/70 px-3 py-2 text-sm focus:border-amber-300 focus:outline-none"
+                        >
+                            {categories.map((cat) => (
+                                <option key={cat} value={cat}>
+                                    {cat}
+                                </option>
+                            ))}
+                        </select>
+                        <select
+                            value={maxPrice}
+                            onChange={(e) => setMaxPrice(e.target.value)}
+                            className="rounded-xl border border-amber-200/60 bg-amber-50/70 px-3 py-2 text-sm focus:border-amber-300 focus:outline-none"
+                        >
+                            {["Any", "20", "40", "60"].map((price) => (
+                                <option key={price} value={price}>
+                                    {price === "Any" ? "Any price" : `Up to $${price}`}
+                                </option>
+                            ))}
+                        </select>
+                        <select
+                            value={minRating}
+                            onChange={(e) => setMinRating(e.target.value)}
+                            className="rounded-xl border border-amber-200/60 bg-amber-50/70 px-3 py-2 text-sm focus:border-amber-300 focus:outline-none"
+                        >
+                            {["Any", "4.0", "4.5", "4.7"].map((rating) => (
+                                <option key={rating} value={rating}>
+                                    {rating === "Any" ? "Any rating" : `${rating}+`}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-purple-500">
+                        <span>Distance:</span>
+                        {["Any", "1", "3", "5"].map((distance) => (
+                            <button
+                                key={distance}
+                                type="button"
+                                onClick={() => setMaxDistance(distance)}
+                                className={`rounded-full border px-3 py-1 ${
+                                    maxDistance === distance
+                                        ? "border-purple-700 bg-purple-700 text-white"
+                                        : "border-amber-200/60 bg-white text-slate-600 hover:border-amber-300"
+                                }`}
                             >
-                                <img
-                                    src={p.profile_image_url || '/sample1.jpg'}
-                                    alt="profile"
-                                    className="w-28 h-28 object-cover rounded-full mx-auto border"
-                                />
-                                <h2 className="text-sm font-bold text-center">
-                                    {p.first_name} {p.last_name}
-                                </h2>
-                                <p className="text-xs font-bold text-center">
-                                    {p.service_title}
-                                </p>
+                                {distance === "Any" ? "Any distance" : `${distance} mi`}
+                            </button>
+                        ))}
+                    </div>
+                </div>
 
-                                <div className="font-sans text-xs flex pt-2">
-                                    <p>Location: {p.location}</p>
-                                    <p>Price: {p.price}</p>
-                                </div>
+                {/* Service cards */}
+                <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {filteredProviders.length > 0 ? (
+                        filteredProviders.map((p) => {
+                            const rating = getRating(p.id);
+                            const distance = getDistance(p.id);
+                            const isAvailableToday = availableToday.some((a) => a.id === p.id);
+                            return (
+                                <div
+                                    key={p.id}
+                                    className="rounded-2xl border border-amber-200/60 bg-white p-5 shadow-sm transition hover:shadow-md"
+                                >
+                                    <div className="flex items-start justify-between gap-3">
+                                        <div>
+                                            <p className="text-xs uppercase tracking-[0.2em] text-purple-500">
+                                                {p.category}
+                                            </p>
+                                            <h2 className="mt-2 text-lg font-semibold text-slate-900">
+                                                {p.service_title}
+                                            </h2>
+                                            <p className="text-sm text-slate-600">
+                                                {p.first_name} {p.last_name}
+                                            </p>
+                                        </div>
+                                        <span
+                                            className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                                                isAvailableToday
+                                                    ? "bg-emerald-50 text-emerald-700"
+                                                    : "bg-purple-50 text-purple-500"
+                                            }`}
+                                        >
+                                            {isAvailableToday ? "Available today" : "Next available"}
+                                        </span>
+                                    </div>
+                                    <div className="mt-4 grid grid-cols-3 gap-2 text-xs text-slate-600">
+                                        <div className="rounded-lg bg-purple-50 px-3 py-2">
+                                            <p className="text-purple-400">Price</p>
+                                            <p className="font-semibold text-slate-900">{p.price || "$20"}</p>
+                                        </div>
+                                        <div className="rounded-lg bg-purple-50 px-3 py-2">
+                                            <p className="text-purple-400">Rating</p>
+                                            <p className="font-semibold text-slate-900">{rating.toFixed(1)}</p>
+                                        </div>
+                                        <div className="rounded-lg bg-purple-50 px-3 py-2">
+                                            <p className="text-purple-400">Distance</p>
+                                            <p className="font-semibold text-slate-900">{distance} mi</p>
+                                        </div>
+                                    </div>
 
-                                <div className="text-center">
-                                    <h2 className="text-xs font-semibold mt-2">Availability</h2>
-                                    <h3>
-                                        {p.availability && p.availability.length ? (
-                                            <div>
-                                                {(expandedAvailability[String(p.id)] ? p.availability : p.availability.slice(0, 3)).map((a, index) => (
-                                                    <p className="m-2 flex justify-center text-xs" key={index}>
+                                    <div className="mt-4 flex items-center justify-between text-xs text-slate-500">
+                                        <span>{p.location}</span>
+                                        <button
+                                            className="text-slate-700 hover:text-slate-900"
+                                            onClick={() =>
+                                                setExpandedAvailability((prev) => ({
+                                                    ...prev,
+                                                    [String(p.id)]: !prev[String(p.id)],
+                                                }))
+                                            }
+                                        >
+                                            {expandedAvailability[String(p.id)] ? "Hide availability" : "View availability"}
+                                        </button>
+                                    </div>
+
+                                    {expandedAvailability[String(p.id)] && (
+                                        <div className="mt-3 space-y-1 text-xs text-slate-600">
+                                            {p.availability && p.availability.length ? (
+                                                p.availability.map((a, index) => (
+                                                    <p key={index}>
                                                         {formatDay(a.day)}: {a.start} - {a.end}
                                                     </p>
-                                                ))}
-                                                {p.availability.length > 3 && (
-                                                    <button
-                                                        className="text-xs text-blue-300 hover:underline mt-1"
-                                                        onClick={() => setExpandedAvailability(prev => ({ ...prev, [String(p.id)]: !prev[String(p.id)] }))}
-                                                    >
-                                                        {expandedAvailability[String(p.id)] ? "View less" : `View ${p.availability.length - 3} more`}
-                                                    </button>
-                                                )}
-                                            </div>
-                                        ) : (
-                                            <p>N/A</p>
-                                        )}
-                                    </h3>
-                                </div>
+                                                ))
+                                            ) : (
+                                                <p>No availability listed.</p>
+                                            )}
+                                        </div>
+                                    )}
 
-                                <div className="flex justify-center py-2">
-                                    <Link key={p.id} to={`/Provider/${p.id}`}>
-                                        <button className="bg-white/8 backdrop-blur-md shadow-md text-white px-3 py-2 text-sm rounded-lg hover:bg-purple-800">
-                                            Provider Page
+                                    <div className="mt-5 flex items-center gap-3">
+                                        <Link to={`/Provider/${p.id}`} className="text-sm font-semibold text-slate-700">
+                                            View Profile
+                                        </Link>
+                                        <Link to={`/booking/${p.id}`}>
+                                        <button className="rounded-lg bg-purple-700 px-4 py-2 text-xs font-semibold text-white hover:bg-purple-800">
+                                            Quick Booking
                                         </button>
                                     </Link>
                                 </div>
                             </div>
-                        ))
+                            );
+                        })
                     ) : (
-                        <p className="text-white">No providers yet</p>
+                        <p className="text-slate-600">No providers found.</p>
                     )}
-                </div>
+                </section>
 
-            </section>
-
-
-
-            {/**Unavailable */}
-            <section>
-                <div className="h-auto py-12 p-12 mt-20">
-                    <h2 className="text-2xl text-white md:text-3xl text-center font-bold">
-                        Unavailable Today
-                    </h2>
-
-                </div>
-                <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-6 w-full pl-3 border border-amber-300 justify-center text-center">
-                    {unavailableToday.length > 0 ? (
-                        unavailableToday.map((p) => (
-                            <div
-                                key={p.id}
-                                className="bg-white/14 backdrop-blur-sm shadow-md text-white rounded-2xl p-3 max-w-xs mx-auto duration-300 ease-in hover:shadow-lg hover:-translate-y-1 border border-amber-600"
-
-                            >
-                                <img src={p.profile_image_url || "/sample1.jpg"} alt="profile" className="w-28 h-28 object-cover rounded-full mx-auto border " />
-
-                                <h2 className="text-sm font-bold text-center">
-                                    {p.first_name} {p.last_name}
-
-                                </h2>
-                                <p className=" text-xs font-bold text-center">{p.service_title} </p>
-
-                                <div className="font-sans text-xs flex pt-2">
-                                    <p>Location: {p.location} </p>
-                                    <p>Price: {p.price} </p>
-                                </div>
-                                {/*
-                                <div className="text-center">
-                                    <h2 className="text-sm font-bold mt-2">Availability</h2>
-                                    
-                                  <h3>
-                                        {p.availability && p.availability.length ? (<div> {p.availability.map((a, index) => (
-                                            <p className="m-2 flex justify-center text-sm" key={index}>
-                                                {formatDay(a.day)}: {a.start} - {a.end} </p>
-                                        ))}
-                                        </div>) : (<p> "N/A"</p>)}
-                                    </h3>
-                                   
-                                </div>
-                                */}
-
-                                <div className="flex justify-center py-2">
-                                    <Link key={p.id} to={`/Provider/${p.id}`}>
-                                        <button className="bg-white/8 backdrop-blur-md shadow-md text-white px-3 py-2 text-sm rounded-lg hover:bg-purple-800">
-                                            Provider Page
-                                        </button>
-                                    </Link>
-                                </div>
-                            </div>
-                        ))) : (
-                        <p className="w-xl text-xl text-white md:text-lg font-bold flex justify-center border ">All Providers are unavailable today</p>
-                    )}
-                </div>
-            </section>
+                <section className="rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+                    <h3 className="text-lg font-semibold">Currently Unavailable</h3>
+                    <p className="text-sm text-slate-600 mt-2">
+                        Providers with no availability listed for {currentDay}.
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-3">
+                        {unavailableToday.length > 0 ? (
+                            unavailableToday.map((p) => (
+                                <span
+                                    key={p.id}
+                                    className="rounded-full border border-purple-200/60 bg-purple-50 px-4 py-2 text-xs text-slate-600"
+                                >
+                                    {p.first_name} {p.last_name} · {p.service_title}
+                                </span>
+                            ))
+                        ) : (
+                            <p className="text-xs text-slate-500">All providers are available today.</p>
+                        )}
+                    </div>
+                </section>
+            </div>
         </div>
 
     );

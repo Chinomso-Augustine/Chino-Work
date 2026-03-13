@@ -1,4 +1,3 @@
-import { MockProviders } from "../Mock Data/MockUserData";
 import ServiceData from "./serviceData"
 
 function Services() {

@@ -224,7 +224,7 @@ const ProvidersForm = () => {
 
     /*Form */
     return (
-        <div className="bg-gradient-to-b from-purple-100 to-white py-6 px-6 mt-16 border w-full max-w-4xl mx-auto rounded-lg shadow">
+        <div className="bg-white py-6 px-6 mt-20 border border-amber-200/60 w-full max-w-4xl mx-auto rounded-2xl shadow-sm">
 
             <form className="space-y-6" onSubmit={handleSubmit}>
                 <HeaderInfo />
@@ -290,7 +290,7 @@ const HeaderInfo = () => (
 
 const BasicInfo = ({ userOptions, formData, setFormData, handleChange }) => (
     <section>
-        <div className="flex items-center gap-2 mb-2 text-lg text-purple-400">
+        <div className="flex items-center gap-2 mb-2 text-lg text-purple-700">
             <User />
             <h2 className="font-semibold">Basic Information</h2>
         </div>
@@ -299,7 +299,7 @@ const BasicInfo = ({ userOptions, formData, setFormData, handleChange }) => (
             <div className="flex-1 min-w-[200px]">
                 <p>First name *</p>
                 <input
-                    className="border rounded-sm text-lg mt-1 w-full p-2"
+                    className="border border-purple-200/60 rounded-lg text-sm mt-1 w-full p-2"
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleChange}
@@ -309,7 +309,7 @@ const BasicInfo = ({ userOptions, formData, setFormData, handleChange }) => (
             <div className="flex-1 min-w-[200px]">
                 <p>Last name *</p>
                 <input
-                    className="border rounded-sm text-lg mt-1 w-full p-2"
+                    className="border border-purple-200/60 rounded-lg text-sm mt-1 w-full p-2"
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
@@ -321,7 +321,7 @@ const BasicInfo = ({ userOptions, formData, setFormData, handleChange }) => (
             <div className="flex-1 min-w-[200px]">
                 <p>Service Title *</p>
                 <input
-                    className="border rounded-sm text-lg mt-1 w-full p-2"
+                    className="border border-purple-200/60 rounded-lg text-sm mt-1 w-full p-2"
                     name="serviceTitle"
                     placeholder="Ex, Haircut"
                     value={formData.serviceTitle}
@@ -351,7 +351,7 @@ const BasicInfo = ({ userOptions, formData, setFormData, handleChange }) => (
                 value={formData.description}
                 onChange={handleChange}
                 placeholder="Describe your service in detail"
-                className="border p-3 rounded-lg w-full"
+                className="border border-purple-200/60 p-3 rounded-lg w-full text-sm"
             />
         </div>
 
@@ -363,7 +363,7 @@ const BasicInfo = ({ userOptions, formData, setFormData, handleChange }) => (
                 value={formData.site}
                 onChange={handleChange}
                 placeholder="Provide link to your personal website if you have one"
-                className="border p-3 rounded-lg w-full"
+                className="border border-purple-200/60 p-3 rounded-lg w-full text-sm"
             />
         </div>
     </section>
@@ -372,7 +372,7 @@ const BasicInfo = ({ userOptions, formData, setFormData, handleChange }) => (
 
 const LocationPricing = ({ formData, handleChange }) => (
     <section>
-        <div className="flex items-center gap-2 mb-2 text-lg text-purple-400">
+        <div className="flex items-center gap-2 mb-2 text-lg text-purple-700">
             <MapPin />
             <h2 className="font-semibold">Location & Pricing</h2>
         </div>
@@ -380,7 +380,7 @@ const LocationPricing = ({ formData, handleChange }) => (
             <div className="flex-1 min-w-[200px]">
                 <p>Location *</p>
                 <input
-                    className="border rounded-sm text-lg mt-1 w-full p-2"
+                    className="border border-purple-200/60 rounded-lg text-sm mt-1 w-full p-2"
                     name="location"
                     placeholder="e.g Campus Library, Dorm"
                     value={formData.location}
@@ -391,7 +391,7 @@ const LocationPricing = ({ formData, handleChange }) => (
             <div className="flex-1 min-w-[200px]">
                 <p>Price</p>
                 <input
-                    className="border rounded-sm text-lg mt-1 w-full p-2"
+                    className="border border-purple-200/60 rounded-lg text-sm mt-1 w-full p-2"
                     name="price"
                     placeholder="e.g $20/hr"
                     value={formData.price}
@@ -404,7 +404,7 @@ const LocationPricing = ({ formData, handleChange }) => (
 
 const ContactInfo = ({ formData, handleChange }) => (
     <section>
-        <div className="flex items-center gap-2 mb-2 text-lg text-purple-400">
+        <div className="flex items-center gap-2 mb-2 text-lg text-purple-700">
             <Mail />
             <h2 className="font-semibold">Contact Information</h2>
         </div>
@@ -412,7 +412,7 @@ const ContactInfo = ({ formData, handleChange }) => (
             <div className="flex-1 min-w-[200px]">
                 <p>Email *</p>
                 <input
-                    className="border rounded-sm text-lg mt-1 w-full p-2"
+                    className="border border-purple-200/60 rounded-lg text-sm mt-1 w-full p-2"
                     name="email"
                     type="email"
                     placeholder="example@email.com"
@@ -424,7 +424,7 @@ const ContactInfo = ({ formData, handleChange }) => (
             <div className="flex-1 min-w-[200px]">
                 <p>Phone (Optional)</p>
                 <input
-                    className="border rounded-sm text-lg mt-1 w-full p-2"
+                    className="border border-purple-200/60 rounded-lg text-sm mt-1 w-full p-2"
                     name="phone"
                     type="tel"
                     placeholder="(242) 143 5899"
@@ -438,20 +438,20 @@ const ContactInfo = ({ formData, handleChange }) => (
 
 const ServiceOffered = ({ text, setText, offers, handleService, deleteOffer }) => (
     <section>
-        <div className="flex items-center gap-2 mb-2 text-lg text-purple-400">
+        <div className="flex items-center gap-2 mb-2 text-lg text-purple-700">
             <Star />
             <h2 className="font-semibold">Services Offered</h2>
         </div>
         <div className="flex gap-4">
             <textarea
                 rows={2}
-                className="border w-full rounded-sm"
+                className="border border-purple-200/60 w-full rounded-lg text-sm p-2"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
             />
             <button
                 type="button"
-                className="w-12 rounded-sm bg-purple-400 cursor-pointer text-white font-bold"
+                className="w-12 rounded-lg bg-purple-700 cursor-pointer text-white font-bold hover:bg-purple-800"
                 onClick={handleService}
                 aria-label="Add Service"
             >
@@ -462,7 +462,7 @@ const ServiceOffered = ({ text, setText, offers, handleService, deleteOffer }) =
             {offers.map((offer) => (
                 <li
                     key={offer.id}
-                    className="flex justify-between bg-purple-200 rounded mt-2  w-auto"
+                className="flex justify-between bg-purple-100 rounded-lg mt-2 w-auto px-3 py-2 text-sm"
 
                 >
                     <span> {offer.text} </span>
@@ -484,7 +484,7 @@ const ServiceOffered = ({ text, setText, offers, handleService, deleteOffer }) =
 const Availability = ({ days, checklist, handleSelect, availability, setDayTime }) => (
     <section>
 
-        <div className="flex items-center gap-2 mb-2 text-lg text-purple-400">
+        <div className="flex items-center gap-2 mb-2 text-lg text-purple-700">
             <Clock />
             <h2 className="font-semibold">Availability</h2>
         </div>
@@ -493,7 +493,7 @@ const Availability = ({ days, checklist, handleSelect, availability, setDayTime 
         <div className="flex gap-2 flex-wrap mb-2">
             <label className="font-medium">Selected: </label>
             {checklist.map((day, index) => (
-                <span key={index} className="bg-purple-200 px-2 py-1 rounded text-sm">
+                <span key={index} className="bg-purple-100 px-2 py-1 rounded text-sm">
                     {day}
                 </span>
             ))}
@@ -506,8 +506,8 @@ const Availability = ({ days, checklist, handleSelect, availability, setDayTime 
                 const times = availability[day] || { start: "", end: "" };
 
                 return (
-                    <div key={id} className="flex items-center gap-3 border rounded p-2 flex-wrap">
-                        <label className="flex items-center gap-2 min-w-[120px] font-bold text-lg">
+                    <div key={id} className="flex items-center gap-3 border border-purple-200/60 rounded-lg p-2 flex-wrap">
+                        <label className="flex items-center gap-2 min-w-[120px] font-semibold text-sm">
                             <input
                                 type="checkbox"
                                 value={day}
@@ -540,7 +540,7 @@ const AboutYou = ({ formData, handleChange }) => (
             value={formData.bio}
             onChange={handleChange}
             placeholder="Tell students about yourself, background, experience..."
-            className="border w-full rounded p-2"
+            className="border border-purple-200/60 w-full rounded-lg p-2 text-sm"
         />
         <div className="mt-4">
             <p>Experience</p>
@@ -550,7 +550,7 @@ const AboutYou = ({ formData, handleChange }) => (
                 value={formData.experience}
                 onChange={handleChange}
                 placeholder="Describe relevant experience or achievements"
-                className="border w-full rounded p-2"
+                className="border border-purple-200/60 w-full rounded-lg p-2 text-sm"
             />
         </div>
     </section>
@@ -558,12 +558,12 @@ const AboutYou = ({ formData, handleChange }) => (
 
 const CreateAccountBtn = ({disabled = false}) => (
     <div className="flex justify-end gap-4">
-        <button type="button" className="px-4 py-2 border rounded">
+        <button type="button" className="px-4 py-2 border border-purple-200/60 rounded-lg text-sm text-slate-600">
             Cancel
         </button>
         <button
             type="submit"
-            className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600"
+            className="px-4 py-2 bg-purple-700 text-white rounded-lg text-sm hover:bg-purple-800"
             disabled={disabled}
 
         >

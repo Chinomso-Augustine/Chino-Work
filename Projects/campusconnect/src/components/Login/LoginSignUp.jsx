@@ -136,12 +136,12 @@ const LoginSignUp = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-100 via-purple-200 to-purple-300 px-4">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-purple-50/40 px-4">
+      <div className="bg-white p-8 rounded-2xl shadow-sm border border-amber-200/60 w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-6">
-          <div className="text-2xl font-bold text-purple-800">{action}</div>
-          <div className="w-16 h-1 bg-purple-800 mx-auto mt-2 rounded"></div>{" "}
+          <div className="text-2xl font-semibold text-purple-900">{action}</div>
+          <div className="w-16 h-1 bg-purple-700 mx-auto mt-2 rounded"></div>{" "}
           {/*For line bellow header */}
         </div>
 
@@ -151,13 +151,13 @@ const LoginSignUp = () => {
           {action === "Login" ? (
             <div></div>
           ) : (
-            <div className="flex items-center border rounded-lg px-4 py-2 bg-purple-50">
-              <FaUser className="text-purple-600 mr-3" />
+            <div className="flex items-center border border-purple-200/60 rounded-lg px-4 py-2 bg-purple-50">
+              <FaUser className="text-purple-500 mr-3" />
               <input
                 type="text"
                 name="name"
                 placeholder="Name"
-                className="bg-transparent outline-none flex-1"
+                className="bg-transparent outline-none flex-1 text-sm"
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -165,26 +165,26 @@ const LoginSignUp = () => {
             </div>
           )}
 
-          <div className="flex items-center border rounded-lg px-4 py-2 bg-purple-50">
-            <FaEnvelope className="text-purple-600 mr-3" />
+          <div className="flex items-center border border-purple-200/60 rounded-lg px-4 py-2 bg-purple-50">
+            <FaEnvelope className="text-purple-500 mr-3" />
             <input
               type="email"
               name="email"
               placeholder="Email"
-              className="bg-transparent outline-none flex-1"
+              className="bg-transparent outline-none flex-1 text-sm"
               value={formData.email}
               onChange={handleChange}
               required
             />
           </div>
 
-          <div className="flex items-center border rounded-lg px-4 py-2 bg-purple-50">
-            <FaLock className="text-purple-600 mr-3" />
+          <div className="flex items-center border border-purple-200/60 rounded-lg px-4 py-2 bg-purple-50">
+            <FaLock className="text-purple-500 mr-3" />
             <input
               type="password"
               name="password"
               placeholder="Password"
-              className="bg-transparent outline-none flex-1"
+              className="bg-transparent outline-none flex-1 text-sm"
               value={formData.password}
               onChange={handleChange}
               required
@@ -192,13 +192,13 @@ const LoginSignUp = () => {
           </div>
           {/*confirm password  */}
           {action == "Login" ? null : (
-            <div className="flex items-center border rounded-lg px-4 py-2 bg-purple-50">
-              <FaLock className="text-purple-600 mr-3" />
+            <div className="flex items-center border border-purple-200/60 rounded-lg px-4 py-2 bg-purple-50">
+              <FaLock className="text-purple-500 mr-3" />
               <input
                 type="password"
                 name="confirm"
                 placeholder="Confirm Password"
-                className="bg-transparent outline-none flex-1"
+                className="bg-transparent outline-none flex-1 text-sm"
                 value={formData.confirm}
                 onChange={handleChange}
                 required
@@ -215,7 +215,7 @@ const LoginSignUp = () => {
               type="button"
               className={`flex-1 py-2 rounded-lg font-semibold ${
                 action === "Login"
-                  ? "bg-purple-300 text-gray-700 cursor-default"
+                  ? "bg-purple-100 text-purple-600 cursor-default"
                   : "bg-purple-700 text-white hover:bg-purple-800 transition"
               }`}
               onClick={() => {
@@ -228,7 +228,7 @@ const LoginSignUp = () => {
               type="button"
               className={`flex-1 py-2 rounded-lg font-semibold ${
                 action === "Sign Up"
-                  ? "bg-purple-300 text-gray-700 cursor-default"
+                  ? "bg-purple-100 text-purple-600 cursor-default"
                   : "bg-purple-700 text-white hover:bg-purple-800 transition"
               }`}
               onClick={() => {

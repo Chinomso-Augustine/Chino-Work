@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../supabaseClient";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import type { Provider } from "../DataTypes/types";
 
 const ProvidersPage = () => {
@@ -100,52 +100,217 @@ const ProvidersPage = () => {
   /*───────────────────────────────────────────
     STEP 7: RENDER
   ───────────────────────────────────────────*/
+  const portfolioImages = Array.from({ length: 4 }).map((_, idx) => ({
+    id: idx,
+    src: provider.profile_image_url || "/sample1.jpg",
+  }));
+
+  const reviews = [
+    {
+      name: "Jordan M.",
+      rating: "4.8",
+      text: "Fast response, clear communication, and exactly what I needed.",
+    },
+    {
+      name: "Ava T.",
+      rating: "4.7",
+      text: "Great service and friendly. The booking flow was smooth.",
+    },
+    {
+      name: "Liam P.",
+      rating: "4.9",
+      text: "Very professional and affordable. Will book again.",
+    },
+  ];
+
   return (
-    <div className="border mt-6 bg-linear-to-b from-purple-700 via-indigo-800 to-purple-800">
+    <div className="min-h-screen bg-purple-50/40 px-6 pb-16 pt-24 text-slate-900">
       {/* ───── Header Section ───── */}
-      <div
-        className="flex w-full p-13 mt-10 bg-cover items-center relative"
-        style={{
-          backgroundImage: `url(${
-            provider.profile_image_url || "/sample1.jpg"
-          })`,
-        }}
-      >
-        <div className="absolute inset-0 bg-black/30" />
-        <div className="relative w-xs flex-shrink-0">
-          <img
-            src={provider.profile_image_url || "/sample1.jpg"}
-            alt={`${provider.first_name} ${provider.last_name}`}
-            className="h-80 w-80 rounded-full object-cover border"
-          />
-        </div>
-        <div className="relative flex-grow flex justify-center">
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl text-center p-6">
-            <h1 className="text-3xl text-white md:text-5xl font-bold">
+      <div className="mx-auto max-w-6xl rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+        <div className="flex flex-col gap-6 md:flex-row md:items-center">
+          <div className="flex-shrink-0">
+            <img
+              src={provider.profile_image_url || "/sample1.jpg"}
+              alt={`${provider.first_name} ${provider.last_name}`}
+              className="h-32 w-32 rounded-2xl object-cover border border-amber-200/60"
+            />
+          </div>
+          <div className="flex-1">
+            <p className="text-xs uppercase tracking-[0.3em] text-purple-500">Provider Profile</p>
+            <h1 className="mt-3 text-3xl font-semibold">
               {provider.first_name} {provider.last_name}
             </h1>
-            <p className="text-2xl text-gray-100 mt-6">
-              {provider.service_title} - {provider.category}
+            <p className="mt-2 text-sm text-slate-600">
+              {provider.service_title} · {provider.category}
             </p>
-            <p className="text-lg text-gray-100 mt-6">{provider.description}</p>
+            <p className="mt-4 text-sm text-slate-700">{provider.description}</p>
+          </div>
+          <div className="flex flex-col items-start gap-3 md:items-end">
+            <p className="text-sm text-slate-500">Starting at</p>
+            <p className="text-2xl font-semibold text-slate-900">{provider.price || "$20"}</p>
+            <Link
+              to={`/booking/${provider.id}`}
+              className="inline-flex items-center justify-center rounded-xl bg-purple-700 px-5 py-3 text-sm font-semibold text-white hover:bg-purple-800"
+            >
+              Book Appointment
+            </Link>
+            {/* Edit icon button */}
+            <button
+              type="button"
+              onClick={() => {
+                if (!sessionUserId) {
+                  alert("You must be logged in to edit.");
+                  return;
+                }
+                if (!isOwner) {
+                  alert("You can only edit your own profile.");
+                  return;
+                }
+                setEditing(true);
+              }}
+              disabled={!sessionUserId || !isOwner}
+              title={sessionUserId && isOwner ? "Edit profile" : "Login to edit"}
+              aria-label={sessionUserId && isOwner ? "Edit profile" : "Login to edit"}
+              className={`inline-flex items-center justify-center rounded-full border px-3 py-3 transition ${
+                sessionUserId && isOwner
+                  ? "border-purple-200 bg-white text-purple-700 hover:border-purple-300 hover:bg-purple-50"
+                  : "border-purple-200 bg-white text-purple-300 cursor-not-allowed opacity-70"
+              }`}
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
 
       {/* ───── Main Content Section ───── */}
-      <div className="backdrop-blur-sm shadow-md text-white rounded-2xl p-6">
-        {/* ───── EDIT MODE ───── */}
-        {editing && isOwner ? (
-          <div className="bg-white/14 backdrop-blur-md shadow-md text-white text-center mb-6 rounded-2xl p-3">
-            <h1 className="font-bold text-xl mb-7">Edit Your Profile</h1>
+      <div className="mx-auto mt-8 max-w-6xl grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+        <div className="space-y-6">
+          <div className="rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+            <h2 className="text-lg font-semibold">Portfolio</h2>
+            <p className="text-sm text-slate-600 mt-2">
+              Recent work and service highlights.
+            </p>
+            <div className="mt-4 grid grid-cols-2 gap-3">
+              {portfolioImages.map((image) => (
+                <img
+                  key={image.id}
+                  src={image.src}
+                  alt="Portfolio sample"
+                  className="h-32 w-full rounded-xl object-cover border border-amber-200/60"
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+            <h2 className="text-lg font-semibold">Pricing & Services</h2>
+            <div className="mt-4 space-y-3 text-sm text-slate-700">
+              <div className="flex items-center justify-between">
+                <span>Base service</span>
+                <span className="font-semibold text-slate-900">{provider.price || "$20"}</span>
+              </div>
+              {provider.offers && provider.offers.length > 0 ? (
+                provider.offers.map((offer, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <span>{offer.text}</span>
+                    <span className="text-slate-500">Custom</span>
+                  </div>
+                ))
+              ) : (
+                <div className="flex items-center justify-between text-slate-500">
+                  <span>Custom add-ons</span>
+                  <span>Available upon request</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+            <h2 className="text-lg font-semibold">Ratings & Reviews</h2>
+            <div className="mt-4 space-y-4">
+              {reviews.map((review, index) => (
+                <div key={index} className="rounded-xl border border-purple-200/60 bg-purple-50 p-4">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="font-semibold text-slate-900">{review.name}</span>
+                    <span className="text-purple-700">{review.rating} ★</span>
+                  </div>
+                  <p className="mt-2 text-sm text-slate-600">{review.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <div className="rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+            <h2 className="text-lg font-semibold">Availability</h2>
+            <p className="text-sm text-slate-600 mt-2">
+              Available time slots this week.
+            </p>
+            <div className="mt-4 space-y-2 text-sm text-slate-700">
+              {provider.availability && provider.availability.length ? (
+                provider.availability.map((slot, index) => (
+                  <div key={index} className="flex items-center justify-between">
+                    <span>{slot.day}</span>
+                    <span className="font-semibold text-slate-900">
+                      {slot.start} - {slot.end}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <p className="text-slate-500">No availability listed.</p>
+              )}
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+            <h2 className="text-lg font-semibold">About</h2>
+            <div className="mt-4 space-y-3 text-sm text-slate-700">
+              <p>
+                <strong>Bio:</strong> {provider.bio || "No bio provided"}
+              </p>
+              <p>
+                <strong>Experience:</strong> {provider.experience || "N/A"}
+              </p>
+              <p>
+                <strong>Location:</strong> {provider.location}
+              </p>
+              <p>
+                <strong>Contact:</strong> {provider.email}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ───── Edit / Read-only Section ───── */}
+      {editing && isOwner ? (
+        <div className="mx-auto mt-8 max-w-6xl rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+          {/* ───── EDIT MODE ───── */}
+          <div className="text-center mb-6">
+            <h1 className="font-semibold text-xl mb-7">Edit Your Profile</h1>
 
             {/* Editable Form Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
               {/* First Name */}
               <div>
-                <label>First Name</label>
+                <label className="text-sm text-slate-600">First Name</label>
                 <input
-                  className="text-black w-full p-2 rounded"
+                  className="w-full rounded-lg border border-purple-200/60 p-2 text-sm text-slate-900"
                   value={form.first_name || ""}
                   onChange={(e) =>
                     setForm({ ...form, first_name: e.target.value })
@@ -155,9 +320,9 @@ const ProvidersPage = () => {
 
               {/* Last Name */}
               <div>
-                <label>Last Name</label>
+                <label className="text-sm text-slate-600">Last Name</label>
                 <input
-                  className="text-black w-full p-2 rounded"
+                  className="w-full rounded-lg border border-purple-200/60 p-2 text-sm text-slate-900"
                   value={form.last_name || ""}
                   onChange={(e) =>
                     setForm({ ...form, last_name: e.target.value })
@@ -167,9 +332,9 @@ const ProvidersPage = () => {
 
               {/* Service Title */}
               <div>
-                <label>Service Title</label>
+                <label className="text-sm text-slate-600">Service Title</label>
                 <input
-                  className="text-black w-full p-2 rounded"
+                  className="w-full rounded-lg border border-purple-200/60 p-2 text-sm text-slate-900"
                   value={form.service_title || ""}
                   onChange={(e) =>
                     setForm({ ...form, service_title: e.target.value })
@@ -179,9 +344,9 @@ const ProvidersPage = () => {
 
               {/* Category */}
               <div>
-                <label>Category</label>
+                <label className="text-sm text-slate-600">Category</label>
                 <input
-                  className="text-black w-full p-2 rounded"
+                  className="w-full rounded-lg border border-purple-200/60 p-2 text-sm text-slate-900"
                   value={form.category || ""}
                   onChange={(e) =>
                     setForm({ ...form, category: e.target.value })
@@ -191,9 +356,9 @@ const ProvidersPage = () => {
 
               {/* Description */}
               <div className="col-span-2">
-                <label>Description</label>
+                <label className="text-sm text-slate-600">Description</label>
                 <textarea
-                  className="text-black w-full p-2 rounded"
+                  className="w-full rounded-lg border border-purple-200/60 p-2 text-sm text-slate-900"
                   value={form.description || ""}
                   onChange={(e) =>
                     setForm({ ...form, description: e.target.value })
@@ -203,9 +368,9 @@ const ProvidersPage = () => {
 
               {/* Price */}
               <div>
-                <label>Price</label>
+                <label className="text-sm text-slate-600">Price</label>
                 <input
-                  className="text-black w-full p-2 rounded"
+                  className="w-full rounded-lg border border-purple-200/60 p-2 text-sm text-slate-900"
                   value={form.price || ""}
                   onChange={(e) => setForm({ ...form, price: e.target.value })}
                 />
@@ -213,9 +378,9 @@ const ProvidersPage = () => {
 
               {/* Location */}
               <div>
-                <label>Location </label>
+                <label className="text-sm text-slate-600">Location </label>
                 <input
-                  className="text-black w-full p-2 rounded"
+                  className="w-full rounded-lg border border-purple-200/60 p-2 text-sm text-slate-900"
                   value={form.location || ""}
                   onChange={(e) =>
                     setForm({ ...form, location: e.target.value })
@@ -225,9 +390,9 @@ const ProvidersPage = () => {
 
               {/* Bio */}
               <div className="col-span-2">
-                <label>Bio</label>
+                <label className="text-sm text-slate-600">Bio</label>
                 <textarea
-                  className="text-black w-full p-2 rounded"
+                  className="w-full rounded-lg border border-purple-200/60 p-2 text-sm text-slate-900"
                   value={form.bio || ""}
                   onChange={(e) => setForm({ ...form, bio: e.target.value })}
                 />
@@ -235,9 +400,9 @@ const ProvidersPage = () => {
 
               {/* Experience */}
               <div className="col-span-2">
-                <label>Experience</label>
+                <label className="text-sm text-slate-600">Experience</label>
                 <textarea
-                  className="text-black w-full p-2 rounded"
+                  className="w-full rounded-lg border border-slate-200 p-2 text-sm text-slate-900"
                   value={form.experience || ""}
                   onChange={(e) =>
                     setForm({ ...form, experience: e.target.value })
@@ -247,9 +412,9 @@ const ProvidersPage = () => {
 
               {/* Site */}
               <div className="col-span-2">
-                <label>Personal Site</label>
+                <label className="text-sm text-slate-600">Personal Site</label>
                 <input
-                  className="text-black w-full p-2 rounded"
+                  className="w-full rounded-lg border border-slate-200 p-2 text-sm text-slate-900"
                   value={form.site || ""}
                   onChange={(e) => setForm({ ...form, site: e.target.value })}
                 />
@@ -268,10 +433,10 @@ const ProvidersPage = () => {
                   handleSave();
                 }}
                 disabled={!sessionUserId}
-                className={`font-bold rounded-xl px-6 py-3 transition ${
+                className={`font-semibold rounded-xl px-6 py-3 transition ${
                   sessionUserId
-                    ? "bg-white text-black hover:bg-purple-300"
-                    : "bg-gray-400 text-white cursor-not-allowed opacity-70"
+                    ? "bg-purple-700 text-white hover:bg-purple-800"
+                    : "bg-purple-200 text-white cursor-not-allowed opacity-70"
                 }`}
               >
                 {sessionUserId ? "Save" : "Login to Save"}
@@ -279,69 +444,15 @@ const ProvidersPage = () => {
 
               {/* CANCEL BUTTON */}
               <button
-                className="bg-gray-400 text-white font-bold rounded-xl px-6 py-3 hover:bg-gray-500"
+                className="bg-purple-100 text-purple-900 font-semibold rounded-xl px-6 py-3 hover:bg-purple-200"
                 onClick={() => setEditing(false)}
               >
                 Cancel
               </button>
             </div>
           </div>
-        ) : (
-          /* ───── READ-ONLY MODE ───── */
-          <div className="bg-white/14 backdrop-blur-md shadow-md text-white text-center mb-6 rounded-2xl p-3">
-            <h1 className="font-bold text-xl mb-7">About</h1>
-            <p className="p-2">
-              <strong>Bio:</strong> {provider.bio || "No bio provided"}
-            </p>
-            <p className="p-2">
-              <strong>Experience:</strong> {provider.experience || "N/A"}
-            </p>
-            <p className="p-2">
-              <strong>Service Title:</strong> {provider.service_title}
-            </p>
-            <p className="p-2">
-              <strong>Category:</strong> {provider.category}
-            </p>
-            <p className="p-2">
-              <strong>Description:</strong> {provider.description}
-            </p>
-            <p className="p-2">
-              <strong>Price:</strong> {provider.price}
-            </p>
-            <p className="p-2">
-              <strong>Location:</strong> {provider.location}
-            </p>
-            <p className="p-2">
-              <strong>Site:</strong> {provider.site}
-            </p>
-
-            {/* 🔹 EDIT BUTTON — disabled if not logged in or not owner */}
-            <div className="flex justify-center mb-6 mt-4">
-              <button
-                onClick={() => {
-                  if (!sessionUserId) {
-                    alert("You must be logged in to edit.");
-                    return;
-                  }
-                  if (!isOwner) {
-                    alert("You can only edit your own profile.");
-                    return;
-                  }
-                  setEditing(true);
-                }}
-                disabled={!sessionUserId || !isOwner}
-                className={`font-bold rounded-xl px-6 py-3 transition ${
-                  sessionUserId && isOwner
-                    ? "bg-white text-black hover:bg-purple-300"
-                    : "bg-gray-400 text-white cursor-not-allowed opacity-70"
-                }`}
-              >
-                {sessionUserId && isOwner ? "Edit Profile" : "Login to Edit"}
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
+        </div>
+      ) : null}
     </div>
   );
 };
