@@ -1,8 +1,13 @@
+import { useState } from "react";
+import type { FormEvent } from "react";
 import { Clock, Search, Star, User } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MockProviders, ServiceCategory } from "../Mock Data/MockUserData";
 
 function Home() {
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+
   const stats = [
     { value: "500+", label: "Active Students" },
     { value: "4.5", label: "Average Rating", icon: <Star className="inline w-8 h-7 ml-1" /> },
@@ -36,6 +41,18 @@ function Home() {
   const popularCategories = Object.keys(ServiceCategory);
   const recommendedProviders = MockProviders.slice(0, 3);
 
+  const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const normalizedQuery = searchQuery.trim();
+
+    if (!normalizedQuery) {
+      navigate("/Services");
+      return;
+    }
+
+    navigate(`/Services?search=${encodeURIComponent(normalizedQuery)}`);
+  };
+
   return (
     <div className="page-shell">
       <section className="app-hero mx-auto mt-2 max-w-6xl">
@@ -52,17 +69,22 @@ function Home() {
           </p>
 
           <div className="mt-8 flex flex-col md:flex-row justify-center items-center gap-4">
-            <div className="mx-auto flex w-full max-w-2xl items-center gap-3 rounded-full border border-blue-100 bg-white/95 px-4 py-3 shadow-lg">
+            <form
+              onSubmit={handleSearch}
+              className="mx-auto flex w-full max-w-2xl items-center gap-3 rounded-full border border-blue-100 bg-white/95 px-4 py-3 shadow-lg"
+            >
               <Search className="h-5 w-5 text-blue-500" />
               <input
                 type="text"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
                 placeholder="Search for haircuts, tutoring, photography..."
                 className="w-full bg-transparent text-sm text-slate-700 focus:outline-none"
               />
-              <button className="app-btn-primary px-5 py-2.5">
+              <button type="submit" className="app-btn-primary px-5 py-2.5">
                 Search
               </button>
-            </div>
+            </form>
           </div>
 
           <div className="mt-8 flex flex-col md:flex-row justify-center items-center gap-4">

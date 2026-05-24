@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
 import { supabase } from "../../supabaseClient";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import type { Provider } from "../DataTypes/types";
 
 function getCurrentDate() {
@@ -26,10 +26,12 @@ function formatDay(day: string) {
 }
 
 export default function ServiceData() {
+    const [searchParams] = useSearchParams();
+    const searchQuery = searchParams.get("search")?.trim() ?? "";
     const [providers, setProviders] = useState<Provider[]>([]);
     const [loading, setLoading] = useState(true);
     const [expandedAvailability, setExpandedAvailability] = useState<Record<string, boolean>>({});
-    const [query, setQuery] = useState("");
+    const [query, setQuery] = useState(searchQuery);
     const [category, setCategory] = useState("All");
     const [maxPrice, setMaxPrice] = useState("Any");
     const [minRating, setMinRating] = useState("Any");
@@ -53,6 +55,10 @@ export default function ServiceData() {
         })();
     }, []);
 
+    useEffect(() => {
+        setQuery(searchQuery);
+    }, [searchQuery]);
+
     const categories = useMemo(() => {
         const set = new Set(providers.map((p) => p.category).filter(Boolean));
         return ["All", ...Array.from(set)];
@@ -72,7 +78,9 @@ export default function ServiceData() {
         p.availability?.some((a) => a.day === currentDay)
     );
 
-    const unavailableToday = providers.filter((p) => !p.availability?.some((a) => a.day === currentDay));
+    const unavailableToday = providers.filter(
+        (p) => !p.availability?.some((a) => a.day === currentDay)
+    );
 
     const parsePrice = (price?: string) => {
         if (!price) return 0;
@@ -275,7 +283,16 @@ export default function ServiceData() {
                             );
                         })
                     ) : (
-                        <p className="text-slate-600">No providers found.</p>
+                        <div className="app-card sm:col-span-2 lg:col-span-3">
+                            <h2 className="text-xl font-semibold text-slate-900">
+                                Service is unavailable
+                            </h2>
+                            <p className="app-subtle mt-2 text-sm">
+                                {query.trim()
+                                    ? `We couldn't find a service for "${query.trim()}". Try a different search or browse all services.`
+                                    : "We couldn't find any services right now. Please try again later."}
+                            </p>
+                        </div>
                     )}
                 </section>
 
