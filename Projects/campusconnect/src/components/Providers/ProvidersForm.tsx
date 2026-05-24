@@ -7,7 +7,7 @@ import {
   type FormEvent,
   type SetStateAction,
 } from "react";
-import Select from "react-select";
+import Select, { type StylesConfig } from "react-select";
 import { Clock, Mail, MapPin, Star, User } from "lucide-react";
 import { supabase } from "../../supabaseClient";
 import ProfileImagePicker from "./ProfileImagePicker";
@@ -54,6 +54,40 @@ type ProviderFormData = {
   category: CategoryOption | null;
   profileImageUrl: string;
   profileImagePath: string;
+};
+
+const selectStyles: StylesConfig<CategoryOption, false> = {
+  control: (base, state) => ({
+    ...base,
+    minHeight: "50px",
+    borderRadius: "18px",
+    borderColor: state.isFocused ? "#1a73e8" : "#dde3ea",
+    backgroundColor: "rgba(255,255,255,0.92)",
+    boxShadow: state.isFocused ? "0 0 0 4px rgba(26, 115, 232, 0.12)" : "none",
+    "&:hover": {
+      borderColor: "#1a73e8",
+    },
+  }),
+  placeholder: (base) => ({
+    ...base,
+    color: "#5f6368",
+  }),
+  singleValue: (base) => ({
+    ...base,
+    color: "#1f1f1f",
+  }),
+  menu: (base) => ({
+    ...base,
+    borderRadius: "20px",
+    overflow: "hidden",
+    boxShadow: "0 10px 30px rgba(60, 64, 67, 0.16)",
+  }),
+  option: (base, state) => ({
+    ...base,
+    backgroundColor: state.isSelected ? "#1a73e8" : state.isFocused ? "#eef3fd" : "#fff",
+    color: state.isSelected ? "#fff" : "#1f1f1f",
+    cursor: "pointer",
+  }),
 };
 
 const category = [
@@ -239,8 +273,8 @@ const ProvidersForm = () => {
   };
 
   return (
-    <div className="bg-white py-6 px-6 mt-20 border border-amber-200/60 w-full max-w-4xl mx-auto rounded-2xl shadow-sm">
-      <form className="space-y-6" onSubmit={handleSubmit}>
+    <div className="page-shell">
+      <form className="page-container max-w-5xl" onSubmit={handleSubmit}>
         <HeaderInfo />
 
         <BasicInfo
@@ -293,9 +327,12 @@ const ProvidersForm = () => {
 export default ProvidersForm;
 
 const HeaderInfo = () => (
-  <div className="text-center">
-    <h2 className="text-lg md:text-2xl font-bold">Create Your Provider Profile</h2>
-    <p className="mt-1">Tell students about your services and availability</p>
+  <div className="app-hero text-center">
+    <div className="app-badge">Become a provider</div>
+    <h2 className="mt-4 text-3xl font-semibold text-slate-900 md:text-4xl">Create Your Provider Profile</h2>
+    <p className="app-subtle mx-auto mt-3 max-w-2xl text-base">
+      Tell students what you offer, when you’re available, and why they should book with you.
+    </p>
   </div>
 );
 
@@ -307,17 +344,19 @@ type BasicInfoProps = {
 };
 
 const BasicInfo = ({ userOptions, formData, setFormData, handleChange }: BasicInfoProps) => (
-  <section>
-    <div className="flex items-center gap-2 mb-2 text-lg text-purple-700">
-      <User />
+  <section className="app-card space-y-5">
+    <div className="mb-2 flex items-center gap-3 text-lg text-blue-700">
+      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50">
+        <User className="h-5 w-5" />
+      </div>
       <h2 className="font-semibold">Basic Information</h2>
     </div>
 
-    <div className="flex gap-4 flex-wrap justify-center">
+    <div className="flex flex-wrap justify-center gap-4">
       <div className="flex-1 min-w-[200px]">
-        <p>First name *</p>
+        <p className="mb-2 text-sm font-medium text-slate-700">First name *</p>
         <input
-          className="border border-purple-200/60 rounded-lg text-sm mt-1 w-full p-2"
+          className="app-input"
           name="firstName"
           value={formData.firstName}
           onChange={handleChange}
@@ -325,9 +364,9 @@ const BasicInfo = ({ userOptions, formData, setFormData, handleChange }: BasicIn
       </div>
 
       <div className="flex-1 min-w-[200px]">
-        <p>Last name *</p>
+        <p className="mb-2 text-sm font-medium text-slate-700">Last name *</p>
         <input
-          className="border border-purple-200/60 rounded-lg text-sm mt-1 w-full p-2"
+          className="app-input"
           name="lastName"
           value={formData.lastName}
           onChange={handleChange}
@@ -335,11 +374,11 @@ const BasicInfo = ({ userOptions, formData, setFormData, handleChange }: BasicIn
       </div>
     </div>
 
-    <div className="flex gap-4 flex-wrap justify-center">
+    <div className="flex flex-wrap justify-center gap-4">
       <div className="flex-1 min-w-[200px]">
-        <p>Service Title *</p>
+        <p className="mb-2 text-sm font-medium text-slate-700">Service Title *</p>
         <input
-          className="border border-purple-200/60 rounded-lg text-sm mt-1 w-full p-2"
+          className="app-input"
           name="serviceTitle"
           placeholder="Ex, Haircut"
           value={formData.serviceTitle}
@@ -348,18 +387,19 @@ const BasicInfo = ({ userOptions, formData, setFormData, handleChange }: BasicIn
       </div>
 
       <div className="flex-1 min-w-[200px]">
-        <p>Category *</p>
+        <p className="mb-2 text-sm font-medium text-slate-700">Category *</p>
         <Select
           options={userOptions}
           placeholder="Select a category"
           value={formData.category}
+          styles={selectStyles}
           onChange={(option) => setFormData((prev) => ({ ...prev, category: option as CategoryOption | null }))}
         />
       </div>
     </div>
 
-    <div className="mt-4">
-      <p>Description*</p>
+    <div>
+      <p className="mb-2 text-sm font-medium text-slate-700">Description *</p>
       <textarea
         rows={3}
         required
@@ -367,19 +407,19 @@ const BasicInfo = ({ userOptions, formData, setFormData, handleChange }: BasicIn
         value={formData.description}
         onChange={handleChange}
         placeholder="Describe your service in detail"
-        className="border border-purple-200/60 p-3 rounded-lg w-full text-sm"
+        className="app-input"
       />
     </div>
 
-    <div className="mt-4">
-      <p>Link to personal site</p>
+    <div>
+      <p className="mb-2 text-sm font-medium text-slate-700">Link to personal site</p>
       <textarea
         rows={1}
         name="site"
         value={formData.site}
         onChange={handleChange}
         placeholder="Provide link to your personal website if you have one"
-        className="border border-purple-200/60 p-3 rounded-lg w-full text-sm"
+        className="app-input"
       />
     </div>
   </section>
@@ -391,16 +431,18 @@ type SharedSectionProps = {
 };
 
 const LocationPricing = ({ formData, handleChange }: SharedSectionProps) => (
-  <section>
-    <div className="flex items-center gap-2 mb-2 text-lg text-purple-700">
-      <MapPin />
+  <section className="app-card space-y-5">
+    <div className="mb-2 flex items-center gap-3 text-lg text-blue-700">
+      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50">
+        <MapPin className="h-5 w-5" />
+      </div>
       <h2 className="font-semibold">Location & Pricing</h2>
     </div>
-    <div className="flex gap-5 flex-wrap">
+    <div className="flex flex-wrap gap-5">
       <div className="flex-1 min-w-[200px]">
-        <p>Location *</p>
+        <p className="mb-2 text-sm font-medium text-slate-700">Location *</p>
         <input
-          className="border border-purple-200/60 rounded-lg text-sm mt-1 w-full p-2"
+          className="app-input"
           name="location"
           placeholder="e.g Campus Library, Dorm"
           value={formData.location}
@@ -409,9 +451,9 @@ const LocationPricing = ({ formData, handleChange }: SharedSectionProps) => (
       </div>
 
       <div className="flex-1 min-w-[200px]">
-        <p>Price</p>
+        <p className="mb-2 text-sm font-medium text-slate-700">Price</p>
         <input
-          className="border border-purple-200/60 rounded-lg text-sm mt-1 w-full p-2"
+          className="app-input"
           name="price"
           placeholder="e.g $20/hr"
           value={formData.price}
@@ -423,16 +465,18 @@ const LocationPricing = ({ formData, handleChange }: SharedSectionProps) => (
 );
 
 const ContactInfo = ({ formData, handleChange }: SharedSectionProps) => (
-  <section>
-    <div className="flex items-center gap-2 mb-2 text-lg text-purple-700">
-      <Mail />
+  <section className="app-card space-y-5">
+    <div className="mb-2 flex items-center gap-3 text-lg text-blue-700">
+      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50">
+        <Mail className="h-5 w-5" />
+      </div>
       <h2 className="font-semibold">Contact Information</h2>
     </div>
-    <div className="flex gap-5 flex-wrap">
+    <div className="flex flex-wrap gap-5">
       <div className="flex-1 min-w-[200px]">
-        <p>Email *</p>
+        <p className="mb-2 text-sm font-medium text-slate-700">Email *</p>
         <input
-          className="border border-purple-200/60 rounded-lg text-sm mt-1 w-full p-2"
+          className="app-input"
           name="email"
           type="email"
           placeholder="example@email.com"
@@ -442,9 +486,9 @@ const ContactInfo = ({ formData, handleChange }: SharedSectionProps) => (
       </div>
 
       <div className="flex-1 min-w-[200px]">
-        <p>Phone (Optional)</p>
+        <p className="mb-2 text-sm font-medium text-slate-700">Phone (Optional)</p>
         <input
-          className="border border-purple-200/60 rounded-lg text-sm mt-1 w-full p-2"
+          className="app-input"
           name="phone"
           type="tel"
           placeholder="(242) 143 5899"
@@ -465,41 +509,44 @@ type ServiceOfferedProps = {
 };
 
 const ServiceOffered = ({ text, setText, offers, handleService, deleteOffer }: ServiceOfferedProps) => (
-  <section>
-    <div className="flex items-center gap-2 mb-2 text-lg text-purple-700">
-      <Star />
+  <section className="app-card space-y-5">
+    <div className="mb-2 flex items-center gap-3 text-lg text-blue-700">
+      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50">
+        <Star className="h-5 w-5" />
+      </div>
       <h2 className="font-semibold">Services Offered</h2>
     </div>
     <div className="flex gap-4">
       <textarea
         rows={2}
-        className="border border-purple-200/60 w-full rounded-lg text-sm p-2"
+        className="app-input"
         value={text}
         onChange={(e) => setText(e.target.value)}
+        placeholder="Add a service offering or package detail"
       />
       <button
         type="button"
-        className="w-12 rounded-lg bg-purple-700 cursor-pointer text-white font-bold hover:bg-purple-800"
+        className="app-btn-primary w-12 rounded-2xl px-0 text-lg"
         onClick={handleService}
         aria-label="Add Service"
       >
         +
       </button>
     </div>
-    <ul className="mt-3 gap-3 w-lg">
+    <ul className="w-lg gap-3">
       {offers.map((offer) => (
         <li
           key={offer.id}
-          className="flex justify-between bg-purple-100 rounded-lg mt-2 w-auto px-3 py-2 text-sm"
+          className="mt-2 flex w-auto items-center justify-between rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm"
         >
           <span>{offer.text}</span>
 
           <button
             type="button"
-            className="flex mt-3 font-bold text-red-500 text-[30px] cursor-pointer mr-3"
+            className="mr-1 flex text-2xl font-bold text-red-500"
             onClick={() => deleteOffer(offer.id)}
           >
-            X
+            ×
           </button>
         </li>
       ))}
@@ -516,16 +563,18 @@ type AvailabilityProps = {
 };
 
 const Availability = ({ days, checklist, handleSelect, availability, setDayTime }: AvailabilityProps) => (
-  <section>
-    <div className="flex items-center gap-2 mb-2 text-lg text-purple-700">
-      <Clock />
+  <section className="app-card space-y-5">
+    <div className="mb-2 flex items-center gap-3 text-lg text-blue-700">
+      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-50">
+        <Clock className="h-5 w-5" />
+      </div>
       <h2 className="font-semibold">Availability</h2>
     </div>
 
-    <div className="flex gap-2 flex-wrap mb-2">
-      <label className="font-medium">Selected: </label>
+    <div className="mb-2 flex flex-wrap gap-2">
+      <label className="font-medium text-slate-700">Selected:</label>
       {checklist.map((day, index) => (
-        <span key={index} className="bg-purple-100 px-2 py-1 rounded text-sm">
+        <span key={index} className="app-chip px-3 py-1 text-xs">
           {day}
         </span>
       ))}
@@ -537,9 +586,9 @@ const Availability = ({ days, checklist, handleSelect, availability, setDayTime 
         const times = availability[day] || { start: "", end: "" };
 
         return (
-          <div key={id} className="flex items-center gap-3 border border-purple-200/60 rounded-lg p-2 flex-wrap">
-            <label className="flex items-center gap-2 min-w-[120px] font-semibold text-sm">
-              <input type="checkbox" value={day} checked={checked} onChange={handleSelect} />
+          <div key={id} className="flex flex-wrap items-center gap-3 rounded-2xl border border-[var(--google-border)] p-3">
+            <label className="flex min-w-[120px] items-center gap-2 text-sm font-semibold text-slate-700">
+              <input className="h-4 w-4 accent-blue-600" type="checkbox" value={day} checked={checked} onChange={handleSelect} />
               {day}
             </label>
 
@@ -558,38 +607,40 @@ const Availability = ({ days, checklist, handleSelect, availability, setDayTime 
 );
 
 const AboutYou = ({ formData, handleChange }: SharedSectionProps) => (
-  <section>
-    <p>Bio *</p>
+  <section className="app-card space-y-4">
+    <div>
+      <p className="mb-2 text-sm font-medium text-slate-700">Bio *</p>
     <textarea
       rows={3}
       name="bio"
       value={formData.bio}
       onChange={handleChange}
       placeholder="Tell students about yourself, background, experience..."
-      className="border border-purple-200/60 w-full rounded-lg p-2 text-sm"
+      className="app-input"
     />
+    </div>
     <div className="mt-4">
-      <p>Experience</p>
+      <p className="mb-2 text-sm font-medium text-slate-700">Experience</p>
       <textarea
         rows={2}
         name="experience"
         value={formData.experience}
         onChange={handleChange}
         placeholder="Describe relevant experience or achievements"
-        className="border border-purple-200/60 w-full rounded-lg p-2 text-sm"
+        className="app-input"
       />
     </div>
   </section>
 );
 
 const CreateAccountBtn = ({ disabled = false }: { disabled?: boolean }) => (
-  <div className="flex justify-end gap-4">
-    <button type="button" className="px-4 py-2 border border-purple-200/60 rounded-lg text-sm text-slate-600">
+  <div className="app-card flex flex-wrap justify-end gap-4">
+    <button type="button" className="app-btn-secondary">
       Cancel
     </button>
     <button
       type="submit"
-      className="px-4 py-2 bg-purple-700 text-white rounded-lg text-sm hover:bg-purple-800"
+      className="app-btn-primary disabled:opacity-60"
       disabled={disabled}
     >
       Create Provider Profile

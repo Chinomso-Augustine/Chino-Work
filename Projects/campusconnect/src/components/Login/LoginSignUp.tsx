@@ -98,22 +98,25 @@ const LoginSignUp = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-purple-50/40 px-4">
-      <div className="bg-white p-8 rounded-2xl shadow-sm border border-amber-200/60 w-full max-w-md">
+    <div className="page-shell flex items-center justify-center">
+      <div className="app-card w-full max-w-md rounded-[32px] p-8">
         <div className="text-center mb-6">
-          <div className="text-2xl font-semibold text-purple-900">{action}</div>
-          <div className="w-16 h-1 bg-purple-700 mx-auto mt-2 rounded"></div>{" "}
+          <div className="app-badge">Account</div>
+          <div className="mt-4 text-2xl font-semibold text-slate-900">{action}</div>
+          <p className="app-subtle mt-2 text-sm">
+            Continue with a cleaner Google-inspired sign-in flow.
+          </p>
         </div>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           {action === "Login" ? null : (
-            <div className="flex items-center border border-purple-200/60 rounded-lg px-4 py-2 bg-purple-50">
-              <FaUser className="text-purple-500 mr-3" />
+            <div className="flex items-center rounded-2xl border border-[var(--google-border-subtle)] bg-white px-4 py-3">
+              <FaUser className="mr-3 text-blue-500" />
               <input
                 type="text"
                 name="name"
                 placeholder="Name"
-                className="bg-transparent outline-none flex-1 text-sm"
+                className="flex-1 bg-transparent text-sm outline-none"
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -121,26 +124,26 @@ const LoginSignUp = () => {
             </div>
           )}
 
-          <div className="flex items-center border border-purple-200/60 rounded-lg px-4 py-2 bg-purple-50">
-            <FaEnvelope className="text-purple-500 mr-3" />
+          <div className="flex items-center rounded-2xl border border-[var(--google-border-subtle)] bg-white px-4 py-3">
+            <FaEnvelope className="mr-3 text-blue-500" />
             <input
               type="email"
               name="email"
               placeholder="Email"
-              className="bg-transparent outline-none flex-1 text-sm"
+              className="flex-1 bg-transparent text-sm outline-none"
               value={formData.email}
               onChange={handleChange}
               required
             />
           </div>
 
-          <div className="flex items-center border border-purple-200/60 rounded-lg px-4 py-2 bg-purple-50">
-            <FaLock className="text-purple-500 mr-3" />
+          <div className="flex items-center rounded-2xl border border-[var(--google-border-subtle)] bg-white px-4 py-3">
+            <FaLock className="mr-3 text-blue-500" />
             <input
               type="password"
               name="password"
               placeholder="Password"
-              className="bg-transparent outline-none flex-1 text-sm"
+              className="flex-1 bg-transparent text-sm outline-none"
               value={formData.password}
               onChange={handleChange}
               required
@@ -148,13 +151,13 @@ const LoginSignUp = () => {
           </div>
 
           {action === "Login" ? null : (
-            <div className="flex items-center border border-purple-200/60 rounded-lg px-4 py-2 bg-purple-50">
-              <FaLock className="text-purple-500 mr-3" />
+            <div className="flex items-center rounded-2xl border border-[var(--google-border-subtle)] bg-white px-4 py-3">
+              <FaLock className="mr-3 text-blue-500" />
               <input
                 type="password"
                 name="confirm"
                 placeholder="Confirm Password"
-                className="bg-transparent outline-none flex-1 text-sm"
+                className="flex-1 bg-transparent text-sm outline-none"
                 value={formData.confirm}
                 onChange={handleChange}
                 required
@@ -169,8 +172,8 @@ const LoginSignUp = () => {
               type="button"
               className={`flex-1 py-2 rounded-lg font-semibold ${
                 action === "Login"
-                  ? "bg-purple-100 text-purple-600 cursor-default"
-                  : "bg-purple-700 text-white hover:bg-purple-800 transition"
+                  ? "cursor-default rounded-full bg-blue-50 text-blue-700"
+                  : "app-btn-secondary"
               }`}
               onClick={() => {
                 setAction("Sign Up");
@@ -182,8 +185,8 @@ const LoginSignUp = () => {
               type="button"
               className={`flex-1 py-2 rounded-lg font-semibold ${
                 action === "Sign Up"
-                  ? "bg-purple-100 text-purple-600 cursor-default"
-                  : "bg-purple-700 text-white hover:bg-purple-800 transition"
+                  ? "cursor-default rounded-full bg-blue-50 text-blue-700"
+                  : "app-btn-secondary"
               }`}
               onClick={() => {
                 setAction("Login");
@@ -196,7 +199,7 @@ const LoginSignUp = () => {
 
           <button
             type="submit"
-            className="mt-4 w-full py-2 rounded-lg font-semibold bg-purple-700 text-white hover:bg-purple-800 transition disabled:opacity-60"
+            className="app-btn-primary mt-4 w-full rounded-full disabled:opacity-60"
             disabled={loading}
           >
             {action === "Sign Up" ? "Create account" : "Sign in"}
@@ -204,10 +207,10 @@ const LoginSignUp = () => {
         </form>
 
         {action === "Sign Up" ? null : (
-          <div className="text-sm text-center text-gray-600 mt-4">
+          <div className="mt-4 text-center text-sm text-gray-600">
             Lost Password?{" "}
             <span
-              className="text-purple-700 font-medium cursor-pointer hover:underline"
+              className="cursor-pointer font-medium text-blue-700 hover:underline"
               onClick={handleForgot}
             >
               Click Here

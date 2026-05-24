@@ -93,9 +93,9 @@ const ProvidersPage = () => {
     STEP 6: HANDLE LOADING STATES
   ───────────────────────────────────────────*/
   if (loading)
-    return <p className="text-white text-center mt-20">Loading...</p>;
+    return <p className="mt-20 text-center text-blue-600">Loading...</p>;
   if (!provider)
-    return <p className="text-white text-center mt-20">Provider not found.</p>;
+    return <p className="mt-20 text-center text-slate-600">Provider not found.</p>;
 
   /*───────────────────────────────────────────
     STEP 7: RENDER
@@ -124,23 +124,22 @@ const ProvidersPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-purple-50/40 px-6 pb-16 pt-24 text-slate-900">
-      {/* ───── Header Section ───── */}
-      <div className="mx-auto max-w-6xl rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+    <div className="page-shell">
+      <div className="app-card mx-auto max-w-6xl">
         <div className="flex flex-col gap-6 md:flex-row md:items-center">
           <div className="flex-shrink-0">
             <img
               src={provider.profile_image_url || "/sample1.jpg"}
               alt={`${provider.first_name} ${provider.last_name}`}
-              className="h-32 w-32 rounded-2xl object-cover border border-amber-200/60"
+              className="h-32 w-32 rounded-[28px] object-cover border border-blue-100"
             />
           </div>
           <div className="flex-1">
-            <p className="text-xs uppercase tracking-[0.3em] text-purple-500">Provider Profile</p>
+            <p className="app-badge">Provider Profile</p>
             <h1 className="mt-3 text-3xl font-semibold">
               {provider.first_name} {provider.last_name}
             </h1>
-            <p className="mt-2 text-sm text-slate-600">
+            <p className="app-subtle mt-2 text-sm">
               {provider.service_title} · {provider.category}
             </p>
             <p className="mt-4 text-sm text-slate-700">{provider.description}</p>
@@ -150,11 +149,10 @@ const ProvidersPage = () => {
             <p className="text-2xl font-semibold text-slate-900">{provider.price || "$20"}</p>
             <Link
               to={`/booking/${provider.id}`}
-              className="inline-flex items-center justify-center rounded-xl bg-purple-700 px-5 py-3 text-sm font-semibold text-white hover:bg-purple-800"
+              className="app-btn-primary"
             >
               Book Appointment
             </Link>
-            {/* Edit icon button */}
             <button
               type="button"
               onClick={() => {
@@ -173,8 +171,8 @@ const ProvidersPage = () => {
               aria-label={sessionUserId && isOwner ? "Edit profile" : "Login to edit"}
               className={`inline-flex items-center justify-center rounded-full border px-3 py-3 transition ${
                 sessionUserId && isOwner
-                  ? "border-purple-200 bg-white text-purple-700 hover:border-purple-300 hover:bg-purple-50"
-                  : "border-purple-200 bg-white text-purple-300 cursor-not-allowed opacity-70"
+                  ? "border-[var(--google-border)] bg-white text-blue-700 hover:bg-blue-50"
+                  : "border-[var(--google-border)] bg-white text-slate-300 cursor-not-allowed opacity-70"
               }`}
             >
               <svg
@@ -196,12 +194,11 @@ const ProvidersPage = () => {
         </div>
       </div>
 
-      {/* ───── Main Content Section ───── */}
       <div className="mx-auto mt-8 max-w-6xl grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="space-y-6">
-          <div className="rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+          <div className="app-card">
             <h2 className="text-lg font-semibold">Portfolio</h2>
-            <p className="text-sm text-slate-600 mt-2">
+            <p className="app-subtle mt-2 text-sm">
               Recent work and service highlights.
             </p>
             <div className="mt-4 grid grid-cols-2 gap-3">
@@ -210,13 +207,13 @@ const ProvidersPage = () => {
                   key={image.id}
                   src={image.src}
                   alt="Portfolio sample"
-                  className="h-32 w-full rounded-xl object-cover border border-amber-200/60"
+                  className="h-32 w-full rounded-2xl object-cover border border-blue-100"
                 />
               ))}
             </div>
           </div>
 
-          <div className="rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+          <div className="app-card">
             <h2 className="text-lg font-semibold">Pricing & Services</h2>
             <div className="mt-4 space-y-3 text-sm text-slate-700">
               <div className="flex items-center justify-between">
@@ -239,14 +236,14 @@ const ProvidersPage = () => {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+          <div className="app-card">
             <h2 className="text-lg font-semibold">Ratings & Reviews</h2>
             <div className="mt-4 space-y-4">
               {reviews.map((review, index) => (
-                <div key={index} className="rounded-xl border border-purple-200/60 bg-purple-50 p-4">
+                <div key={index} className="rounded-2xl border border-blue-100 bg-blue-50 p-4">
                   <div className="flex items-center justify-between text-sm">
                     <span className="font-semibold text-slate-900">{review.name}</span>
-                    <span className="text-purple-700">{review.rating} ★</span>
+                    <span className="text-blue-700">{review.rating} ★</span>
                   </div>
                   <p className="mt-2 text-sm text-slate-600">{review.text}</p>
                 </div>
@@ -256,9 +253,9 @@ const ProvidersPage = () => {
         </div>
 
         <div className="space-y-6">
-          <div className="rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+          <div className="app-card">
             <h2 className="text-lg font-semibold">Availability</h2>
-            <p className="text-sm text-slate-600 mt-2">
+            <p className="app-subtle mt-2 text-sm">
               Available time slots this week.
             </p>
             <div className="mt-4 space-y-2 text-sm text-slate-700">
@@ -277,7 +274,7 @@ const ProvidersPage = () => {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+          <div className="app-card">
             <h2 className="text-lg font-semibold">About</h2>
             <div className="mt-4 space-y-3 text-sm text-slate-700">
               <p>
@@ -297,20 +294,15 @@ const ProvidersPage = () => {
         </div>
       </div>
 
-      {/* ───── Edit / Read-only Section ───── */}
       {editing && isOwner ? (
-        <div className="mx-auto mt-8 max-w-6xl rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
-          {/* ───── EDIT MODE ───── */}
+        <div className="app-card mx-auto mt-8 max-w-6xl">
           <div className="text-center mb-6">
             <h1 className="font-semibold text-xl mb-7">Edit Your Profile</h1>
-
-            {/* Editable Form Fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
-              {/* First Name */}
               <div>
                 <label className="text-sm text-slate-600">First Name</label>
                 <input
-                  className="w-full rounded-lg border border-purple-200/60 p-2 text-sm text-slate-900"
+                  className="app-input"
                   value={form.first_name || ""}
                   onChange={(e) =>
                     setForm({ ...form, first_name: e.target.value })
@@ -318,11 +310,10 @@ const ProvidersPage = () => {
                 />
               </div>
 
-              {/* Last Name */}
               <div>
                 <label className="text-sm text-slate-600">Last Name</label>
                 <input
-                  className="w-full rounded-lg border border-purple-200/60 p-2 text-sm text-slate-900"
+                  className="app-input"
                   value={form.last_name || ""}
                   onChange={(e) =>
                     setForm({ ...form, last_name: e.target.value })
@@ -330,11 +321,10 @@ const ProvidersPage = () => {
                 />
               </div>
 
-              {/* Service Title */}
               <div>
                 <label className="text-sm text-slate-600">Service Title</label>
                 <input
-                  className="w-full rounded-lg border border-purple-200/60 p-2 text-sm text-slate-900"
+                  className="app-input"
                   value={form.service_title || ""}
                   onChange={(e) =>
                     setForm({ ...form, service_title: e.target.value })
@@ -342,11 +332,10 @@ const ProvidersPage = () => {
                 />
               </div>
 
-              {/* Category */}
               <div>
                 <label className="text-sm text-slate-600">Category</label>
                 <input
-                  className="w-full rounded-lg border border-purple-200/60 p-2 text-sm text-slate-900"
+                  className="app-input"
                   value={form.category || ""}
                   onChange={(e) =>
                     setForm({ ...form, category: e.target.value })
@@ -354,11 +343,10 @@ const ProvidersPage = () => {
                 />
               </div>
 
-              {/* Description */}
               <div className="col-span-2">
                 <label className="text-sm text-slate-600">Description</label>
                 <textarea
-                  className="w-full rounded-lg border border-purple-200/60 p-2 text-sm text-slate-900"
+                  className="app-input"
                   value={form.description || ""}
                   onChange={(e) =>
                     setForm({ ...form, description: e.target.value })
@@ -366,21 +354,19 @@ const ProvidersPage = () => {
                 />
               </div>
 
-              {/* Price */}
               <div>
                 <label className="text-sm text-slate-600">Price</label>
                 <input
-                  className="w-full rounded-lg border border-purple-200/60 p-2 text-sm text-slate-900"
+                  className="app-input"
                   value={form.price || ""}
                   onChange={(e) => setForm({ ...form, price: e.target.value })}
                 />
               </div>
 
-              {/* Location */}
               <div>
                 <label className="text-sm text-slate-600">Location </label>
                 <input
-                  className="w-full rounded-lg border border-purple-200/60 p-2 text-sm text-slate-900"
+                  className="app-input"
                   value={form.location || ""}
                   onChange={(e) =>
                     setForm({ ...form, location: e.target.value })
@@ -388,21 +374,19 @@ const ProvidersPage = () => {
                 />
               </div>
 
-              {/* Bio */}
               <div className="col-span-2">
                 <label className="text-sm text-slate-600">Bio</label>
                 <textarea
-                  className="w-full rounded-lg border border-purple-200/60 p-2 text-sm text-slate-900"
+                  className="app-input"
                   value={form.bio || ""}
                   onChange={(e) => setForm({ ...form, bio: e.target.value })}
                 />
               </div>
 
-              {/* Experience */}
               <div className="col-span-2">
                 <label className="text-sm text-slate-600">Experience</label>
                 <textarea
-                  className="w-full rounded-lg border border-slate-200 p-2 text-sm text-slate-900"
+                  className="app-input"
                   value={form.experience || ""}
                   onChange={(e) =>
                     setForm({ ...form, experience: e.target.value })
@@ -410,11 +394,10 @@ const ProvidersPage = () => {
                 />
               </div>
 
-              {/* Site */}
               <div className="col-span-2">
                 <label className="text-sm text-slate-600">Personal Site</label>
                 <input
-                  className="w-full rounded-lg border border-slate-200 p-2 text-sm text-slate-900"
+                  className="app-input"
                   value={form.site || ""}
                   onChange={(e) => setForm({ ...form, site: e.target.value })}
                 />

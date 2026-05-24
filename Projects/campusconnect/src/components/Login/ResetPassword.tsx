@@ -34,14 +34,20 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-purple-50/40 px-4">
-      <div className="bg-white p-8 rounded-2xl shadow-sm border border-amber-200/60 w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-purple-900 text-center mb-4">Reset Password</h2>
+    <div className="page-shell flex items-center justify-center">
+      <div className="app-card w-full max-w-md rounded-[32px] p-8">
+        <div className="text-center">
+          <div className="app-badge">Security</div>
+        </div>
+        <h2 className="mb-2 mt-4 text-center text-2xl font-semibold text-slate-900">Reset Password</h2>
+        <p className="app-subtle mb-4 text-center text-sm">
+          Update your password with the same calm, focused flow used across the app.
+        </p>
         <form className="space-y-4" onSubmit={handleReset}>
           <input
             type="password"
             placeholder="New Password"
-            className="w-full border border-purple-200/60 rounded-lg px-4 py-2 bg-purple-50 outline-none text-sm"
+            className="app-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -49,7 +55,7 @@ const ResetPassword = () => {
           <input
             type="password"
             placeholder="Confirm Password"
-            className="w-full border border-purple-200/60 rounded-lg px-4 py-2 bg-purple-50 outline-none text-sm"
+            className="app-input"
             value={confirm}
             onChange={(e) => setConfirm(e.target.value)}
             required
@@ -58,7 +64,7 @@ const ResetPassword = () => {
           {msg && <p className="text-green-700 text-sm">{msg}</p>}
           <button
             type="submit"
-            className="w-full py-2 rounded-lg font-semibold bg-purple-700 text-white hover:bg-purple-800 transition disabled:opacity-60"
+            className="app-btn-primary w-full rounded-full disabled:opacity-60"
             disabled={loading}
           >
             {loading ? "Updating..." : "Update Password"}

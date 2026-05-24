@@ -1,15 +1,10 @@
-import ServiceData from "./serviceData"
+import ServiceData from "./ServiceDataPage"
 
 function Services() {
-
    return (
-      <div>
-         <section>
-            <ServiceData />
-         </section>
-
-      </div >
-
+      <section>
+         <ServiceData />
+      </section>
    )
 }
 

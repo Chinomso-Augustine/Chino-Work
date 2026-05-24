@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from "./components/Navbar/Nav";
-import Home from "./components/Home/home";
+import Home from "./components/Home/HomePage";
 import Services from "./components/Services/Services";
 import ProvidersData from "./components/Providers/ProviderData";
 import ProvidersForm from "./components/Providers/ProvidersForm";

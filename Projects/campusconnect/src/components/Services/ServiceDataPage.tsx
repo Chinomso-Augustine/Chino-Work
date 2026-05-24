@@ -25,7 +25,7 @@ function formatDay(day: string) {
     return map[dayNormalized] ?? day.slice(0, 3);
 }
 
-export default function DisplayInfo() {
+export default function ServiceData() {
     const [providers, setProviders] = useState<Provider[]>([]);
     const [loading, setLoading] = useState(true);
     const [expandedAvailability, setExpandedAvailability] = useState<Record<string, boolean>>({});
@@ -59,7 +59,7 @@ export default function DisplayInfo() {
     }, [providers]);
 
     if (loading) {
-        return <p className="text-purple-600 text-center mt-24">Loading...</p>;
+        return <p className="mt-24 text-center text-blue-600">Loading...</p>;
     }
     {/**.some = check if something appears at least once
     1. filter through providers and store inside p
@@ -111,31 +111,30 @@ export default function DisplayInfo() {
     });
 
     return (
-        <div className="min-h-screen bg-purple-50/40 px-6 pb-16 pt-24 text-slate-900">
-            <div className="mx-auto max-w-6xl space-y-10">
-                {/**Header */}
-                <div className="rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
-                    <h1 className="text-3xl md:text-4xl font-semibold text-center">
+        <div className="page-shell">
+            <div className="page-container">
+                <div className="app-card">
+                    <div className="app-badge">Service discovery</div>
+                    <h1 className="mt-4 text-center text-3xl font-semibold md:text-4xl">
                         Service Listings
                     </h1>
-                    <p className="text-sm text-slate-600 text-center mt-3">
+                    <p className="app-subtle mt-3 text-center text-sm">
                         Browse student-led services and book directly with providers near campus.
                     </p>
                 </div>
 
-                {/* Filters */}
-                <div className="rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+                <div className="app-card">
                     <div className="grid gap-4 md:grid-cols-5">
                         <input
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             placeholder="Search services or providers"
-                            className="rounded-xl border border-amber-200/60 bg-amber-50/70 px-4 py-2 text-sm focus:border-amber-300 focus:outline-none md:col-span-2"
+                            className="app-input md:col-span-2"
                         />
                         <select
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
-                            className="rounded-xl border border-amber-200/60 bg-amber-50/70 px-3 py-2 text-sm focus:border-amber-300 focus:outline-none"
+                            className="app-input"
                         >
                             {categories.map((cat) => (
                                 <option key={cat} value={cat}>
@@ -146,7 +145,7 @@ export default function DisplayInfo() {
                         <select
                             value={maxPrice}
                             onChange={(e) => setMaxPrice(e.target.value)}
-                            className="rounded-xl border border-amber-200/60 bg-amber-50/70 px-3 py-2 text-sm focus:border-amber-300 focus:outline-none"
+                            className="app-input"
                         >
                             {["Any", "20", "40", "60"].map((price) => (
                                 <option key={price} value={price}>
@@ -157,7 +156,7 @@ export default function DisplayInfo() {
                         <select
                             value={minRating}
                             onChange={(e) => setMinRating(e.target.value)}
-                            className="rounded-xl border border-amber-200/60 bg-amber-50/70 px-3 py-2 text-sm focus:border-amber-300 focus:outline-none"
+                            className="app-input"
                         >
                             {["Any", "4.0", "4.5", "4.7"].map((rating) => (
                                 <option key={rating} value={rating}>
@@ -166,17 +165,17 @@ export default function DisplayInfo() {
                             ))}
                         </select>
                     </div>
-                    <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-purple-500">
-                        <span>Distance:</span>
+                    <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-slate-500">
+                        <span className="font-semibold text-slate-700">Distance:</span>
                         {["Any", "1", "3", "5"].map((distance) => (
                             <button
                                 key={distance}
                                 type="button"
                                 onClick={() => setMaxDistance(distance)}
-                                className={`rounded-full border px-3 py-1 ${
+                                className={`rounded-full border px-3 py-1.5 text-sm ${
                                     maxDistance === distance
-                                        ? "border-purple-700 bg-purple-700 text-white"
-                                        : "border-amber-200/60 bg-white text-slate-600 hover:border-amber-300"
+                                        ? "border-blue-600 bg-blue-600 text-white"
+                                        : "border-[var(--google-border)] bg-white text-slate-600 hover:bg-blue-50 hover:text-blue-700"
                                 }`}
                             >
                                 {distance === "Any" ? "Any distance" : `${distance} mi`}
@@ -185,7 +184,6 @@ export default function DisplayInfo() {
                     </div>
                 </div>
 
-                {/* Service cards */}
                 <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {filteredProviders.length > 0 ? (
                         filteredProviders.map((p) => {
@@ -195,11 +193,11 @@ export default function DisplayInfo() {
                             return (
                                 <div
                                     key={p.id}
-                                    className="rounded-2xl border border-amber-200/60 bg-white p-5 shadow-sm transition hover:shadow-md"
+                                    className="app-card app-card-hover border-blue-50 p-5"
                                 >
                                     <div className="flex items-start justify-between gap-3">
                                         <div>
-                                            <p className="text-xs uppercase tracking-[0.2em] text-purple-500">
+                                            <p className="text-xs uppercase tracking-[0.2em] text-blue-600">
                                                 {p.category}
                                             </p>
                                             <h2 className="mt-2 text-lg font-semibold text-slate-900">
@@ -213,23 +211,23 @@ export default function DisplayInfo() {
                                             className={`rounded-full px-3 py-1 text-xs font-semibold ${
                                                 isAvailableToday
                                                     ? "bg-emerald-50 text-emerald-700"
-                                                    : "bg-purple-50 text-purple-500"
+                                                    : "bg-blue-50 text-blue-600"
                                             }`}
                                         >
                                             {isAvailableToday ? "Available today" : "Next available"}
                                         </span>
                                     </div>
                                     <div className="mt-4 grid grid-cols-3 gap-2 text-xs text-slate-600">
-                                        <div className="rounded-lg bg-purple-50 px-3 py-2">
-                                            <p className="text-purple-400">Price</p>
+                                        <div className="rounded-2xl bg-blue-50 px-3 py-3">
+                                            <p className="text-blue-500">Price</p>
                                             <p className="font-semibold text-slate-900">{p.price || "$20"}</p>
                                         </div>
-                                        <div className="rounded-lg bg-purple-50 px-3 py-2">
-                                            <p className="text-purple-400">Rating</p>
+                                        <div className="rounded-2xl bg-blue-50 px-3 py-3">
+                                            <p className="text-blue-500">Rating</p>
                                             <p className="font-semibold text-slate-900">{rating.toFixed(1)}</p>
                                         </div>
-                                        <div className="rounded-lg bg-purple-50 px-3 py-2">
-                                            <p className="text-purple-400">Distance</p>
+                                        <div className="rounded-2xl bg-blue-50 px-3 py-3">
+                                            <p className="text-blue-500">Distance</p>
                                             <p className="font-semibold text-slate-900">{distance} mi</p>
                                         </div>
                                     </div>
@@ -264,11 +262,11 @@ export default function DisplayInfo() {
                                     )}
 
                                     <div className="mt-5 flex items-center gap-3">
-                                        <Link to={`/Provider/${p.id}`} className="cursor-pointer text-sm font-semibold text-slate-700">
+                                        <Link to={`/Provider/${p.id}`} className="app-link">
                                             View Profile
                                         </Link>
                                         <Link to={`/booking/${p.id}`}>
-                                        <button className="cursor-pointer rounded-lg bg-purple-700 px-4 py-2 text-xs font-semibold text-white hover:bg-purple-800">
+                                        <button className="app-btn-primary rounded-full px-4 py-2 text-xs">
                                             Quick Booking
                                         </button>
                                     </Link>
@@ -281,9 +279,9 @@ export default function DisplayInfo() {
                     )}
                 </section>
 
-                <section className="rounded-2xl border border-amber-200/60 bg-white p-6 shadow-sm">
+                <section className="app-card">
                     <h3 className="text-lg font-semibold">Currently Unavailable</h3>
-                    <p className="text-sm text-slate-600 mt-2">
+                    <p className="app-subtle mt-2 text-sm">
                         Providers with no availability listed for {currentDay}.
                     </p>
                     <div className="mt-4 flex flex-wrap gap-3">
@@ -291,7 +289,7 @@ export default function DisplayInfo() {
                             unavailableToday.map((p) => (
                                 <span
                                     key={p.id}
-                                    className="rounded-full border border-purple-200/60 bg-purple-50 px-4 py-2 text-xs text-slate-600"
+                                    className="app-chip"
                                 >
                                     {p.first_name} {p.last_name} · {p.service_title}
                                 </span>

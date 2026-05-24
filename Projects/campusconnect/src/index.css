@@ -1,15 +1,34 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Fraunces:wght@500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap");
 @import "tailwindcss";
 
 :root {
-  font-family: "Manrope", "Fraunces", serif;
-  color: #0f172a;
-  background-color: #faf9fd;
+  font-family: "Inter", "Roboto", system-ui, sans-serif;
+  color: #1f1f1f;
+  background-color: #f8fafd;
+  --google-blue: #1a73e8;
+  --google-blue-hover: #1765cc;
+  --google-surface: #f8fafd;
+  --google-surface-strong: #ffffff;
+  --google-surface-soft: #eef3fd;
+  --google-border: #d2e3fc;
+  --google-border-subtle: #dde3ea;
+  --google-text: #1f1f1f;
+  --google-muted: #5f6368;
+  --google-success: #137333;
+  --google-shadow: 0 1px 2px rgba(60, 64, 67, 0.1), 0 2px 6px rgba(60, 64, 67, 0.15);
+  --google-shadow-hover: 0 4px 12px rgba(60, 64, 67, 0.18);
 }
 
 body {
   min-height: 100vh;
-  background-color: #faf9fd;
+  background:
+    radial-gradient(circle at top left, rgba(26, 115, 232, 0.12), transparent 32%),
+    linear-gradient(180deg, #f8fafd 0%, #eef3fd 100%);
+  color: var(--google-text);
+}
+
+#root {
+  min-height: 100vh;
 }
 
 button,
@@ -22,4 +41,118 @@ a,
 button:disabled,
 [role="button"][aria-disabled="true"] {
   cursor: not-allowed;
+}
+
+@layer components {
+  .page-shell {
+    @apply min-h-screen px-4 pb-16 pt-24 text-slate-900 sm:px-6;
+  }
+
+  .page-container {
+    @apply mx-auto max-w-6xl space-y-8;
+  }
+
+  .app-topbar {
+    @apply border-b backdrop-blur-xl;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-color: var(--google-border-subtle);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.12);
+  }
+
+  .app-card {
+    @apply rounded-[28px] border p-6 transition;
+    background: var(--google-surface-strong);
+    border-color: var(--google-border-subtle);
+    box-shadow: var(--google-shadow);
+  }
+
+  .app-card-hover:hover {
+    box-shadow: var(--google-shadow-hover);
+    transform: translateY(-1px);
+  }
+
+  .app-hero {
+    @apply rounded-[32px] px-6 py-10 md:px-10 md:py-14;
+    background:
+      linear-gradient(135deg, rgba(26, 115, 232, 0.14), rgba(255, 255, 255, 0.96) 55%),
+      var(--google-surface-strong);
+    border: 1px solid var(--google-border);
+    box-shadow: var(--google-shadow);
+  }
+
+  .app-kpi {
+    @apply rounded-3xl border px-6 py-5 text-center;
+    background: rgba(255, 255, 255, 0.88);
+    border-color: var(--google-border);
+    box-shadow: var(--google-shadow);
+  }
+
+  .app-chip {
+    @apply inline-flex items-center rounded-full border px-4 py-2 text-sm font-medium;
+    background: var(--google-surface-strong);
+    border-color: var(--google-border);
+    color: var(--google-muted);
+  }
+
+  .app-badge {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide;
+    background: rgba(26, 115, 232, 0.1);
+    color: var(--google-blue);
+  }
+
+  .app-btn-primary {
+    @apply inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold text-white transition;
+    background: var(--google-blue);
+    box-shadow: 0 1px 2px rgba(26, 115, 232, 0.3);
+  }
+
+  .app-btn-primary:hover {
+    background: var(--google-blue-hover);
+  }
+
+  .app-btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border px-5 py-3 text-sm font-semibold transition;
+    border-color: var(--google-border);
+    background: var(--google-surface-strong);
+    color: var(--google-blue);
+  }
+
+  .app-btn-secondary:hover {
+    background: rgba(26, 115, 232, 0.06);
+  }
+
+  .app-btn-tonal {
+    @apply inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition;
+    background: rgba(26, 115, 232, 0.1);
+    color: var(--google-blue);
+  }
+
+  .app-btn-tonal:hover {
+    background: rgba(26, 115, 232, 0.16);
+  }
+
+  .app-link {
+    @apply text-sm font-semibold transition;
+    color: var(--google-blue);
+  }
+
+  .app-link:hover {
+    color: var(--google-blue-hover);
+  }
+
+  .app-input {
+    @apply w-full rounded-2xl border px-4 py-3 text-sm outline-none transition;
+    border-color: var(--google-border-subtle);
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--google-text);
+  }
+
+  .app-input:focus {
+    border-color: var(--google-blue);
+    box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.12);
+  }
+
+  .app-subtle {
+    color: var(--google-muted);
+  }
 }

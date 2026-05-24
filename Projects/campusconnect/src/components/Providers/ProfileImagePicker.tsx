@@ -93,22 +93,26 @@ export default function ProfileImagePicker({
     }
 
     return (
-        <div className="space-y-2">
-            <label className="block font-medium">Profile picture</label>
+        <div className="app-card space-y-4">
+            <div>
+                <div className="app-badge">Profile image</div>
+                <label className="mt-3 block text-sm font-medium text-slate-700">Profile picture</label>
+                <p className="app-subtle mt-1 text-sm">Upload a clean headshot or work sample image to build trust.</p>
+            </div>
 
             {preview ? (
                 <img
                     src={preview}
                     alt="Profile preview"
-                    className="w-28 h-28 rounded-full object-cover border"
+                    className="h-28 w-28 rounded-full border border-blue-100 object-cover"
                 />
             ) : (
-                <div className="w-28 h-28 rounded-full border grid place-items-center text-sm text-gray-500">
+                <div className="grid h-28 w-28 place-items-center rounded-full border border-dashed border-blue-200 bg-blue-50 text-sm text-slate-500">
                     No image
                 </div>
             )}
 
-            <div className="flex gap-3 mt-2">
+            <div className="mt-2 flex gap-3">
                 <input
                     ref={inputRef}
                     type="file"
@@ -120,7 +124,7 @@ export default function ProfileImagePicker({
                 <button
                     type="button"
                     onClick={() => inputRef.current?.click()}
-                    className="px-3 py-1 rounded border"
+                    className="app-btn-secondary"
                     disabled={uploading}
                 >
                     Choose image
@@ -130,7 +134,7 @@ export default function ProfileImagePicker({
                     <button
                         type="button"
                         onClick={onRemove}
-                        className="px-3 py-1 rounded border"
+                        className="app-btn-tonal"
                         disabled={uploading}
                     >
                         Remove
@@ -138,7 +142,7 @@ export default function ProfileImagePicker({
                 )}
             </div>
 
-            {uploading && <p className="text-xs text-purple-500">Uploading…</p>}
+            {uploading && <p className="text-xs text-blue-600">Uploading…</p>}
             {err && <p className="text-red-600 text-sm">{err}</p>}
         </div>
     );
