@@ -1,61 +1,38 @@
-import React, { useState } from "react";
-import { FaUser, FaLock, FaEnvelope } from "react-icons/fa";
-import { supabase } from "../../supabaseClient";
+import { useState, type ChangeEvent, type FormEvent } from "react";
+import { FaEnvelope, FaLock, FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../../supabaseClient";
+
+type AuthMode = "Sign Up" | "Login";
+
+type LoginFormData = {
+  name: string;
+  email: string;
+  password: string;
+  confirm: string;
+};
+
+const getErrorMessage = (error: unknown, fallback: string) =>
+  error instanceof Error ? error.message : fallback;
 
 const LoginSignUp = () => {
   const navigate = useNavigate();
-
-  //1. sign up and Login initial State
-  const [action, setAction] = useState("Sign Up"); // This is where we perform action. It's currently on Sign UP which means Login btn is gray
-
-  //2. Form input states
-  //Since initial stats for these inputs are empty, use one useState -> forDate which covers name, email, password, and confirm
-
-  const [formData, setFormData] = useState({
+  const [action, setAction] = useState<AuthMode>("Sign Up");
+  const [formData, setFormData] = useState<LoginFormData>({
     name: "",
     email: "",
     password: "",
     confirm: "",
   });
-
-  //3. UI notifications / feedback
   const [loading, setLoading] = useState(false);
-  const [err, setErr] = useState(null);
-  const [msg, setMsg] = useState(null);
+  const [err, setErr] = useState<string | null>(null);
+  const [msg, setMsg] = useState<string | null>(null);
 
-  const refreshUser = async () => {
-    try {
-      //starts loading
-      setLoading(true);
-
-      //get current seesion + user
-      const { data, error } = await supabase.auth.getSession();
-      if (error) throw error;
-
-      const session = data?.session;
-
-      if (session?.user) {
-        //meaning user is signed out
-        setUser(null);
-        setProviderProfile(null);
-      }
-    } catch (err) {
-      console.log("enter refreshing user:", err.message);
-      setUser(null);
-      setProviderProfile(null);
-    } finally {
-      //stop loading
-      setAuthLoading(false);
-    }
-  };
-  //Handler updater
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  //Handle Forgot Password
   const handleForgot = async () => {
     setErr(null);
     setMsg(null);
@@ -66,29 +43,18 @@ const LoginSignUp = () => {
     setLoading(true);
 
     try {
-      // Use an explicit app URL env var when available to ensure redirect is correct
-      const redirectTo = `${
-        import.meta.env.VITE_APP_URL ?? window.location.origin
-      }/auth/reset`;
-      console.log("Password reset redirectTo:", redirectTo);
-
-      const { error } = await supabase.auth.resetPasswordForEmail(
-        formData.email,
-        {
-          redirectTo,
-        }
-      );
+      const redirectTo = `${import.meta.env.VITE_APP_URL ?? window.location.origin}/auth/reset`;
+      const { error } = await supabase.auth.resetPasswordForEmail(formData.email, { redirectTo });
       if (error) throw error;
       setMsg("Reset link sent. Check your email");
-    } catch (e) {
-      setErr(e?.message || "Could not sent reset email.");
+    } catch (error) {
+      setErr(getErrorMessage(error, "Could not sent reset email."));
     } finally {
       setLoading(false);
     }
   };
 
-  //Handle submit
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErr(null);
     setMsg(null);
@@ -101,9 +67,7 @@ const LoginSignUp = () => {
 
     try {
       if (action === "Sign Up") {
-        // Use explicit app URL when available to ensure callback redirect matches dev server
         const appUrl = import.meta.env.VITE_APP_URL ?? window.location.origin;
-        console.log("Sign-up emailRedirectTo:", `${appUrl}/auth/callback`);
         const { error } = await supabase.auth.signUp({
           email: formData.email,
           password: formData.password,
@@ -122,14 +86,12 @@ const LoginSignUp = () => {
         });
 
         if (error) throw error;
-
-        //If work, redirect back to campusconnect
         if (data?.session) {
           navigate("/");
         }
       }
-    } catch (err) {
-      setErr(err?.message || "Authentication failed");
+    } catch (error) {
+      setErr(getErrorMessage(error, "Authentication failed"));
     } finally {
       setLoading(false);
     }
@@ -138,19 +100,13 @@ const LoginSignUp = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-purple-50/40 px-4">
       <div className="bg-white p-8 rounded-2xl shadow-sm border border-amber-200/60 w-full max-w-md">
-        {/* Header */}
         <div className="text-center mb-6">
           <div className="text-2xl font-semibold text-purple-900">{action}</div>
           <div className="w-16 h-1 bg-purple-700 mx-auto mt-2 rounded"></div>{" "}
-          {/*For line bellow header */}
         </div>
 
-        {/* Input Fields */}
         <form className="space-y-4" onSubmit={handleSubmit}>
-          {/* If action is Login, we hide the name input by creating empty div, else show everything */}
-          {action === "Login" ? (
-            <div></div>
-          ) : (
+          {action === "Login" ? null : (
             <div className="flex items-center border border-purple-200/60 rounded-lg px-4 py-2 bg-purple-50">
               <FaUser className="text-purple-500 mr-3" />
               <input
@@ -190,8 +146,8 @@ const LoginSignUp = () => {
               required
             />
           </div>
-          {/*confirm password  */}
-          {action == "Login" ? null : (
+
+          {action === "Login" ? null : (
             <div className="flex items-center border border-purple-200/60 rounded-lg px-4 py-2 bg-purple-50">
               <FaLock className="text-purple-500 mr-3" />
               <input
@@ -208,8 +164,6 @@ const LoginSignUp = () => {
           {err && <p className="text-red-600 text-sm">{err}</p>}
           {msg && <p className="text-green-700 text-sm">{msg}</p>}
 
-          {/* Dynamic btn change: if action is Login, change Sign Up btn to gray, else do nothing */}
-          {/* Dynamic btn change: if action is Sign Up, change Login btn to gray, else do nothing */}
           <div className="flex justify-between mt-6 space-x-4">
             <button
               type="button"
@@ -249,7 +203,6 @@ const LoginSignUp = () => {
           </button>
         </form>
 
-        {/**forget password  */}
         {action === "Sign Up" ? null : (
           <div className="text-sm text-center text-gray-600 mt-4">
             Lost Password?{" "}
