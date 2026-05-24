@@ -3,23 +3,6 @@ import { supabase } from "../../supabaseClient"
 import { Link } from "react-router-dom"
 import type { Provider } from "../DataTypes/types";
 
-// Format full day name into three-letter abbreviation (e.g., Monday -> Mon)
-function formatDay(day: string) {
-    if (!day) return day;
-    const dayNormalized = day.charAt(0).toUpperCase() + day.slice(1).toLowerCase();
-    const map: Record<string, string> = {
-        Sunday: 'Sun',
-        Monday: 'Mon',
-        Tuesday: 'Tue',
-        Wednesday: 'Wed',
-        Thursday: 'Thu',
-        Friday: 'Fri',
-        Saturday: 'Sat',
-    };
-    return map[dayNormalized] ?? day.slice(0, 3);
-}
-
-
 const DisplayInfo = () => {
     /*Storing providers fetched */
     const [providers, setProviders] = useState<Provider[]>([]);

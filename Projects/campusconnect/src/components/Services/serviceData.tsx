@@ -41,14 +41,14 @@ export default function DisplayInfo() {
     useEffect(() => {
         (async () => {
             const { data, error } = await supabase
-                .from<Provider>("providers_public")
+                .from("providers_public")
                 .select("*")
                 .order("created_at", { ascending: false });
 
             if (error) {
                 console.error("Error fetching Providers:", error);
             }
-            setProviders(data ?? []);
+            setProviders((data as Provider[] | null) ?? []);
             setLoading(false);
         })();
     }, []);

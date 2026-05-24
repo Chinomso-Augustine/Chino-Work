@@ -11,3 +11,15 @@ body {
   min-height: 100vh;
   background-color: #faf9fd;
 }
+
+button,
+[role="button"],
+a,
+[role="link"] {
+  cursor: pointer;
+}
+
+button:disabled,
+[role="button"][aria-disabled="true"] {
+  cursor: not-allowed;
+}

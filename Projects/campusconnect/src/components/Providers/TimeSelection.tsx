@@ -1,10 +1,17 @@
-import * as React from 'react';
 import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 
-export default function TimeSelection ({checked, start, end, onStart, onEnd}){
+type TimeSelectionProps = {
+    checked: boolean;
+    start: string;
+    end: string;
+    onStart: (value: string) => void;
+    onEnd: (value: string) => void;
+};
+
+export default function TimeSelection({ checked, start, end, onStart, onEnd }: TimeSelectionProps) {
     const startVal = start? dayjs(start, "h:mm A"):null; 
     const endVal = end? dayjs(end, "h:mm A"): null; 
 

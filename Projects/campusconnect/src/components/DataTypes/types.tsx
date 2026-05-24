@@ -16,6 +16,7 @@
     availability?: AvailabilitySlot[] | null;
     offers?: { text: string }[];
     created_at?: string;
+    user_id?: string | null;
     profile_image_url?: string | null;
     profile_image_path?: string | null;
 }
