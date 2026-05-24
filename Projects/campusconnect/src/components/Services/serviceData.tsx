@@ -264,11 +264,11 @@ export default function DisplayInfo() {
                                     )}
 
                                     <div className="mt-5 flex items-center gap-3">
-                                        <Link to={`/Provider/${p.id}`} className="text-sm font-semibold text-slate-700">
+                                        <Link to={`/Provider/${p.id}`} className="cursor-pointer text-sm font-semibold text-slate-700">
                                             View Profile
                                         </Link>
                                         <Link to={`/booking/${p.id}`}>
-                                        <button className="rounded-lg bg-purple-700 px-4 py-2 text-xs font-semibold text-white hover:bg-purple-800">
+                                        <button className="cursor-pointer rounded-lg bg-purple-700 px-4 py-2 text-xs font-semibold text-white hover:bg-purple-800">
                                             Quick Booking
                                         </button>
                                     </Link>

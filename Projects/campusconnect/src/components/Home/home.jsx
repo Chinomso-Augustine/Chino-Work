@@ -51,7 +51,7 @@ function Home() {
                                 placeholder="Search for haircuts, tutoring, photography..."
                                 className="w-full bg-transparent text-sm text-slate-700 focus:outline-none"
                             />
-                            <button className="rounded-xl bg-purple-700 px-4 py-2 text-sm font-semibold text-white hover:bg-purple-800">
+                            <button className="cursor-pointer rounded-xl bg-purple-700 px-4 py-2 text-sm font-semibold text-white hover:bg-purple-800">
                                 Search
                             </button>
                         </div>
@@ -59,13 +59,13 @@ function Home() {
 
                     <div className="mt-8 flex flex-col md:flex-row justify-center items-center gap-4">
                         <Link to="/Services">
-                            <button className="rounded-xl bg-purple-700 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-purple-800">
+                            <button className="cursor-pointer rounded-xl bg-purple-700 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-purple-800">
                                 Browse Services
                             </button>
                         </Link>
 
                         <Link to="/Providers">
-                            <button className="rounded-xl border border-purple-200/70 px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-purple-300 hover:text-purple-900">
+                            <button className="cursor-pointer rounded-xl border border-purple-200/70 px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-purple-300 hover:text-purple-900">
                                 View All Providers
                             </button>
                         </Link>

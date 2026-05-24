@@ -66,12 +66,12 @@ const DisplayInfo = () => {
 
                                 <div className="flex justify-center py-2">
                                     <Link key={p.id} to={`/Provider/${p.id}`}>
-                                    <button className="rounded-lg border border-purple-200/60 bg-purple-700 px-4 py-2 text-xs font-semibold text-white hover:bg-purple-800">
+                                    <button className="cursor-pointer rounded-lg border border-purple-200/60 bg-purple-700 px-4 py-2 text-xs font-semibold text-white hover:bg-purple-800">
                                         Provider Page
                                     </button>
                                 </Link>
                                 <Link to={`/booking/${p.id}`} className="ml-3">
-                                    <button className="rounded-lg border border-purple-200/60 px-4 py-2 text-xs font-semibold text-slate-700 hover:border-purple-300 hover:text-purple-900">
+                                    <button className="cursor-pointer rounded-lg border border-purple-200/60 px-4 py-2 text-xs font-semibold text-slate-700 hover:border-purple-300 hover:text-purple-900">
                                         Book
                                     </button>
                                 </Link>

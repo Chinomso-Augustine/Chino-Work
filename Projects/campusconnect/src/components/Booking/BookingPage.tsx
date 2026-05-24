@@ -110,7 +110,7 @@ export default function BookingPage() {
 
             <button
               type="button"
-              className="w-full rounded-xl bg-purple-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-purple-800"
+              className="w-full cursor-pointer rounded-xl bg-purple-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-purple-800"
             >
               Confirm Appointment
             </button>
